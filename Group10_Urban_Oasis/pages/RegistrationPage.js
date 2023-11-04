@@ -1,14 +1,16 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 
-export default function App() {
+export const RegistrationPage = () => {
   return (
     <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
+      <Text>Registration Page</Text>
+      {/* button component added temporarily for simplicity, can be exchanged with a Pressable later */}
+      <Button title="Register" />
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
