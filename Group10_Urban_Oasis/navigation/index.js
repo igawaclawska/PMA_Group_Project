@@ -1,9 +1,11 @@
+import { useContext } from "react";
 import { NavigationContainer } from "@react-navigation/native";
 import { ApplicationNavigation } from "./ApplicationNavigation";
 import { AuthenticationNavigation } from "./AuthenticationNavigation";
+import { AuthenticationContext } from "../authentication/AuthenticationContext";
 
 export const Navigation = () => {
-  const isAuthenticated = false; //temporarily hardcoded, to be replaced with a real data after implementing authentication
+  const { isAuthenticated } = useContext(AuthenticationContext);
 
   return (
     <NavigationContainer>
