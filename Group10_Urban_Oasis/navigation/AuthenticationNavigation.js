@@ -10,9 +10,9 @@ export const AuthenticationNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" component={WelcomePage} />
-      <Stack.Screen name="Log in or Sign Up " component={LoginOrSignupPage} />
+      <Stack.Screen name="Log in or Sign Up" component={LoginOrSignupPage} />
       <Stack.Screen name="Log in" component={LoginPage} />
-      <Stack.Screen name="Register" component={RegistrationPage} />
+      <Stack.Screen name="Sign up" component={RegistrationPage} />
     </Stack.Navigator>
   );
 };

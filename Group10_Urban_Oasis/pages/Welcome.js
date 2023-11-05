@@ -1,13 +1,17 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-export const WelcomePage = () => {
+export const WelcomePage = ({ navigation }) => {
+  const clickNavigate = () => {
+    navigation.navigate("Log in or Sign Up");
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text>Welcome</Text>
       {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
-      <Button title="Get Started" />
+      <Button title="Get Started" onPress={clickNavigate} />
     </View>
   );
 };

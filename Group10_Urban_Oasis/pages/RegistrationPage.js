@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 
-export const RegistrationPage = () => {
+export const RegistrationPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
