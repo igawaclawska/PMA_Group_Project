@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
-import { AuthenticationContext } from "../authentication/AuthenticationContext";
-import { AuthenticationInputField } from "../components/AuthenticationInputField";
+import { AuthenticationContext } from "../../authentication/AuthenticationContext";
+import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 
 export const RegistrationPage = ({ navigation }) => {
   const { onRegister, error, setError, isLoading } = useContext(

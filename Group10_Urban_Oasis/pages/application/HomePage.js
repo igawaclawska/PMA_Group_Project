@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useContext } from "react";
-import { AuthenticationContext } from "../authentication/AuthenticationContext";
+import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { StyleSheet, Text, View, Button } from "react-native";
 
 export const HomePage = () => {

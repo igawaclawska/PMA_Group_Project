@@ -1,8 +1,8 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, Alert } from "react-native";
-import { AuthenticationInputField } from "../components/AuthenticationInputField";
+import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { useState, useContext } from "react";
-import { AuthenticationContext } from "../authentication/AuthenticationContext";
+import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 
 export const LoginPage = ({ navigation }) => {
   const { onLogin, error, setError, isLoading } = useContext(

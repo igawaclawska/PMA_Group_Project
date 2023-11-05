@@ -1,8 +1,8 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { WelcomePage } from "../pages/Welcome";
-import { LoginOrSignupPage } from "../pages/LoginOrSignUp";
-import { LoginPage } from "../pages/LoginPage";
-import { RegistrationPage } from "../pages/RegistrationPage";
+import { WelcomePage } from "../pages/authentication/Welcome";
+import { LoginOrSignupPage } from "../pages/authentication/LoginOrSignUp";
+import { LoginPage } from "../pages/authentication/LoginPage";
+import { RegistrationPage } from "../pages/authentication/RegistrationPage";
 
 const Stack = createNativeStackNavigator();
 
