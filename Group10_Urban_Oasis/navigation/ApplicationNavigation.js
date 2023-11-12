@@ -1,4 +1,5 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import { Ionicons } from "@expo/vector-icons";
 import { HomePage } from "../pages/application/HomePage";
 import { AddLocation } from "../pages/application/AddLocation";
 import { RecentlyVisited } from "../pages/application/RecentlyVisited";
@@ -6,10 +7,29 @@ import { UserAccount } from "../pages/application/UserAccount";
 
 const Tab = createBottomTabNavigator();
 
-//removes default header
-const createScreenOptions = () => {
+//object containing icon names
+const TAB_ICON = {
+  Explore: "earth-sharp",
+  RecentVisit: "time",
+  AddLocation: "add-circle",
+  MyAccount: "md-person-sharp",
+};
+
+//dynamically returns the icon component
+const tabBarIcon = (iconName) => {
+  return ({ size, color }) => (
+    <Ionicons name={iconName} size={size} color={color} />
+  );
+};
+
+//removes default header and assigns correct icon
+const createScreenOptions = ({ route }) => {
+  let name = route.name.replace(" ", ""); //removes white space from the route name to match tab icon keys
+  const iconName = TAB_ICON[name];
   return {
     headerShown: false,
+    tabBarIcon: tabBarIcon(iconName),
+    tabBarActiveTintColor: "#3E9C27",
   };
 };
 
@@ -19,7 +39,7 @@ export const ApplicationNavigation = () => {
       <Tab.Screen name="Explore" component={HomePage} />
       <Tab.Screen name="Recent Visit" component={RecentlyVisited} />
       <Tab.Screen name="Add Location" component={AddLocation} />
-      <Tab.Screen name="User Account" component={UserAccount} />
+      <Tab.Screen name="My Account" component={UserAccount} />
     </Tab.Navigator>
   );
 };
