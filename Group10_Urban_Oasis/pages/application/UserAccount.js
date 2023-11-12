@@ -9,7 +9,7 @@ export const UserAccount = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>User</Text>
+      <Text>User Account</Text>
       {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.
       Logout will be later moved to the user settings page */}
       <Button title="Log out" onPress={onLogout} />
