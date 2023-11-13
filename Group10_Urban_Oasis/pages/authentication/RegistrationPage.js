@@ -35,11 +35,12 @@ export const RegistrationPage = ({ navigation }) => {
         placeholder={"Repeat Password"}
       />
 
-      {error && (
+    {/* Error message temporarily disabled */}
+      {/* {error && (
         <Text variant="error" style={styles.error}>
           {error}
         </Text>
-      )}
+      )} */}
       {/* button component added temporarily for simplicity,
       can be exchanged with a Pressable later */}
       <Button
