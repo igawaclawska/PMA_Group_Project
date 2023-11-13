@@ -9,7 +9,7 @@ export const HomePage = () => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Home Page</Text>
+      <Text>Map view goes Here</Text>
     </View>
   );
 };
