@@ -4,8 +4,11 @@ import { LoginOrSignupPage } from "../pages/authentication/LoginOrSignUp";
 import { LoginPage } from "../pages/authentication/LoginPage";
 import { RegistrationPage } from "../pages/authentication/RegistrationPage";
 
+//This file is responsible for the stack navigation settings (visible for not authenticated users)
+
 const Stack = createNativeStackNavigator();
 
+//Stack navigation screens
 export const AuthenticationNavigation = () => {
   return (
     <Stack.Navigator>
