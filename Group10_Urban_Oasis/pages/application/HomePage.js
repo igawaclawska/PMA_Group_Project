@@ -12,7 +12,6 @@ location: {
   "longitude": 55.61089535500283,
 }
 
-    
 , description: 'this is just a test'
 }
 
@@ -31,8 +30,8 @@ const onRegionChange = (region) =>{
     
    <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Map view goes Here</Text>
-      <MapView style={styles.map} initialRegion={{ latitude: 55.61089535500283, longitude: 10.453921831373197  }} onRegionChange={onRegionChange}></MapView>
+      <Text>Map view goes Here</Text> 
+      <MapView style={styles.map}initialRegion={{ latitude: 55.58376336969238, latitudeDelta: 2.1949835082157563, longitude: 10.4347135309621, longitudeDelta: 2.4010375513883844} } onRegionChange={onRegionChange}></MapView>
   </View>
   
   );
