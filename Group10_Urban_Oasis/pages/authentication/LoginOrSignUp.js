@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, Alert } from "react-native";
+import { StyleSheet, Text, View, Image, Button, Alert } from "react-native";
 
 export const LoginOrSignupPage = ({ navigation }) => {
   const clickNavigateToLogIn = () => {
@@ -15,6 +15,10 @@ export const LoginOrSignupPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
+      <Image
+        style={styles.image}
+        source={require("../../assets/images/image-2.jpg")}
+      />
       <Text>Log in or Sign up</Text>
       <Text>
         Please select your preferred method to continue setting up your account
@@ -35,5 +39,12 @@ const styles = StyleSheet.create({
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  image: {
+    flex: 2,
+    maxHeight: 360,
+    width: 400,
+    resizeMode: "cover",
   },
 });
