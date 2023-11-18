@@ -16,6 +16,9 @@ export const LoginOrSignupPage = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text>Log in or Sign up</Text>
+      <Text>
+        Please select your preferred method to continue setting up your account
+      </Text>
       {/* button component added temporarily for simplicity, can be exchanged with a Pressable later */}
       <Button title="Continue with Email" onPress={clickNavigateToLogIn} />
       {/* TODO: Implement these login functionlities */}

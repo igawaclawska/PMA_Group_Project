@@ -9,7 +9,15 @@ export const WelcomePage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Welcome</Text>
+      <Text>Welcome to Urban Oasis Finder</Text>
+      <Text>
+        Discover stunning hidden areas shared by the community and experience
+        your city like never before...
+      </Text>
+      <Text>
+        If you are creating a new account, Terms & Conditions and Privacy Policy
+        will apply.
+      </Text>
       {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
       <Button title="Get Started" onPress={clickNavigate} />
     </View>
