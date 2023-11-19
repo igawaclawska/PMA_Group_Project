@@ -1,5 +1,5 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button } from "react-native";
+import { StyleSheet, Text, View, Button } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
 
 export const WelcomePage = ({ navigation }) => {
@@ -10,18 +10,28 @@ export const WelcomePage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <LocationImage path={require("../../assets/images/image-1.jpg")} />
-      <Text>Welcome to Urban Oasis Finder</Text>
-      <Text>
-        Discover stunning hidden areas shared by the community and experience
-        your city like never before...
-      </Text>
-      <Text>
-        If you are creating a new account, Terms & Conditions and Privacy Policy
-        will apply.
-      </Text>
-      {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
-      <Button title="Get Started" onPress={clickNavigate} />
+      <View style={styles.imageWrapper}>
+        <LocationImage path={require("../../assets/images/image-1.jpg")} />
+      </View>
+      <View style={styles.bottomContainer}>
+        <View style={styles.appDescriptionContainer}>
+          <Text style={[styles.h1, styles.boldFont, styles.darkGrayText]}>
+            Welcome to Urban Oasis Finder
+          </Text>
+          <Text
+            style={[
+              styles.paragraph,
+              styles.centeredText,
+              styles.lightGrayText,
+            ]}
+          >
+            Discover stunning hidden areas shared by the community and
+            experience your city like never before...
+          </Text>
+        </View>
+        {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
+        <Button title="Get Started" onPress={clickNavigate} />
+      </View>
     </View>
   );
 };
@@ -29,8 +39,49 @@ export const WelcomePage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 12,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  bottomContainer: {
+    flex: 1,
+    paddingVertical: 40,
+    justifyContent: "space-between",
+  },
+
+  appDescriptionContainer: {
+    alignItems: "center",
+    gap: 16,
+  },
+
+  imageWrapper: {
+    flex: 2,
+  },
+
+  h1: {
+    fontSize: 24,
+  },
+
+  paragraph: {
+    fontSize: 16,
+    lineHeight: 24,
+  },
+
+  boldFont: {
+    fontWeight: 700,
+  },
+
+  centeredText: {
+    textAlign: "center",
+  },
+
+  darkGrayText: {
+    color: "#1A1C29",
+  },
+
+  lightGrayText: {
+    color: "#797979",
   },
 });

@@ -11,8 +11,7 @@ export const LocationImage = ({ path }) => {
 
 const styles = StyleSheet.create({
   image: {
-    flex: 2,
-    maxHeight: 360,
+    flex: 1,
     width: windowWidth,
     resizeMode: "cover",
   },
