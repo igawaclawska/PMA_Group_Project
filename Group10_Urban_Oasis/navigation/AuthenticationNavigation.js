@@ -19,7 +19,7 @@ export const AuthenticationNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen name="Welcome" options={createScreenOptions} component={WelcomePage} />
-      <Stack.Screen name="Log in or Sign Up" component={LoginOrSignupPage} />
+      <Stack.Screen name="Log in or Sign Up" options={createScreenOptions} component={LoginOrSignupPage} />
       <Stack.Screen name="Log in" component={LoginPage} />
       <Stack.Screen name="Sign up" component={RegistrationPage} />
     </Stack.Navigator>
