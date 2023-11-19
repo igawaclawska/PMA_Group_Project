@@ -39,6 +39,7 @@ export const WelcomePage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingTop: 46,
     paddingHorizontal: 12,
     backgroundColor: "#fff",
     alignItems: "center",
@@ -47,7 +48,7 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     flex: 1,
-    paddingVertical: 40,
+    paddingVertical: 32,
     justifyContent: "space-between",
   },
 

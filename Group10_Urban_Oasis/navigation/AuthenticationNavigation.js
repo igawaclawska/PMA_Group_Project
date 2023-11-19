@@ -8,11 +8,17 @@ import { RegistrationPage } from "../pages/authentication/RegistrationPage";
 
 const Stack = createNativeStackNavigator();
 
+const createScreenOptions = () => {
+  return {
+    headerShown: false,
+  };
+};
+
 //Stack navigation screens
 export const AuthenticationNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Welcome" component={WelcomePage} />
+      <Stack.Screen name="Welcome" options={createScreenOptions} component={WelcomePage} />
       <Stack.Screen name="Log in or Sign Up" component={LoginOrSignupPage} />
       <Stack.Screen name="Log in" component={LoginPage} />
       <Stack.Screen name="Sign up" component={RegistrationPage} />
