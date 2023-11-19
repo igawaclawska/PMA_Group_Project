@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button, Alert, Pressable } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
+import { Button2 } from "../../components/Button2";
 import { Ionicons } from "@expo/vector-icons";
 
 export const LoginOrSignupPage = ({ navigation }) => {
@@ -43,14 +44,23 @@ export const LoginOrSignupPage = ({ navigation }) => {
             account
           </Text>
         </View>
-        {/* button component added temporarily for simplicity, can be exchanged with a Pressable later */}
         <View style={styles.buttonsContainer}>
-          <Button title="Continue with Email" onPress={clickNavigateToLogIn} />
+          <Button2 onPress={clickNavigateToLogIn}>Continue with Email</Button2>
           {/* TODO: Implement these login functionlities */}
-          <Button title="Continue with Phone" onPress={handleAlert} />
+          <Button2 theme={"secondary"} onPress={handleAlert}>
+            Continue with Phone
+          </Button2>
           <View style={styles.buttonsContainerHorizontal}>
-            <Button title="Google" onPress={handleAlert} />
-            <Button title="Apple" onPress={handleAlert} />
+            <View style={styles.horizontalButtonWrapper}>
+              <Button2 theme={"secondary"} onPress={handleAlert}>
+                <Ionicons name="logo-google" size={18} color="black" />
+              </Button2>
+            </View>
+            <View style={styles.horizontalButtonWrapper}>
+              <Button2 theme={"secondary"} onPress={handleAlert}>
+                <Ionicons name="md-logo-apple" size={18} color="black" />
+              </Button2>
+            </View>
           </View>
         </View>
         <Text
@@ -84,8 +94,8 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     flex: 1,
+    width: "100%",
     paddingVertical: 32,
-    alignItems: "center",
     justifyContent: "space-between",
   },
 
@@ -94,14 +104,15 @@ const styles = StyleSheet.create({
     gap: 16,
   },
 
-  buttonsContainer: {
-    gap: 2,
-  },
+  buttonsContainer: {},
 
   buttonsContainerHorizontal: {
     flexDirection: "row",
-    justifyContent: "center",
-    gap: 2,
+    gap: 8,
+  },
+
+  horizontalButtonWrapper: {
+    flex: 1,
   },
 
   h2: {
@@ -110,7 +121,7 @@ const styles = StyleSheet.create({
 
   paragraph: {
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 21,
   },
 
   paragraphSmall: {
@@ -135,7 +146,6 @@ const styles = StyleSheet.create({
   },
 
   closeIcon: {
-    width: "100%",
-    marginLeft: "auto",
+    alignSelf: "flex-end",
   },
 });

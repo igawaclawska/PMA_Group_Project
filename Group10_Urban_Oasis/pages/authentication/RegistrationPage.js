@@ -3,6 +3,7 @@ import { useState, useContext } from "react";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
+import { Button2 } from "../../components/Button2";
 
 export const RegistrationPage = ({ navigation }) => {
   const { onRegister, error, setError, isLoading } = useContext(
@@ -35,18 +36,17 @@ export const RegistrationPage = ({ navigation }) => {
         placeholder={"Repeat Password"}
       />
 
-    {/* Error message temporarily disabled */}
+      {/* Error message temporarily disabled */}
       {/* {error && (
         <Text variant="error" style={styles.error}>
           {error}
         </Text>
       )} */}
-      {/* button component added temporarily for simplicity,
-      can be exchanged with a Pressable later */}
-      <Button
-        title="Register"
-        onPress={() => onRegister(email, password, passwordRepeated)}
-      />
+      <View style={styles.btnWrapper}>
+        <Button2 onPress={() => onRegister(email, password, passwordRepeated)}>
+          Register
+        </Button2>
+      </View>
     </View>
   );
 };
@@ -54,8 +54,14 @@ export const RegistrationPage = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    paddingHorizontal: 12,
     backgroundColor: "#fff",
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  btnWrapper: {
+    width: "100%",
+    alignItems: "stretch",
   },
 });

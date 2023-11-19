@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Alert } from "react-native";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
+import { Button2 } from "../../components/Button2";
 
 export const LoginPage = ({ navigation }) => {
   const { onLogin, error, setError, isLoading } = useContext(
@@ -33,13 +34,12 @@ export const LoginPage = ({ navigation }) => {
       />
       {/* TODO: Implement a sophisticated error message */}
 
-      {/* button component added temporarily for simplicity,
-      can be exchanged with a Pressable later */}
-      <Button title="Log in" onPress={() =>  onLogin(email, password) } />
-      <Button
-        title="Don't have an account? Sign up"
-        onPress={(clickNavigateToSignUp)}
-      />
+      <View style={styles.btnWrapper}>
+        <Button2 onPress={() => onLogin(email, password)}>Log in</Button2>
+        <Button2 theme={"secondary"} onPress={clickNavigateToSignUp}>
+          Don't have an account? Sign up
+        </Button2>
+      </View>
     </View>
   );
 };
@@ -48,7 +48,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
+    paddingHorizontal: 12,
     alignItems: "center",
     justifyContent: "center",
+  },
+
+  btnWrapper: {
+    width: "98%",
   },
 });

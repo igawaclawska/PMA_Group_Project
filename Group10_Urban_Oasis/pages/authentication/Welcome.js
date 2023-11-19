@@ -1,6 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Button } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
+import { Button2 } from "../../components/Button2";
 
 export const WelcomePage = ({ navigation }) => {
   const clickNavigate = () => {
@@ -30,7 +31,7 @@ export const WelcomePage = ({ navigation }) => {
           </Text>
         </View>
         {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
-        <Button title="Get Started" onPress={clickNavigate} />
+        <Button2 onPress={clickNavigate}>Get Started</Button2>
       </View>
     </View>
   );
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
 
   bottomContainer: {
     flex: 1,
+    width: "100%",
     paddingVertical: 32,
     justifyContent: "space-between",
   },
@@ -67,7 +69,7 @@ const styles = StyleSheet.create({
 
   paragraph: {
     fontSize: 16,
-    lineHeight: 24,
+    lineHeight: 21,
   },
 
   boldFont: {
