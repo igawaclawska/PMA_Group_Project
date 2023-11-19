@@ -24,10 +24,13 @@ export const AuthenticationInputField = ({
 //TODO: this styling is temporary and will be improved
 const styles = StyleSheet.create({
   input: {
-    width: "90%",
-    height: 40,
+
+    width: "100%",
+    // height: 40,
     margin: 12,
-    borderWidth: 1,
-    padding: 10,
+    paddingVertical: 14,
+    paddingHorizontal: 8,
+    borderRadius: 8,
+    backgroundColor:"#EDEDED",
   },
 });
