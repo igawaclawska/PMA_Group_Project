@@ -4,6 +4,7 @@ import { AuthenticationInputField } from "../../components/AuthenticationInputFi
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { CustomButton } from "../../components/CustomButton";
+import { Ionicons } from "@expo/vector-icons";
 
 export const LoginPage = ({ navigation }) => {
   const { onLogin, error, setError, isLoading } = useContext(
