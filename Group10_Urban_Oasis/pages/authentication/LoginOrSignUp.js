@@ -45,21 +45,30 @@ export const LoginOrSignupPage = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.buttonsContainer}>
-          <CustomButton onPress={clickNavigateToLogIn}>Continue with Email</CustomButton>
+          <CustomButton
+            value={"Continue with Email"}
+            onPress={clickNavigateToLogIn}
+          />
           {/* TODO: Implement these login functionlities */}
-          <CustomButton theme={"secondary"} onPress={handleAlert}>
-            Continue with Phone
-          </CustomButton>
+          <CustomButton
+            value={"Continue with Phone"}
+            theme={"secondary"}
+            onPress={handleAlert}
+          />
           <View style={styles.buttonsContainerHorizontal}>
             <View style={styles.horizontalButtonWrapper}>
-              <CustomButton theme={"secondary"} onPress={handleAlert}>
-                <Ionicons name="logo-google" size={18} color="black" />
-              </CustomButton>
+              <CustomButton
+                icon={<Ionicons name="logo-google" size={18} color="black" />}
+                theme={"secondary"}
+                onPress={handleAlert}
+              />
             </View>
             <View style={styles.horizontalButtonWrapper}>
-              <CustomButton theme={"secondary"} onPress={handleAlert}>
-                <Ionicons name="md-logo-apple" size={18} color="black" />
-              </CustomButton>
+              <CustomButton
+                icon={<Ionicons name="md-logo-apple" size={18} color="black" />}
+                theme={"secondary"}
+                onPress={handleAlert}
+              />
             </View>
           </View>
         </View>

@@ -40,10 +40,16 @@ export const LoginPage = ({ navigation }) => {
         {/* TODO: Implement a sophisticated error message */}
 
         <View>
-          <CustomButton onPress={() => onLogin(email, password)}>Log in</CustomButton>
-          <CustomButton theme={"secondary"} onPress={clickNavigateToSignUp}>
-            Don't have an account? Sign up
-          </CustomButton>
+          <CustomButton
+            value={"Log in"}
+            onPress={() => onLogin(email, password)}
+          />
+
+          <CustomButton
+            value={"Don't have an account? Sign up"}
+            theme={"secondary"}
+            onPress={clickNavigateToSignUp}
+          />
         </View>
       </View>
     </View>

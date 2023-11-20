@@ -31,7 +31,7 @@ export const WelcomePage = ({ navigation }) => {
           </Text>
         </View>
         {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
-        <CustomButton onPress={clickNavigate}>Get Started</CustomButton>
+        <CustomButton value={"Get Started"} onPress={clickNavigate} />
       </View>
     </View>
   );

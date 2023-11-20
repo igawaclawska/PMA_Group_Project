@@ -49,10 +49,9 @@ export const RegistrationPage = ({ navigation }) => {
       )} */}
         <View style={styles.btnWrapper}>
           <CustomButton
+            value={"Register"}
             onPress={() => onRegister(email, password, passwordRepeated)}
-          >
-            Register
-          </CustomButton>
+          />
         </View>
       </View>
     </View>
