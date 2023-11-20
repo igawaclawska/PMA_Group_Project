@@ -19,26 +19,30 @@ export const LoginPage = ({ navigation }) => {
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
-      <Text>Login Page</Text>
-      <AuthenticationInputField
-        hiddenInput={false}
-        input={email}
-        setInput={setEmail}
-        placeholder={"Email"}
-      />
-      <AuthenticationInputField
-        hiddenInput={true}
-        input={password}
-        setInput={setPassword}
-        placeholder={"Password"}
-      />
-      {/* TODO: Implement a sophisticated error message */}
+      <View style={styles.pageContentWrapper}>
+        <Text style={[styles.boldFont, styles.h2]}>Log in</Text>
+        <View>
+          <AuthenticationInputField
+            hiddenInput={false}
+            input={email}
+            setInput={setEmail}
+            placeholder={"Email"}
+          />
+          <AuthenticationInputField
+            hiddenInput={true}
+            input={password}
+            setInput={setPassword}
+            placeholder={"Password"}
+          />
+        </View>
+        {/* TODO: Implement a sophisticated error message */}
 
-      <View style={styles.btnWrapper}>
-        <Button2 onPress={() => onLogin(email, password)}>Log in</Button2>
-        <Button2 theme={"secondary"} onPress={clickNavigateToSignUp}>
-          Don't have an account? Sign up
-        </Button2>
+        <View>
+          <Button2 onPress={() => onLogin(email, password)}>Log in</Button2>
+          <Button2 theme={"secondary"} onPress={clickNavigateToSignUp}>
+            Don't have an account? Sign up
+          </Button2>
+        </View>
       </View>
     </View>
   );
@@ -53,7 +57,16 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
 
-  btnWrapper: {
-    width: "98%",
+  boldFont: {
+    fontWeight: 700,
+  },
+
+  h2: {
+    fontSize: 20,
+  },
+
+  pageContentWrapper: {
+    width: "100%",
+    gap: 24,
   },
 });

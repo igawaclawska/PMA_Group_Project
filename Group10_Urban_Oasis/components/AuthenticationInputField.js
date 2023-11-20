@@ -29,8 +29,7 @@ export const AuthenticationInputField = ({
 //TODO: this styling is temporary and will be improved
 const styles = StyleSheet.create({
   input: {
-    width: "100%",
-    margin: 12,
+    marginVertical: 4,
     paddingVertical: 14,
     paddingHorizontal: 8,
     borderRadius: 8,
