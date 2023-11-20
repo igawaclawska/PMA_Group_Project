@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, Alert, Pressable } from "react-native";
+import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
-import { Button2 } from "../../components/Button2";
+import { CustomButton } from "../../components/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
 
 export const LoginOrSignupPage = ({ navigation }) => {
@@ -45,21 +45,21 @@ export const LoginOrSignupPage = ({ navigation }) => {
           </Text>
         </View>
         <View style={styles.buttonsContainer}>
-          <Button2 onPress={clickNavigateToLogIn}>Continue with Email</Button2>
+          <CustomButton onPress={clickNavigateToLogIn}>Continue with Email</CustomButton>
           {/* TODO: Implement these login functionlities */}
-          <Button2 theme={"secondary"} onPress={handleAlert}>
+          <CustomButton theme={"secondary"} onPress={handleAlert}>
             Continue with Phone
-          </Button2>
+          </CustomButton>
           <View style={styles.buttonsContainerHorizontal}>
             <View style={styles.horizontalButtonWrapper}>
-              <Button2 theme={"secondary"} onPress={handleAlert}>
+              <CustomButton theme={"secondary"} onPress={handleAlert}>
                 <Ionicons name="logo-google" size={18} color="black" />
-              </Button2>
+              </CustomButton>
             </View>
             <View style={styles.horizontalButtonWrapper}>
-              <Button2 theme={"secondary"} onPress={handleAlert}>
+              <CustomButton theme={"secondary"} onPress={handleAlert}>
                 <Ionicons name="md-logo-apple" size={18} color="black" />
-              </Button2>
+              </CustomButton>
             </View>
           </View>
         </View>

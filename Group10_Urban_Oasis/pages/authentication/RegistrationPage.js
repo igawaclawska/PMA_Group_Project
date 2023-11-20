@@ -1,9 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useContext } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
-import { Button2 } from "../../components/Button2";
+import { CustomButton } from "../../components/CustomButton";
 
 export const RegistrationPage = ({ navigation }) => {
   const { onRegister, error, setError, isLoading } = useContext(
@@ -48,11 +48,11 @@ export const RegistrationPage = ({ navigation }) => {
         </Text>
       )} */}
         <View style={styles.btnWrapper}>
-          <Button2
+          <CustomButton
             onPress={() => onRegister(email, password, passwordRepeated)}
           >
             Register
-          </Button2>
+          </CustomButton>
         </View>
       </View>
     </View>

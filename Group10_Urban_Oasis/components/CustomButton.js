@@ -1,7 +1,7 @@
 import React from "react";
-import { StyleSheet, Pressable, View, Text } from "react-native";
+import { StyleSheet, Pressable, Text } from "react-native";
 
-export const Button2 = ({ children, onPress, theme }) => {
+export const CustomButton = ({ children, onPress, theme }) => {
   return (
     <Pressable
       onPress={onPress}

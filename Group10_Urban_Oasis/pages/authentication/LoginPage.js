@@ -1,9 +1,9 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
-import { Button2 } from "../../components/Button2";
+import { CustomButton } from "../../components/CustomButton";
 
 export const LoginPage = ({ navigation }) => {
   const { onLogin, error, setError, isLoading } = useContext(
@@ -40,10 +40,10 @@ export const LoginPage = ({ navigation }) => {
         {/* TODO: Implement a sophisticated error message */}
 
         <View>
-          <Button2 onPress={() => onLogin(email, password)}>Log in</Button2>
-          <Button2 theme={"secondary"} onPress={clickNavigateToSignUp}>
+          <CustomButton onPress={() => onLogin(email, password)}>Log in</CustomButton>
+          <CustomButton theme={"secondary"} onPress={clickNavigateToSignUp}>
             Don't have an account? Sign up
-          </Button2>
+          </CustomButton>
         </View>
       </View>
     </View>

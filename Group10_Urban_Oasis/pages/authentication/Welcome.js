@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
-import { Button2 } from "../../components/Button2";
+import { CustomButton } from "../../components/CustomButton";
 
 export const WelcomePage = ({ navigation }) => {
   const clickNavigate = () => {
@@ -31,7 +31,7 @@ export const WelcomePage = ({ navigation }) => {
           </Text>
         </View>
         {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.*/}
-        <Button2 onPress={clickNavigate}>Get Started</Button2>
+        <CustomButton onPress={clickNavigate}>Get Started</CustomButton>
       </View>
     </View>
   );
