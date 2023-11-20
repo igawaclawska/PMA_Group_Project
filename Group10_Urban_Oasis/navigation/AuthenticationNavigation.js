@@ -8,9 +8,16 @@ import { RegistrationPage } from "../pages/authentication/RegistrationPage";
 
 const Stack = createNativeStackNavigator();
 
-const createScreenOptions = () => {
+const createScreenOptionsForIntro = () => {
   return {
     headerShown: false,
+  };
+};
+
+const createScreenOptionsForAuthentication = () => {
+  return {
+    title: "",
+    headerBackTitle: "Back",
   };
 };
 
@@ -18,10 +25,26 @@ const createScreenOptions = () => {
 export const AuthenticationNavigation = () => {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Welcome" options={createScreenOptions} component={WelcomePage} />
-      <Stack.Screen name="Log in or Sign Up" options={createScreenOptions} component={LoginOrSignupPage} />
-      <Stack.Screen name="Log in" component={LoginPage} />
-      <Stack.Screen name="Sign up" component={RegistrationPage} />
+      <Stack.Screen
+        name="Welcome"
+        options={createScreenOptionsForIntro}
+        component={WelcomePage}
+      />
+      <Stack.Screen
+        name="Log in or Sign Up"
+        options={createScreenOptionsForIntro}
+        component={LoginOrSignupPage}
+      />
+      <Stack.Screen
+        name="Log in"
+        options={createScreenOptionsForAuthentication}
+        component={LoginPage}
+      />
+      <Stack.Screen
+        name="Sign up"
+        options={createScreenOptionsForAuthentication}
+        component={RegistrationPage}
+      />
     </Stack.Navigator>
   );
 };
