@@ -20,7 +20,9 @@ export const LoginPage = ({ navigation }) => {
     <View style={styles.container}>
       <StatusBar style="auto" />
       <View style={styles.pageContentWrapper}>
-        <Text style={[styles.boldFont, styles.h2]}>Log in</Text>
+        <Text style={[styles.boldFont, styles.h2, styles.darkGrayText]}>
+          Log in
+        </Text>
         <View>
           <AuthenticationInputField
             hiddenInput={false}
@@ -68,5 +70,9 @@ const styles = StyleSheet.create({
   pageContentWrapper: {
     width: "100%",
     gap: 24,
+  },
+
+  darkGrayText: {
+    color: "#1A1C29",
   },
 });
