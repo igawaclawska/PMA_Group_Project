@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { StyleSheet, View, TextInput, Text } from "react-native";
+import { StyleSheet, View, TextInput } from "react-native";
 
 export const AuthenticationInputField = ({
   placeholder,

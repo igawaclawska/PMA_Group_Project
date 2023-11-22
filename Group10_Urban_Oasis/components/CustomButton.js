@@ -66,12 +66,13 @@ const styles = StyleSheet.create({
 
   btnText: {
     color: "white",
+    fontSize: 14,
     fontWeight: "700",
-    gap: 16,
   },
 
   btnSecondaryText: {
     color: "#1A1C29",
+    fontSize: 14,
     fontWeight: "600",
   },
 });

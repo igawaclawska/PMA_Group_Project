@@ -2,6 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
 import { CustomButton } from "../../components/CustomButton";
+import mainContainerStyle from "../../styling/mainContainer";
+import typography from "../../styling/typography";
 
 export const WelcomePage = ({ navigation }) => {
   const clickNavigate = () => {
@@ -9,21 +11,21 @@ export const WelcomePage = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
         <LocationImage path={require("../../assets/images/image-1.jpg")} />
       </View>
       <View style={styles.bottomContainer}>
         <View style={styles.appDescriptionContainer}>
-          <Text style={[styles.h1, styles.boldFont, styles.darkGrayText]}>
+          <Text style={[typography.h1, typography.boldFont]}>
             Welcome to Urban Oasis Finder
           </Text>
           <Text
             style={[
-              styles.paragraph,
-              styles.centeredText,
-              styles.lightGrayText,
+              typography.paragraph,
+              typography.centeredText,
+              typography.lightGrayText,
             ]}
           >
             Discover stunning hidden areas shared by the community and
@@ -39,12 +41,7 @@ export const WelcomePage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 46,
-    paddingHorizontal: 12,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 
   bottomContainer: {
@@ -61,30 +58,5 @@ const styles = StyleSheet.create({
 
   imageWrapper: {
     flex: 2,
-  },
-
-  h1: {
-    fontSize: 24,
-  },
-
-  paragraph: {
-    fontSize: 16,
-    lineHeight: 21,
-  },
-
-  boldFont: {
-    fontWeight: 700,
-  },
-
-  centeredText: {
-    textAlign: "center",
-  },
-
-  darkGrayText: {
-    color: "#1A1C29",
-  },
-
-  lightGrayText: {
-    color: "#797979",
   },
 });

@@ -4,6 +4,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { CustomButton } from "../../components/CustomButton";
+import mainContainerStyle from "../../styling/mainContainer";
+import typography from "../../styling/typography";
 
 export const RegistrationPage = ({ navigation }) => {
   const { onRegister, error, setError, isLoading } = useContext(
@@ -14,10 +16,10 @@ export const RegistrationPage = ({ navigation }) => {
   const [passwordRepeated, setPasswordRepeated] = useState("");
 
   return (
-    <View style={styles.container}>
+    <View style={mainContainerStyle}>
       <StatusBar style="auto" />
       <View style={styles.pageContentWrapper}>
-        <Text style={[styles.boldFont, styles.h2, styles.darkGrayText]}>
+        <Text style={[typography.boldFont, typography.h2]}>
           Create a new user
         </Text>
         <View>
@@ -59,14 +61,6 @@ export const RegistrationPage = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    paddingHorizontal: 12,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
   btnWrapper: {
     width: "100%",
     alignItems: "stretch",
@@ -75,17 +69,5 @@ const styles = StyleSheet.create({
   pageContentWrapper: {
     width: "100%",
     gap: 24,
-  },
-
-  boldFont: {
-    fontWeight: 700,
-  },
-
-  h2: {
-    fontSize: 20,
-  },
-
-  darkGrayText: {
-    color: "#1A1C29",
   },
 });

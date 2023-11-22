@@ -3,6 +3,8 @@ import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
 import { CustomButton } from "../../components/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
+import mainContainerStyle from "../../styling/mainContainer";
+import typography from "../../styling/typography";
 
 export const LoginOrSignupPage = ({ navigation }) => {
   const clickNavigateToLogIn = () => {
@@ -20,7 +22,7 @@ export const LoginOrSignupPage = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
         <LocationImage path={require("../../assets/images/image-3.jpg")} />
@@ -30,14 +32,14 @@ export const LoginOrSignupPage = ({ navigation }) => {
           <Ionicons name="close-circle" size={24} color="gray" />
         </Pressable>
         <View style={styles.textContainer}>
-          <Text style={[styles.h2, styles.boldFont, styles.darkGrayText]}>
+          <Text style={[typography.h2, typography.boldFont]}>
             Log in or Sign up
           </Text>
           <Text
             style={[
-              styles.paragraph,
-              styles.centeredText,
-              styles.lightGrayText,
+              typography.paragraph,
+              typography.centeredText,
+              typography.lightGrayText,
             ]}
           >
             Please select your preferred method to continue setting up your
@@ -74,9 +76,9 @@ export const LoginOrSignupPage = ({ navigation }) => {
         </View>
         <Text
           style={[
-            styles.paragraphSmall,
-            styles.centeredText,
-            styles.lightGrayText,
+            typography.paragraphSmall,
+            typography.centeredText,
+            typography.lightGrayText,
           ]}
         >
           If you are creating a new account, Terms & Conditions and Privacy
@@ -89,12 +91,7 @@ export const LoginOrSignupPage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     paddingTop: 46,
-    paddingHorizontal: 12,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
   },
 
   imageWrapper: {
@@ -122,36 +119,6 @@ const styles = StyleSheet.create({
 
   horizontalButtonWrapper: {
     flex: 1,
-  },
-
-  h2: {
-    fontSize: 20,
-  },
-
-  paragraph: {
-    fontSize: 16,
-    lineHeight: 21,
-  },
-
-  paragraphSmall: {
-    fontSize: 12,
-    lineHeight: 18,
-  },
-
-  boldFont: {
-    fontWeight: 700,
-  },
-
-  centeredText: {
-    textAlign: "center",
-  },
-
-  darkGrayText: {
-    color: "#1A1C29",
-  },
-
-  lightGrayText: {
-    color: "#797979",
   },
 
   closeIcon: {

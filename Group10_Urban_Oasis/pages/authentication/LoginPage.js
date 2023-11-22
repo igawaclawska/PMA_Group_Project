@@ -4,7 +4,8 @@ import { AuthenticationInputField } from "../../components/AuthenticationInputFi
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { CustomButton } from "../../components/CustomButton";
-import { Ionicons } from "@expo/vector-icons";
+import mainContainerStyle from "../../styling/mainContainer";
+import typography from "../../styling/typography";
 
 export const LoginPage = ({ navigation }) => {
   const { onLogin, error, setError, isLoading } = useContext(
@@ -18,12 +19,10 @@ export const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <View style={styles.container}>
+    <View style={mainContainerStyle}>
       <StatusBar style="auto" />
       <View style={styles.pageContentWrapper}>
-        <Text style={[styles.boldFont, styles.h2, styles.darkGrayText]}>
-          Log in
-        </Text>
+        <Text style={[typography.boldFont, typography.h2]}>Log in</Text>
         <View>
           <AuthenticationInputField
             hiddenInput={false}
@@ -58,28 +57,8 @@ export const LoginPage = ({ navigation }) => {
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    paddingHorizontal: 12,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-
-  boldFont: {
-    fontWeight: 700,
-  },
-
-  h2: {
-    fontSize: 20,
-  },
-
   pageContentWrapper: {
     width: "100%",
     gap: 24,
-  },
-
-  darkGrayText: {
-    color: "#1A1C29",
   },
 });
