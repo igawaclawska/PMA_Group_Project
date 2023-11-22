@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Image, Button, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Image,
+  Button,
+  Alert,
+  Pressable,
+} from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Buttons from "../../components/Buttons";
 
@@ -17,11 +25,17 @@ function ViewLocation(props) {
   const [detailsTitle, setDetailsTitle] = useState("Wonderful hidden oasis");
   const [detailsDescription, setDetailsDescription] = useState(placeholderText);
 
+  const [favorite, setFavorite] = useState(false);
+
   useEffect(() => {
     setImageURL(
       "https://images.nationalgeographic.org/image/upload/t_edhub_resource_key_image_large/v1652303287/EducationHub/photos/earth-day.jpg"
     );
   }, []);
+
+  const changeFavorite = () => {
+    setFavorite(!favorite);
+  };
 
   return (
     <View style={styles.container}>
@@ -30,11 +44,21 @@ function ViewLocation(props) {
       </View>
       <View style={styles.imgContainer}>
         <Image source={{ uri: imageURL }} style={styles.image} />
+        <Pressable onPress={changeFavorite} style={styles.favContainer}>
+          <Image
+            source={
+              favorite
+                ? require("../../assets/Images/fav_filled.png")
+                : require("../../assets/Images/fav_noFill.png")
+            }
+            style={styles.fav}
+          />
+        </Pressable>
       </View>
       <View style={styles.detailsContainer}>
         <View style={styles.detailsTitleContainer}>
           <Text style={styles.detailsTitle}>{detailsTitle}</Text>
-          <AntDesign name="staro" size={24} color="black" />
+          {/*<AntDesign name="staro" size={24} color="black" />*/}
         </View>
         <Text style={styles.detailsDescription}>{placeholderText}</Text>
         <View style={styles.buttonContainer}>
@@ -56,11 +80,24 @@ const styles = StyleSheet.create({
     flex: 1.5,
     justifyContent: "flex-start",
     alignItems: "center",
+    position: "relative",
   },
   image: {
     width: "100%",
     height: "100%",
     resizeMode: "cover",
+  },
+  favContainer: {
+    position: "absolute",
+    bottom: 10,
+    right: 10,
+    resizeMode: "contain",
+    justifyContent: "center",
+    alignItems: "center",
+  },
+  fav: {
+    width: 55,
+    height: 55,
   },
   titleContainer: {
     width: "100%",
