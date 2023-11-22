@@ -16,6 +16,10 @@ const typography = StyleSheet.create({
     lineHeight: 21,
   },
 
+  button: {
+    fontSize: 14,
+  },
+
   paragraphSmall: {
     fontSize: 12,
     lineHeight: 18,
@@ -32,6 +36,16 @@ const typography = StyleSheet.create({
   lightGrayText: {
     color: "#797979",
   },
+
+  darkGrayText: {
+    color: "#1A1C29",
+  },
+
+  whiteText: {
+    color: "white",
+  },
+
+  
 });
 
 export default typography;

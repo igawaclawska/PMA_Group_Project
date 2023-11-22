@@ -1,5 +1,9 @@
-import React from "react";
 import { StyleSheet, Pressable, Text } from "react-native";
+import typography from "../styling/typography";
+
+//This button detects the value of "pressed" provided by the Pressable and changes its look accordingly.
+//This button has a "theme" prop that takes the following string values: "primary" and "secondary".
+//The button can take an icon as a prop
 
 export const CustomButton = ({ value, onPress, theme, icon }) => {
   return (
@@ -22,9 +26,13 @@ export const CustomButton = ({ value, onPress, theme, icon }) => {
       {icon}
       {value && (
         <Text
-          style={
-            theme !== "secondary" ? styles.btnText : styles.btnSecondaryText
-          }
+          style={[
+            typography.button,
+            typography.boldFont,
+            theme !== "secondary"
+              ? typography.whiteText
+              : typography.darkGrayText,
+          ]}
         >
           {value}
         </Text>
@@ -62,17 +70,5 @@ const styles = StyleSheet.create({
   secondary: {
     borderColor: "#D7D7D7",
     borderWidth: 1,
-  },
-
-  btnText: {
-    color: "white",
-    fontSize: 14,
-    fontWeight: "700",
-  },
-
-  btnSecondaryText: {
-    color: "#1A1C29",
-    fontSize: 14,
-    fontWeight: "600",
   },
 });
