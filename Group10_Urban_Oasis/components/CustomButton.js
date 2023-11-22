@@ -1,5 +1,5 @@
 import { StyleSheet, Pressable, Text } from "react-native";
-import typography from "../styling/typography";
+import typography from "../globalStyles/typography";
 
 //This button detects the value of "pressed" provided by the Pressable and changes its look accordingly.
 //This button has a "theme" prop that takes the following string values: "primary" and "secondary".

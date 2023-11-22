@@ -2,8 +2,8 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
 import { CustomButton } from "../../components/CustomButton";
-import mainContainerStyle from "../../styling/mainContainer";
-import typography from "../../styling/typography";
+import mainContainerStyle from "../../globalStyles/mainContainer";
+import typography from "../../globalStyles/typography";
 
 export const WelcomePage = ({ navigation }) => {
   const clickNavigate = () => {

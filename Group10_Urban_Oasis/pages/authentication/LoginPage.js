@@ -4,8 +4,8 @@ import { AuthenticationInputField } from "../../components/AuthenticationInputFi
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { CustomButton } from "../../components/CustomButton";
-import mainContainerStyle from "../../styling/mainContainer";
-import typography from "../../styling/typography";
+import mainContainerStyle from "../../globalStyles/mainContainer";
+import typography from "../../globalStyles/typography";
 
 export const LoginPage = ({ navigation }) => {
   const { onLogin, error, setError, isLoading } = useContext(

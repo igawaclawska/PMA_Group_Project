@@ -4,8 +4,8 @@ import { StyleSheet, Text, View } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { CustomButton } from "../../components/CustomButton";
-import mainContainerStyle from "../../styling/mainContainer";
-import typography from "../../styling/typography";
+import mainContainerStyle from "../../globalStyles/mainContainer";
+import typography from "../../globalStyles/typography";
 
 export const RegistrationPage = ({ navigation }) => {
   const { onRegister, error, setError, isLoading } = useContext(

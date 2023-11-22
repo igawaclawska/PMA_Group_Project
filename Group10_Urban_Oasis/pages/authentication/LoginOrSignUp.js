@@ -3,8 +3,8 @@ import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import { LocationImage } from "../../components/LocationImage";
 import { CustomButton } from "../../components/CustomButton";
 import { Ionicons } from "@expo/vector-icons";
-import mainContainerStyle from "../../styling/mainContainer";
-import typography from "../../styling/typography";
+import mainContainerStyle from "../../globalStyles/mainContainer";
+import typography from "../../globalStyles/typography";
 
 export const LoginOrSignupPage = ({ navigation }) => {
   const clickNavigateToLogIn = () => {
