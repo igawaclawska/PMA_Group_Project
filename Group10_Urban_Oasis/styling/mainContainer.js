@@ -1,5 +1,7 @@
 import { StyleSheet } from "react-native";
 
+//Main container of each screen
+
 const mainContainerStyle = StyleSheet.create({
     flex: 1,
     paddingHorizontal: 12,
