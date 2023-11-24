@@ -1,7 +1,9 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MapView, { Callout, Marker } from 'react-native-maps';
+import * as Location from "expo-location";
+
 
 // map import goes here // 
 
@@ -231,7 +233,26 @@ export const HomePage = () => {
 
   const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({ latitude: 55.60866491013769,
     longitude: 12.34104207156517});
+const [currentPosition, setCurrentPosition] = useState(null);
 
+    useEffect(() => {
+      // Request permission to access the device's location
+      (async () => {
+        let { status } = await Location.requestForegroundPermissionsAsync();
+        if (status !== "granted") {
+          console.error("Permission to access location was denied");
+          return;
+        }
+  
+        // Get the current position
+        let location = await Location.getCurrentPositionAsync({});
+        setCurrentPosition({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      })();
+    }, []); // Run this effect only once when the component mounts
+    
  
     const showDefaultLocations = () => {
       return defaultLocations.map((item, index) => {
@@ -291,6 +312,19 @@ coordinate={{latitude: 55.671652929902606, longitude: 12.398517827563387}}
   <Text>Anything can be displayed from here</Text>
 </Callout>
 </Marker>
+
+
+{currentPosition && (
+        <Marker
+          pinColor="#D4AFEA"
+          coordinate={{
+            latitude: currentPosition.latitude,
+            longitude: currentPosition.longitude,
+          }}
+        />
+      )}
+
+         
 
 
 
