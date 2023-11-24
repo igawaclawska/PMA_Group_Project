@@ -31,14 +31,14 @@ export const RecentlyVisited = () => {
   ]);
 
   const renderLocation = ({ item }) => (
-    <TouchableOpacity style={styles.item}>
+    <View style={styles.item}>
       <Location
         title={item.title}
         img={item.img}
         description={item.description}
         style={styles.locationCard}
       />
-    </TouchableOpacity>
+    </View>
   );
 
   const addNewLocation = () => {
@@ -80,22 +80,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   header: {
-    fontSize: 24,
+    fontSize: 28,
     fontWeight: "bold",
-    marginBottom: 20,
+    paddingVertical: 40,
   },
   listContainer: {
     width: "100%",
     flex: 1,
   },
   flatListContainer: {
-    paddingHorizontal: 20,
+    paddingHorizontal: 15,
+    paddingTop: 5,
   },
   addButton: {
     marginTop: 20,
     padding: 10,
     backgroundColor: "lightblue",
     borderRadius: 5,
+    marginBottom: 20,
   },
   addButtonText: {
     fontSize: 16,
