@@ -252,7 +252,7 @@ const [currentPosition, setCurrentPosition] = useState(null);
         });
       })();
     }, []); // Run this effect only once when the component mounts
-    
+
  
     const showDefaultLocations = () => {
       return defaultLocations.map((item, index) => {
@@ -283,6 +283,7 @@ const onRegionChange = (region) =>{
    <View style={styles.container}>
       <StatusBar style="auto" />
       <Text>Map view goes Here</Text> 
+
       <MapView style={styles.map}
       onRegionChange={onRegionChange}
       initialRegion={{
@@ -293,15 +294,27 @@ const onRegionChange = (region) =>{
       customMapStyle={mapJson}
 >
    
+
+
+{/* Maps through array DefaultLocations and displays markers*/}
     
     {showDefaultLocations()}
 
+
+
+
+{/* Dragable marker */}
     <Marker
     draggable
     coordinate={draggableMarkerCoord}
     onDragEnd={(e) => setDraggableMarkerCoord(e.nativeEvent.coordinate)}
     pinColor="#D4AFEA"
     />
+
+
+
+{/* Marker to display anything insde using callout */}
+
 
 <Marker 
 pinColor="#D4AFEA"
@@ -314,9 +327,15 @@ coordinate={{latitude: 55.671652929902606, longitude: 12.398517827563387}}
 </Marker>
 
 
+
+
+{/* Get current position of user */}
+
 {currentPosition && (
         <Marker
-          pinColor="#D4AFEA"
+          title="You are here"
+          description="Right here..."
+          pinColor="#0000FF"
           coordinate={{
             latitude: currentPosition.latitude,
             longitude: currentPosition.longitude,
@@ -324,10 +343,7 @@ coordinate={{latitude: 55.671652929902606, longitude: 12.398517827563387}}
         />
       )}
 
-         
-
-
-
+        
 </MapView>
   </View>
   
