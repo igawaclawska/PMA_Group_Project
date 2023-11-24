@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { useState } from "react";
-import MapView, { Marker } from 'react-native-maps';
+import MapView, { Callout, Marker } from 'react-native-maps';
 
 // map import goes here // 
 
@@ -279,7 +279,20 @@ const onRegionChange = (region) =>{
     draggable
     coordinate={draggableMarkerCoord}
     onDragEnd={(e) => setDraggableMarkerCoord(e.nativeEvent.coordinate)}
+    pinColor="#D4AFEA"
     />
+
+<Marker 
+pinColor="#D4AFEA"
+coordinate={{latitude: 55.671652929902606, longitude: 12.398517827563387}}
+>
+<Callout>
+
+  <Text>Anything can be displayed from here</Text>
+</Callout>
+</Marker>
+
+
 
 </MapView>
   </View>
