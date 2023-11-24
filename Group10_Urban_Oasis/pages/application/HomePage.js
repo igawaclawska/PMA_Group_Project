@@ -229,8 +229,8 @@ let defaultLocations = [
 
 export const HomePage = () => {
 
-  const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({ latitude: 37.78825,
-    longitude: -122.4324});
+  const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({ latitude: 55.60866491013769,
+    longitude: 12.34104207156517});
 
  
     const showDefaultLocations = () => {
