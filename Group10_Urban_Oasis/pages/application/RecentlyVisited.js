@@ -20,13 +20,7 @@ export const RecentlyVisited = () => {
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
-    {
-      id: "2",
-      title: "Location 2",
-      img: "https://images.nationalgeographic.org/image/upload/t_edhub_resource_key_image_large/v1652303287/EducationHub/photos/earth-day.jpg",
-      description:
-        "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
-    },
+
     // Add more items as needed
   ]);
 
@@ -104,6 +98,6 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
   },
   locationCard: {
-    width: "100%", // Ensure the item container fills the entire width
+    width: "100%",
   },
 });
