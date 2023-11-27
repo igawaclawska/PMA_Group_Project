@@ -7,8 +7,6 @@ import * as FileSystem from 'expo-file-system';
 import {shareAsync} from 'expo-sharing';
 
 
-// map import goes here //
-
 //map style vector
 
 const mapTheme = [
@@ -172,7 +170,7 @@ const mapTheme = [
   }
 ];
 
-// default markers
+// default markers (replace below with json-file)
 let defaultLocations = [
   {
     title: "First",
