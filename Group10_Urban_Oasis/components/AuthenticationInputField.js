@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 
-export const CustomInputField = ({
+export const AuthenticationInputField = ({
   placeholder,
   hiddenInput,
   input,

@@ -2,7 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState, useContext } from "react";
 import { StyleSheet, Text, View } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
-import { CustomInputField } from "../../components/CustomInputField";
+import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { CustomButton } from "../../components/CustomButton";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
@@ -23,19 +23,19 @@ export const RegistrationPage = ({ navigation }) => {
           Create a new user
         </Text>
         <View>
-          <CustomInputField
+          <AuthenticationInputField
             hiddenInput={false}
             input={email}
             setInput={setEmail}
             placeholder={"Email"}
           />
-          <CustomInputField
+          <AuthenticationInputField
             hiddenInput={true}
             input={password}
             setInput={setPassword}
             placeholder={"Password"}
           />
-          <CustomInputField
+          <AuthenticationInputField
             hiddenInput={true}
             input={passwordRepeated}
             setInput={setPasswordRepeated}
