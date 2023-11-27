@@ -16,7 +16,7 @@ export const AddLocation = () => {
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
-        <LocationImage path={require("../../assets/images/image-3.jpg")} />
+        <LocationImage path={require("../../assets/images/location.png")} />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.mainContent}>
