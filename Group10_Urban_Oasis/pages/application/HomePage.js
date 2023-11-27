@@ -11,7 +11,7 @@ import {shareAsync} from 'expo-sharing';
 
 //map style vector
 
-const mapJson = [
+const mapTheme = [
   {
     "elementType": "geometry",
     "stylers": [
@@ -263,7 +263,7 @@ export const HomePage = () => {
           longitude: 12.374072260726619,
           longitudeDelta: 0.884737209682612,
         }}
-        customMapStyle={mapJson}
+        customMapStyle={mapTheme}
       >
         {/* Maps through array DefaultLocations and displays markers*/}
 
