@@ -9,7 +9,7 @@ export const Navigation = () => {
 
   return (
     <NavigationContainer>
-      {isAuthenticated ? (
+      {!isAuthenticated ? (
         <ApplicationNavigation />
       ) : (
         <AuthenticationNavigation />
