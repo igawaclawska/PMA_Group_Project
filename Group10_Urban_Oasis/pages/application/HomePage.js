@@ -312,7 +312,7 @@ export const HomePage = () => {
           draggable
           coordinate={draggableMarkerCoord}
           onDragEnd={(e) => setDraggableMarkerCoord(e.nativeEvent.coordinate)}
-          pinColor="#D4AFEA"
+          pinColor="#008000"
         />
 
         {/* Marker to display anything insde using callout */}
@@ -346,6 +346,8 @@ export const HomePage = () => {
             }}
           />
         )}
+        {/* map overlay, anything could be displayed here */}
+        <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text>
       </MapView>
     </View>
   );
@@ -363,4 +365,16 @@ const styles = StyleSheet.create({
     height: "100%",
     zIndex: 1,
   },
+
+  mapOverlay: {
+    position: "absolute",
+    bottom: 50,
+    backgroundColor: "#eee",
+    borderWidth: 0.4,
+    borderRadius: 5,
+    padding: 16,
+    left: "25%",
+    width: "50%",
+    textAlign: "center"
+  }
 });
