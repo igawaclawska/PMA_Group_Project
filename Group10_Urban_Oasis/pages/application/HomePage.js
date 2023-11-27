@@ -1,7 +1,7 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 import { useState, useEffect, useRef } from "react";
-import MapView, { Callout, Marker } from "react-native-maps";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE} from "react-native-maps";
 import * as Location from "expo-location";
 import * as FileSystem from 'expo-file-system';
 import {shareAsync} from 'expo-sharing';
@@ -13,202 +13,163 @@ import {shareAsync} from 'expo-sharing';
 
 const mapJson = [
   {
-    elementType: "geometry",
-    stylers: [
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#212121",
-      },
-    ],
+        "color": "#f5f5f5"
+      }
+    ]
   },
   {
-    elementType: "labels.icon",
-    stylers: [
+    "elementType": "labels.icon",
+    "stylers": [
       {
-        visibility: "off",
-      },
-    ],
+        "visibility": "off"
+      }
+    ]
   },
   {
-    elementType: "labels.text.fill",
-    stylers: [
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#757575",
-      },
-    ],
+        "color": "#616161"
+      }
+    ]
   },
   {
-    elementType: "labels.text.stroke",
-    stylers: [
+    "elementType": "labels.text.stroke",
+    "stylers": [
       {
-        color: "#212121",
-      },
-    ],
+        "color": "#f5f5f5"
+      }
+    ]
   },
   {
-    featureType: "administrative",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "administrative.land_parcel",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#757575",
-      },
-    ],
+        "color": "#bdbdbd"
+      }
+    ]
   },
   {
-    featureType: "administrative.country",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#9e9e9e",
-      },
-    ],
+        "color": "#eeeeee"
+      }
+    ]
   },
   {
-    featureType: "administrative.locality",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#bdbdbd",
-      },
-    ],
+        "color": "#757575"
+      }
+    ]
   },
   {
-    featureType: "poi",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "poi.park",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#757575",
-      },
-    ],
+        "color": "#e5e5e5"
+      }
+    ]
   },
   {
-    featureType: "poi.park",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "poi.park",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#181818",
-      },
-    ],
+        "color": "#9e9e9e"
+      }
+    ]
   },
   {
-    featureType: "poi.park",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "road",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#616161",
-      },
-    ],
+        "color": "#ffffff"
+      }
+    ]
   },
   {
-    featureType: "poi.park",
-    elementType: "labels.text.stroke",
-    stylers: [
+    "featureType": "road.arterial",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#1b1b1b",
-      },
-    ],
+        "color": "#757575"
+      }
+    ]
   },
   {
-    featureType: "road",
-    elementType: "geometry.fill",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#2c2c2c",
-      },
-    ],
+        "color": "#dadada"
+      }
+    ]
   },
   {
-    featureType: "road",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "road.highway",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#8a8a8a",
-      },
-    ],
+        "color": "#616161"
+      }
+    ]
   },
   {
-    featureType: "road.arterial",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "road.local",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#373737",
-      },
-    ],
+        "color": "#9e9e9e"
+      }
+    ]
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "transit.line",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#3c3c3c",
-      },
-    ],
+        "color": "#e5e5e5"
+      }
+    ]
   },
   {
-    featureType: "road.highway",
-    elementType: "geometry.stroke",
-    stylers: [
+    "featureType": "transit.station",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#ffeb3b",
-      },
-      {
-        weight: 3,
-      },
-    ],
+        "color": "#eeeeee"
+      }
+    ]
   },
   {
-    featureType: "road.highway.controlled_access",
-    elementType: "geometry",
-    stylers: [
+    "featureType": "water",
+    "elementType": "geometry",
+    "stylers": [
       {
-        color: "#4e4e4e",
-      },
-    ],
+        "color": "#c9c9c9"
+      }
+    ]
   },
   {
-    featureType: "road.local",
-    elementType: "labels.text.fill",
-    stylers: [
+    "featureType": "water",
+    "elementType": "labels.text.fill",
+    "stylers": [
       {
-        color: "#616161",
-      },
-    ],
-  },
-  {
-    featureType: "transit",
-    elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#757575",
-      },
-    ],
-  },
-  {
-    featureType: "water",
-    elementType: "geometry",
-    stylers: [
-      {
-        color: "#000000",
-      },
-    ],
-  },
-  {
-    featureType: "water",
-    elementType: "geometry.fill",
-    stylers: [
-      {
-        color: "#1f0038",
-      },
-    ],
-  },
-  {
-    featureType: "water",
-    elementType: "labels.text.fill",
-    stylers: [
-      {
-        color: "#3d3d3d",
-      },
-    ],
-  },
+        "color": "#9e9e9e"
+      }
+    ]
+  }
 ];
 
 // default markers
@@ -292,6 +253,7 @@ export const HomePage = () => {
       <Text>Map view goes Here</Text>
 
       <MapView
+        provider={PROVIDER_GOOGLE}
         ref={mapRef}
         style={styles.map}
         onRegionChange={onRegionChange}
