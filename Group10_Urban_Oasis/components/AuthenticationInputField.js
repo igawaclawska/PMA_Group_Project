@@ -7,6 +7,7 @@ export const AuthenticationInputField = ({
   input,
   setInput,
   icon,
+  isMultiline,
 }) => {
   const [isFocused, setFocused] = useState(false);
 
@@ -15,9 +16,16 @@ export const AuthenticationInputField = ({
   };
 
   return (
-    <View style={[styles.inputWrapper, isFocused === true && styles.focused]}>
+    <View
+      style={[
+        styles.inputWrapper,
+        isFocused === true && styles.focused,
+        isMultiline !== true ? styles.singleLineInput : styles.multiLineInput,
+      ]}
+    >
       <TextInput
         style={[styles.input]}
+        multiline={isMultiline === true ? true : false}
         secureTextEntry={hiddenInput}
         placeholder={placeholder}
         value={input}
@@ -34,11 +42,21 @@ const styles = StyleSheet.create({
   inputWrapper: {
     flexDirection: "row",
     justifyContent: "space-between",
-    alignItems: "center",
     marginVertical: 4,
     paddingRight: 12,
     borderRadius: 8,
     backgroundColor: "#EDEDED",
+  },
+
+  singleLineInput: {
+    alignItems: "center",
+    height: 48,
+  },
+
+  multiLineInput: {
+    paddingTop: 8,
+    height: 80,
+    maxHeight: 80,
   },
 
   input: {
