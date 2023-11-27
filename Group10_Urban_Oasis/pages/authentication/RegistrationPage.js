@@ -1,8 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useContext } from "react";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
+import { CustomButton } from "../../components/CustomButton";
+import mainContainerStyle from "../../globalStyles/mainContainer";
+import typography from "../../globalStyles/typography";
 
 export const RegistrationPage = ({ navigation }) => {
   const { onRegister, error, setError, isLoading } = useContext(
@@ -13,49 +16,58 @@ export const RegistrationPage = ({ navigation }) => {
   const [passwordRepeated, setPasswordRepeated] = useState("");
 
   return (
-    <View style={styles.container}>
+    <View style={mainContainerStyle}>
       <StatusBar style="auto" />
-      <Text>Registration Page</Text>
-      <AuthenticationInputField
-        hiddenInput={false}
-        input={email}
-        setInput={setEmail}
-        placeholder={"Email"}
-      />
-      <AuthenticationInputField
-        hiddenInput={true}
-        input={password}
-        setInput={setPassword}
-        placeholder={"Password"}
-      />
-      <AuthenticationInputField
-        hiddenInput={true}
-        input={passwordRepeated}
-        setInput={setPasswordRepeated}
-        placeholder={"Repeat Password"}
-      />
+      <View style={styles.pageContentWrapper}>
+        <Text style={[typography.boldFont, typography.h2]}>
+          Create a new user
+        </Text>
+        <View>
+          <AuthenticationInputField
+            hiddenInput={false}
+            input={email}
+            setInput={setEmail}
+            placeholder={"Email"}
+          />
+          <AuthenticationInputField
+            hiddenInput={true}
+            input={password}
+            setInput={setPassword}
+            placeholder={"Password"}
+          />
+          <AuthenticationInputField
+            hiddenInput={true}
+            input={passwordRepeated}
+            setInput={setPasswordRepeated}
+            placeholder={"Repeat Password"}
+          />
+        </View>
 
-    {/* Error message temporarily disabled */}
-      {/* {error && (
+        {/* Error message temporarily disabled */}
+        {/* {error && (
         <Text variant="error" style={styles.error}>
           {error}
         </Text>
       )} */}
-      {/* button component added temporarily for simplicity,
-      can be exchanged with a Pressable later */}
-      <Button
-        title="Register"
-        onPress={() => onRegister(email, password, passwordRepeated)}
-      />
+        <View style={styles.btnWrapper}>
+          <CustomButton
+            value={"Register"}
+            onPress={() => onRegister(email, password, passwordRepeated)}
+          />
+        </View>
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+  btnWrapper: {
+    width: "100%",
+    alignItems: "stretch",
+  },
+
+  pageContentWrapper: {
+    width: "100%",
+    gap: 24,
   },
 });
