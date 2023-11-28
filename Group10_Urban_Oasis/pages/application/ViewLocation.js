@@ -48,8 +48,8 @@ function ViewLocation(props) {
           <Image
             source={
               favorite
-                ? require("../../assets/Images/fav_filled.png")
-                : require("../../assets/Images/fav_noFill.png")
+                ? require("../../assets/images/fav_filled.png")
+                : require("../../assets/images/fav_noFill.png")
             }
             style={styles.fav}
           />
