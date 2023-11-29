@@ -21,7 +21,6 @@ export const RecentlyVisited = () => {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
 
-    // Add more items as needed
   ]);
 
   const renderLocation = ({ item }) => (
@@ -45,6 +44,8 @@ export const RecentlyVisited = () => {
     };
     setLocationData([newLocation, ...locationData]);
   };
+
+  // Just need to add the correct data and call the addNewLocation function
 
   return (
     <SafeAreaView style={styles.container}>
