@@ -6,26 +6,7 @@ import * as Location from "expo-location";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import mapTheme from "../../globalStyles/mapTheme"; //import map style vector
-
-// default markers (replace below with json-file)
-let defaultLocations = [
-  {
-    title: "First",
-    location: {
-      latitude: 55.60866491013769,
-      longitude: 12.5911277895021,
-    },
-    description: "Hidden Location #1",
-  },
-  {
-    title: "Second",
-    location: {
-      latitude: 55.813353748065204,
-      longitude: 12.34104207156517,
-    },
-    description: "Hidden Location #2",
-  },
-];
+import defaultLocations from "../../data/defaultLocations.json";
 
 export const Map = () => {
   const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({
