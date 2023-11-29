@@ -7,7 +7,7 @@ import { LocationImage } from "../../components/LocationImage";
 import { Ionicons } from "@expo/vector-icons";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
-import { Map } from "./Map";
+import { Map } from "../../components/Map";
 
 export const AddLocation = () => {
   const [locationName, setLocationName] = useState("");
@@ -17,7 +17,8 @@ export const AddLocation = () => {
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
-        <LocationImage path={require("../../assets/images/location.png")} />
+        <Map/>
+        {/* <LocationImage path={require("../../assets/images/location.png")} /> */}
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.mainContent}>
@@ -94,7 +95,7 @@ const styles = StyleSheet.create({
   },
 
   imageWrapper: {
-    flex: 1,
+    flex: 3,
   },
 
   uploadButtonsSection: {
@@ -107,7 +108,7 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    flex: 3,
+    flex: 7,
     width: "100%",
     paddingVertical: 32,
     justifyContent: "space-between",
