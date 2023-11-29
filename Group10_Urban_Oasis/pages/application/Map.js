@@ -1,44 +1,24 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef, useContext } from "react";
+import { LocationContext } from "../../location/locationContext";
 import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
-import * as Location from "expo-location";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import mapTheme from "../../globalStyles/mapTheme"; //import map style vector
-import defaultLocationsData from "../../data/defaultLocationsData";
 
 export const Map = () => {
-  const [defaultLocations, setDefaultLocations] = useState([]);
-  const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({
-    latitude: 55.60866491013769,
-    longitude: 12.34104207156517,
-  });
-  const [currentPosition, setCurrentPosition] = useState(null);
+  const {
+    defaultLocations,
+    setDefaultLocations,
+    draggableMarkerCoord,
+    setDraggableMarkerCoord,
+    currentPosition,
+    setCurrentPosition,
+  } = useContext(LocationContext);
+
   const [count, setCount] = useState(0);
   const mapRef = useRef();
-
-  useEffect(() => {
-    // Request permission to access the device's location
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        console.error("Permission to access location was denied");
-        return;
-      }
-
-      // Get the current position
-      let location = await Location.getCurrentPositionAsync({});
-      setCurrentPosition({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-    })();
-  }, []); // Run this effect only once when the component mounts
-
-  useEffect(() => {
-    setDefaultLocations(defaultLocationsData);
-  }, []);
 
   const showDefaultLocations = () => {
     return defaultLocations.map((item, index) => {
