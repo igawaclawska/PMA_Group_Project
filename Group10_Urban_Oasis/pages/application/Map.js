@@ -1,174 +1,11 @@
 import { StatusBar } from "expo-status-bar";
 import { Button, Image, StyleSheet, Text, View } from "react-native";
 import { useState, useEffect, useRef } from "react";
-import MapView, { Callout, Marker, PROVIDER_GOOGLE} from "react-native-maps";
+import MapView, { Callout, Marker, PROVIDER_GOOGLE } from "react-native-maps";
 import * as Location from "expo-location";
-import * as FileSystem from 'expo-file-system';
-import {shareAsync} from 'expo-sharing';
-
-
-//map style vector
-
-const mapTheme = [
-  {
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.icon",
-    "stylers": [
-      {
-        "visibility": "off"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "elementType": "labels.text.stroke",
-    "stylers": [
-      {
-        "color": "#f5f5f5"
-      }
-    ]
-  },
-  {
-    "featureType": "administrative.land_parcel",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#bdbdbd"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "poi",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "poi.park",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "road",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#ffffff"
-      }
-    ]
-  },
-  {
-    "featureType": "road.arterial",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#757575"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#dadada"
-      }
-    ]
-  },
-  {
-    "featureType": "road.highway",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#616161"
-      }
-    ]
-  },
-  {
-    "featureType": "road.local",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.line",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#e5e5e5"
-      }
-    ]
-  },
-  {
-    "featureType": "transit.station",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#eeeeee"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "geometry",
-    "stylers": [
-      {
-        "color": "#c9c9c9"
-      }
-    ]
-  },
-  {
-    "featureType": "water",
-    "elementType": "labels.text.fill",
-    "stylers": [
-      {
-        "color": "#9e9e9e"
-      }
-    ]
-  }
-];
+import * as FileSystem from "expo-file-system";
+import { shareAsync } from "expo-sharing";
+import mapTheme from "../../globalStyles/mapTheme"; //import map style vector
 
 // default markers (replace below with json-file)
 let defaultLocations = [
@@ -237,13 +74,18 @@ export const Map = () => {
   };
 
   const takeSnapshotAndShare = async () => {
-
-    const snapshot = await mapRef.current.takeSnapshot({width: 300, height: 300, result: 'base64'});
+    const snapshot = await mapRef.current.takeSnapshot({
+      width: 300,
+      height: 300,
+      result: "base64",
+    });
     console.log(snapshot);
-    const uri = FileSystem.documentDirectory + 'snapshot.jpg';
-    await FileSystem.writeAsStringAsync(uri, snapshot,{encoding: FileSystem.EncodingType.Base64});
-    await shareAsync(uri)
-  }
+    const uri = FileSystem.documentDirectory + "snapshot.jpg";
+    await FileSystem.writeAsStringAsync(uri, snapshot, {
+      encoding: FileSystem.EncodingType.Base64,
+    });
+    await shareAsync(uri);
+  };
 
   return (
     <View style={styles.container}>
@@ -286,10 +128,18 @@ export const Map = () => {
         >
           <Callout>
             <Text>Anything can be displayed from here: {count}</Text>
-            <Image style={{width: 80, height: 80, marginLeft: 80, marginTop: 7 }} source={{uri:'https://reactnative.dev/img/tiny_logo.png'}}></Image>
-            <Button onPress={() => setCount(count + 1)} title="Click me +"></Button>
-            <Button onPress={takeSnapshotAndShare} title="Take SnapShot"></Button>
-            
+            <Image
+              style={{ width: 80, height: 80, marginLeft: 80, marginTop: 7 }}
+              source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
+            ></Image>
+            <Button
+              onPress={() => setCount(count + 1)}
+              title="Click me +"
+            ></Button>
+            <Button
+              onPress={takeSnapshotAndShare}
+              title="Take SnapShot"
+            ></Button>
           </Callout>
         </Marker>
 
@@ -335,6 +185,6 @@ const styles = StyleSheet.create({
     padding: 16,
     left: "25%",
     width: "50%",
-    textAlign: "center"
-  }
+    textAlign: "center",
+  },
 });
