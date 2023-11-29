@@ -6,9 +6,10 @@ import * as Location from "expo-location";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import mapTheme from "../../globalStyles/mapTheme"; //import map style vector
-import defaultLocations from "../../data/defaultLocations.json";
+import defaultLocationsData from "../../data/defaultLocationsData";
 
 export const Map = () => {
+  const [defaultLocations, setDefaultLocations] = useState([]);
   const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({
     latitude: 55.60866491013769,
     longitude: 12.34104207156517,
@@ -34,6 +35,10 @@ export const Map = () => {
       });
     })();
   }, []); // Run this effect only once when the component mounts
+
+  useEffect(() => {
+    setDefaultLocations(defaultLocationsData);
+  }, []);
 
   const showDefaultLocations = () => {
     return defaultLocations.map((item, index) => {
@@ -68,10 +73,25 @@ export const Map = () => {
     await shareAsync(uri);
   };
 
+  const addLocation = () => {
+    setDefaultLocations((prevLocations) => [
+      ...prevLocations,
+      {
+        title: "Location Added",
+        location: {
+          latitude: draggableMarkerCoord.latitude,
+          longitude: draggableMarkerCoord.longitude,
+        },
+        description: "Hidden Location Added",
+      },
+    ]);
+  };
+
   return (
     <View style={styles.container}>
       <StatusBar style="auto" />
       <Text>Map view goes Here</Text>
+      <Button onPress={addLocation} title="Add location"></Button>
 
       <MapView
         provider={PROVIDER_GOOGLE}
@@ -107,20 +127,15 @@ export const Map = () => {
             longitude: 12.398517827563387,
           }}
         >
-          <Callout>
+          {/* Callout support its own onPress but does not support having buttons and related elements placed inside it */}
+          <Callout onPress={takeSnapshotAndShare}>
             <Text>Anything can be displayed from here: {count}</Text>
             <Image
               style={{ width: 80, height: 80, marginLeft: 80, marginTop: 7 }}
               source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
             ></Image>
-            <Button
-              onPress={() => setCount(count + 1)}
-              title="Click me +"
-            ></Button>
-            <Button
-              onPress={takeSnapshotAndShare}
-              title="Take SnapShot"
-            ></Button>
+            <Button onPress={() => setCount(count + 1)} title="Click me +" />
+            <Button onPress={takeSnapshotAndShare} title="Take SnapShot" />
           </Callout>
         </Marker>
 
@@ -146,6 +161,7 @@ export const Map = () => {
 
 const styles = StyleSheet.create({
   container: {
+    paddingTop: 46,
     flex: 1,
     backgroundColor: "#fff",
     alignItems: "center",

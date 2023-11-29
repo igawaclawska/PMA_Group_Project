@@ -7,6 +7,7 @@ import { LocationImage } from "../../components/LocationImage";
 import { Ionicons } from "@expo/vector-icons";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
+import { Map } from "./Map";
 
 export const AddLocation = () => {
   const [locationName, setLocationName] = useState("");
