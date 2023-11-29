@@ -5,7 +5,6 @@ import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
   SafeAreaView,
 } from "react-native";
 
@@ -20,7 +19,6 @@ export const RecentlyVisited = () => {
       description:
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
-
   ]);
 
   const renderLocation = ({ item }) => (
@@ -60,9 +58,6 @@ export const RecentlyVisited = () => {
           contentContainerStyle={styles.flatListContainer}
         />
       </View>
-      <TouchableOpacity style={styles.addButton} onPress={addNewLocation}>
-        <Text style={styles.addButtonText}>Add New Item</Text>
-      </TouchableOpacity>
     </SafeAreaView>
   );
 };
@@ -86,17 +81,6 @@ const styles = StyleSheet.create({
   flatListContainer: {
     paddingHorizontal: 15,
     paddingTop: 5,
-  },
-  addButton: {
-    marginTop: 20,
-    padding: 10,
-    backgroundColor: "lightblue",
-    borderRadius: 5,
-    marginBottom: 20,
-  },
-  addButtonText: {
-    fontSize: 16,
-    fontWeight: "bold",
   },
   locationCard: {
     width: "100%",
