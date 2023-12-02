@@ -3,11 +3,10 @@ import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
-import { LocationImage } from "../../components/LocationImage";
+import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
-import { Map } from "../../components/Map";
 
 export const AddLocation = () => {
   const [locationName, setLocationName] = useState("");
@@ -17,8 +16,7 @@ export const AddLocation = () => {
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
-        <Map/>
-        {/* <LocationImage path={require("../../assets/images/location.png")} /> */}
+        <Map />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.mainContent}>

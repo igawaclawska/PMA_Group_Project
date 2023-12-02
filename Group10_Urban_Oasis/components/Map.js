@@ -46,7 +46,7 @@ export const Map = () => {
 
   const onRegionChange = (region) => {
     // console log region change
-    console.log(region);
+    // console.log(region);
   };
 
   const takeSnapshotAndShare = async () => {
