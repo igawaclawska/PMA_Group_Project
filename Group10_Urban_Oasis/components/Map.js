@@ -63,20 +63,6 @@ export const Map = () => {
     await shareAsync(uri);
   };
 
-  const addLocation = () => {
-    setDefaultLocations((prevLocations) => [
-      ...prevLocations,
-      {
-        title: "Location Added",
-        location: {
-          latitude: draggableMarkerCoord.latitude,
-          longitude: draggableMarkerCoord.longitude,
-        },
-        description: "Hidden Location Added",
-      },
-    ]);
-  };
-
   return (
     <MapView
       provider={PROVIDER_GOOGLE}
@@ -157,15 +143,15 @@ const styles = StyleSheet.create({
     zIndex: 1,
   },
 
-//   mapOverlay: {
-//     position: "absolute",
-//     bottom: 50,
-//     backgroundColor: "#eee",
-//     borderWidth: 0.4,
-//     borderRadius: 5,
-//     padding: 16,
-//     left: "25%",
-//     width: "50%",
-//     textAlign: "center",
-//   },
+  //   mapOverlay: {
+  //     position: "absolute",
+  //     bottom: 50,
+  //     backgroundColor: "#eee",
+  //     borderWidth: 0.4,
+  //     borderRadius: 5,
+  //     padding: 16,
+  //     left: "25%",
+  //     width: "50%",
+  //     textAlign: "center",
+  //   },
 });

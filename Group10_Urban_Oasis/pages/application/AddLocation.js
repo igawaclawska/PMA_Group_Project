@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
+import { LocationContext } from "../../location/locationContext";
 import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
 import mainContainerStyle from "../../globalStyles/mainContainer";
@@ -11,6 +12,29 @@ import typography from "../../globalStyles/typography";
 export const AddLocation = () => {
   const [locationName, setLocationName] = useState("");
   const [description, setDescription] = useState("");
+
+  const {
+    defaultLocations,
+    setDefaultLocations,
+    draggableMarkerCoord,
+    setDraggableMarkerCoord,
+    currentPosition,
+    setCurrentPosition,
+  } = useContext(LocationContext);
+
+  const addLocation = () => {
+    setDefaultLocations((prevLocations) => [
+      ...prevLocations,
+      {
+        title: "Location Added",
+        location: {
+          latitude: draggableMarkerCoord.latitude,
+          longitude: draggableMarkerCoord.longitude,
+        },
+        description: "Hidden Location Added",
+      },
+    ]);
+  };
 
   return (
     <View style={[mainContainerStyle, styles.container]}>
@@ -80,7 +104,7 @@ export const AddLocation = () => {
           </View>
         </View>
         <View style={styles.buttonWrapper}>
-          <CustomButton value={"Add location"} />
+          <CustomButton onPress={addLocation} value={"Add location"} />
         </View>
       </View>
     </View>
