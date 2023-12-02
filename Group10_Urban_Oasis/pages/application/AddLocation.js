@@ -9,12 +9,16 @@ import { Ionicons } from "@expo/vector-icons";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
 
-export const AddLocation = () => {
+export const AddLocation = ({ navigation }) => {
   const [locationName, setLocationName] = useState("");
   const [description, setDescription] = useState("");
 
   const { setDefaultLocations, draggableMarkerCoord } =
     useContext(LocationContext);
+
+  const handleNavigateToExplore = () => {
+    navigation.navigate("Explore");
+  };
 
   const addLocation = () => {
     setDefaultLocations(
@@ -30,7 +34,8 @@ export const AddLocation = () => {
         },
       ],
       setLocationName(""), //clear input fields after adding a new location
-      setDescription("")
+      setDescription(""),
+      handleNavigateToExplore()
     );
   };
 

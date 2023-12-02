@@ -17,7 +17,7 @@ import mapTheme from "../globalStyles/mapTheme"; //import map style vector
 // source: https://reactnative.dev/docs/dimensions
 const windowWidth = Dimensions.get("window").width;
 
-export const Map = () => {
+export const Map = ({ screenType }) => {
   const {
     defaultLocations,
     setDefaultLocations,
@@ -79,7 +79,7 @@ export const Map = () => {
     >
       {/* Maps through array DefaultLocations and displays markers*/}
 
-      {showDefaultLocations()}
+      {screenType === "Explore" && showDefaultLocations()}
 
       {/* Dragable marker */}
       <Marker

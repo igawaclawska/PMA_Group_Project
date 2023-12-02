@@ -8,7 +8,7 @@ export const Explore = () => {
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View>
-        <Map />
+        <Map screenType={"Explore"} />
       </View>
     </View>
   );
