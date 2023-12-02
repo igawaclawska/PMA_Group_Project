@@ -13,27 +13,25 @@ export const AddLocation = () => {
   const [locationName, setLocationName] = useState("");
   const [description, setDescription] = useState("");
 
-  const {
-    defaultLocations,
-    setDefaultLocations,
-    draggableMarkerCoord,
-    setDraggableMarkerCoord,
-    currentPosition,
-    setCurrentPosition,
-  } = useContext(LocationContext);
+  const { setDefaultLocations, draggableMarkerCoord } =
+    useContext(LocationContext);
 
   const addLocation = () => {
-    setDefaultLocations((prevLocations) => [
-      ...prevLocations,
-      {
-        title: "Location Added",
-        location: {
-          latitude: draggableMarkerCoord.latitude,
-          longitude: draggableMarkerCoord.longitude,
+    setDefaultLocations(
+      (prevLocations) => [
+        ...prevLocations,
+        {
+          title: locationName,
+          location: {
+            latitude: draggableMarkerCoord.latitude,
+            longitude: draggableMarkerCoord.longitude,
+          },
+          description: description,
         },
-        description: "Hidden Location Added",
-      },
-    ]);
+      ],
+      setLocationName(""), //clear input fields after adding a new location
+      setDescription("")
+    );
   };
 
   return (
