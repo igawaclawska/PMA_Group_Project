@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { AuthenticationInputField } from "../../components/AuthenticationInputField";
 import { LocationContext } from "../../location/locationContext";
@@ -20,6 +20,19 @@ export const AddLocation = ({ navigation }) => {
     navigation.navigate("Explore");
   };
 
+  // https://reactnative.dev/docs/alert
+  const createTwoButtonAlert = () =>
+    Alert.alert(`Location successfully added!`, "", [
+      {
+        text: "Go to Explore",
+        onPress: () => {
+          handleNavigateToExplore(), console.log("Cancel Pressed");
+        },
+        style: "cancel",
+      },
+      { text: "Add new location", onPress: () => console.log("OK Pressed") },
+    ]);
+
   const addLocation = () => {
     setDefaultLocations(
       (prevLocations) => [
@@ -35,7 +48,7 @@ export const AddLocation = ({ navigation }) => {
       ],
       setLocationName(""), //clear input fields after adding a new location
       setDescription(""),
-      handleNavigateToExplore()
+      createTwoButtonAlert()
     );
   };
 
