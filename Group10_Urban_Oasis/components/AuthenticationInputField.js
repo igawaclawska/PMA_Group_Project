@@ -32,6 +32,7 @@ export const AuthenticationInputField = ({
         onChangeText={handleInputAdded}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        blurOnSubmit={true}
       ></TextInput>
       {icon && <View>{icon}</View>}
     </View>
