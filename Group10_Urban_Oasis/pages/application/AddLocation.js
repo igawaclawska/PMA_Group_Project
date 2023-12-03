@@ -21,35 +21,46 @@ export const AddLocation = ({ navigation }) => {
   };
 
   // https://reactnative.dev/docs/alert
-  const createTwoButtonAlert = () =>
+  const createLocationAddedAlert = () =>
     Alert.alert(`Location successfully added!`, "", [
       {
         text: "Go to Explore",
         onPress: () => {
-          handleNavigateToExplore(), console.log("Cancel Pressed");
+          handleNavigateToExplore(), console.log("Go to Explore Pressed");
         },
         style: "cancel",
       },
-      { text: "Add new location", onPress: () => console.log("OK Pressed") },
+      {
+        text: "Add new location",
+        onPress: () => console.log("Add new location Pressed"),
+      },
     ]);
 
   const addLocation = () => {
-    setDefaultLocations(
-      (prevLocations) => [
-        ...prevLocations,
-        {
-          title: locationName,
-          location: {
-            latitude: draggableMarkerCoord.latitude,
-            longitude: draggableMarkerCoord.longitude,
+
+    let trimmedLocationName = locationName.trim();
+    let trimmedDescription = description.trim();
+    
+    if (trimmedLocationName.length !== 0) {
+      setDefaultLocations(
+        (prevLocations) => [
+          ...prevLocations,
+          {
+            title: trimmedLocationName,
+            location: {
+              latitude: draggableMarkerCoord.latitude,
+              longitude: draggableMarkerCoord.longitude,
+            },
+            description: trimmedDescription,
           },
-          description: description,
-        },
-      ],
-      setLocationName(""), //clear input fields after adding a new location
-      setDescription(""),
-      createTwoButtonAlert()
-    );
+        ],
+        setLocationName(""), //clear input fields after adding a new location
+        setDescription(""),
+        createLocationAddedAlert()
+      );
+    } else {
+      Alert.alert("To add a new location, you need to provide its name");
+    }
   };
 
   return (
