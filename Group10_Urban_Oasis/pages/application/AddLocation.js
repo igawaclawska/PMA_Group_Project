@@ -6,6 +6,7 @@ import { AuthenticationInputField } from "../../components/AuthenticationInputFi
 import { LocationContext } from "../../location/locationContext";
 import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
+import { Location } from "../../data/Location"; //Location class used to create location objects
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
 
@@ -37,23 +38,24 @@ export const AddLocation = ({ navigation }) => {
     ]);
 
   const addLocation = () => {
-
     let trimmedLocationName = locationName.trim();
     let trimmedDescription = description.trim();
-    
+    let latitude = draggableMarkerCoord.latitude;
+    let longitude = draggableMarkerCoord.longitude;
+
     if (trimmedLocationName.length !== 0) {
       setDefaultLocations(
         (prevLocations) => [
           ...prevLocations,
-          {
-            title: trimmedLocationName,
-            location: {
-              latitude: draggableMarkerCoord.latitude,
-              longitude: draggableMarkerCoord.longitude,
-            },
-            description: trimmedDescription,
-          },
+
+          new Location(
+            trimmedLocationName,
+            trimmedDescription,
+            latitude,
+            longitude
+          ),
         ],
+
         setLocationName(""), //clear input fields after adding a new location
         setDescription(""),
         createLocationAddedAlert()
