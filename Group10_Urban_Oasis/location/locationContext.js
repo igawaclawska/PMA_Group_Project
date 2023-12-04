@@ -4,13 +4,15 @@ import defaultLocationsData from "../data/defaultLocationsData";
 
 export const LocationContext = createContext();
 
-export const LocationContextProvider = ({children}) => {
+export const LocationContextProvider = ({ children }) => {
   const [defaultLocations, setDefaultLocations] = useState([]);
   const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({
     latitude: 55.60866491013769,
     longitude: 12.34104207156517,
   });
   const [currentPosition, setCurrentPosition] = useState(null);
+  const [draggableMarkerCoordCurrent, setDraggableMarkerCoordCurrent] =
+    useState(null);
 
   useEffect(() => {
     // Request permission to access the device's location
@@ -24,6 +26,12 @@ export const LocationContextProvider = ({children}) => {
       // Get the current position
       let location = await Location.getCurrentPositionAsync({});
       setCurrentPosition({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+
+      //Get current position for the draggable marker as it starting pont
+      setDraggableMarkerCoordCurrent({
         latitude: location.coords.latitude,
         longitude: location.coords.longitude,
       });
@@ -41,6 +49,8 @@ export const LocationContextProvider = ({children}) => {
         setDefaultLocations,
         draggableMarkerCoord,
         setDraggableMarkerCoord,
+        draggableMarkerCoordCurrent,
+        setDraggableMarkerCoordCurrent,
         currentPosition,
         setCurrentPosition,
       }}

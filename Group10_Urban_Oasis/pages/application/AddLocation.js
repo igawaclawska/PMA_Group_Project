@@ -14,8 +14,12 @@ export const AddLocation = ({ navigation }) => {
   const [locationName, setLocationName] = useState("");
   const [description, setDescription] = useState("");
 
-  const { setDefaultLocations, draggableMarkerCoord } =
-    useContext(LocationContext);
+  const {
+    setDefaultLocations,
+    draggableMarkerCoordCurrent,
+    setDraggableMarkerCoordCurrent,
+    currentPosition,
+  } = useContext(LocationContext);
 
   const handleNavigateToExplore = () => {
     navigation.navigate("Explore");
@@ -31,23 +35,20 @@ export const AddLocation = ({ navigation }) => {
         },
         style: "cancel",
       },
-      {
-        text: "Add new location",
-        onPress: () => console.log("Add new location Pressed"),
-      },
     ]);
 
   const addLocation = () => {
-    let trimmedLocationName = locationName.trim();
-    let trimmedDescription = description.trim();
-    let latitude = draggableMarkerCoord.latitude;
-    let longitude = draggableMarkerCoord.longitude;
+    let trimmedLocationName = locationName.trim(); //cleans the input up
+    let trimmedDescription = description.trim(); //cleans the input up
+    let latitude = draggableMarkerCoordCurrent.latitude;
+    let longitude = draggableMarkerCoordCurrent.longitude;
 
     if (trimmedLocationName.length !== 0) {
       setDefaultLocations(
         (prevLocations) => [
           ...prevLocations,
 
+          //create new Location object
           new Location(
             trimmedLocationName,
             trimmedDescription,
@@ -55,21 +56,24 @@ export const AddLocation = ({ navigation }) => {
             longitude
           ),
         ],
-
-        setLocationName(""), //clear input fields after adding a new location
+        //clear input fields after adding a new location
+        setLocationName(""),
         setDescription(""),
+
         createLocationAddedAlert()
       );
     } else {
       Alert.alert("To add a new location, you need to provide its name");
     }
+    //reset draggable marker to its starting point (current position of the user) after clicking "Add location"
+    setDraggableMarkerCoordCurrent(currentPosition);
   };
 
   return (
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
-        <Map />
+        <Map screenType={"AddLocation"} />
       </View>
       <View style={styles.contentContainer}>
         <View style={styles.mainContent}>
