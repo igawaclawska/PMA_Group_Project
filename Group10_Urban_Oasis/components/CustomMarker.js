@@ -2,7 +2,7 @@ import React from "react";
 import { useContext } from "react";
 import { LocationContext } from "../location/locationContext";
 import { Callout, Marker } from "react-native-maps";
-import { Alert, Text, Image } from "react-native";
+import { Alert, Text, Image, StyleSheet, View } from "react-native";
 
 export const CustomMarker = ({
   type,
@@ -31,7 +31,10 @@ export const CustomMarker = ({
           pinColor="#008000"
         />
       );
-    } else if (type === "draggableCurrentPosition") {
+    } else if (
+      type === "draggableCurrentPosition" &&
+      currentPosition !== null
+    ) {
       return (
         //Dragable marker. Current user position is its initial position
         <Marker
@@ -43,7 +46,7 @@ export const CustomMarker = ({
           pinColor="#008000"
         />
       );
-    } else if (type === "currentPosition") {
+    } else if (type === "currentPosition" && currentPosition !== null) {
       return (
         //Get current position of user
         <Marker
@@ -83,13 +86,18 @@ export const CustomMarker = ({
                 : () => Alert.alert("Location view to be implemented")
             }
           >
-            <Image
-              style={{ width: "100%", height: 80, marginTop: 7 }}
-              source={{ uri: "https://reactnative.dev/img/tiny_logo.png" }}
-            ></Image>
-            <Text>{title}</Text>
-            {description && <Text>{description}</Text>}
-            <Text>Click to Display location</Text>
+            <View style={styles.calloutContentWrapper}>
+              <Image
+                style={styles.calloutImage}
+                source={require("../assets/images/image-3.jpg")}
+              ></Image>
+              <Text style={styles.calloutTitle}>{title}</Text>
+              {description && (
+                <Text style={styles.calloutDescription}>{description}</Text>
+              )}
+
+              <Text style={styles.calloutClickToAction}>Open location</Text>
+            </View>
           </Callout>
         </Marker>
       );
@@ -98,3 +106,39 @@ export const CustomMarker = ({
 
   return renderMarker(type);
 };
+
+const styles = StyleSheet.create({
+  calloutImage: {
+    width: "100%",
+    height: 80,
+    marginVertical: 6,
+    borderRadius: 4,
+  },
+
+  calloutTitle: {
+    fontWeight: "600",
+    fontSize: 14,
+    color: "#1A1C29",
+    marginBottom: 2,
+  },
+
+  calloutDescription: {
+    fontSize: 12,
+    color: "#797979",
+    marginBottom: 4,
+  },
+
+  calloutClickToAction: {
+    fontWeight: "600",
+    textAlign: "center",
+    fontSize: 14,
+    color: "#3E9C27",
+    textDecorationLine: "underline",
+    marginTop: 4,
+    marginBottom: 8,
+  },
+
+  calloutContentWrapper: {
+    width: 120,
+  },
+});
