@@ -1,5 +1,5 @@
 // Location class used for creating location objects.
-export class Location {
+export class LocationItem {
   constructor(title, description, latitude, longitude) {
     this.title = title;
     this.location = {

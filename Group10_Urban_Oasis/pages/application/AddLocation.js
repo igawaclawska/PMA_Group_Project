@@ -6,7 +6,7 @@ import { AuthenticationInputField } from "../../components/AuthenticationInputFi
 import { LocationContext } from "../../location/locationContext";
 import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
-import { Location } from "../../data/Location"; //Location class used to create location objects
+import { LocationItem } from "../../data/LocationItem"; //Location class used to create location objects
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
 
@@ -49,7 +49,7 @@ export const AddLocation = ({ navigation }) => {
           ...prevLocations,
 
           //create new Location object
-          new Location(
+          new LocationItem(
             trimmedLocationName,
             trimmedDescription,
             latitude,
