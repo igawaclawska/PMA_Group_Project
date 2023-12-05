@@ -8,7 +8,7 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import Location from "../../components/location";
+import LocationContainer from "../../components/LocationContainer";
 
 export const RecentlyVisited = () => {
   const [locationData, setLocationData] = useState([
@@ -23,7 +23,7 @@ export const RecentlyVisited = () => {
 
   const renderLocation = ({ item }) => (
     <View style={styles.item}>
-      <Location
+      <LocationContainer
         title={item.title}
         img={item.img}
         description={item.description}
