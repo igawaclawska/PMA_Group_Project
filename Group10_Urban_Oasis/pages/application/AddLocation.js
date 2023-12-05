@@ -88,8 +88,9 @@ export const AddLocation = ({ navigation }) => {
               Add current location to community
             </Text>
             <Text style={[typography.paragraph, typography.lightGrayText]}>
-              Lorem ipsum dolor sit amet, adipiscing elit, sed eiusmod tempor
-              incididunt.
+              The green marker shows where you are right now. You
+              can add this location, or you can drag the marker
+              to a new spot.
             </Text>
           </View>
           <View style={styles.inputSection}>

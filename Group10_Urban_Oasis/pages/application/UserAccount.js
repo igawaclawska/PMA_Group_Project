@@ -1,27 +1,34 @@
 import { StatusBar } from "expo-status-bar";
 import { useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
-import { StyleSheet, Text, View, Button } from "react-native";
+import { StyleSheet, View } from "react-native";
+import { CustomButton } from "../../components/CustomButton";
+import mainContainerStyle from "../../globalStyles/mainContainer";
+import { Ionicons } from "@expo/vector-icons";
 
 export const UserAccount = () => {
   const { onLogout } = useContext(AuthenticationContext);
 
   return (
-    <View style={styles.container}>
+    <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
-      <Text>User Account</Text>
-      {/* button component added temporarily for simplicity, can be exchanged with a Pressable later.
-      Logout will be later moved to the user settings page */}
-      <Button title="Log out" onPress={onLogout} />
+      <View style={styles.buttonWrapper}>
+        <CustomButton
+          value={"Log out"}
+          onPress={onLogout}
+          icon={<Ionicons name="exit-outline" size={20} color="white" />}
+        />
+      </View>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
+    paddingTop: 46,
+  },
+
+  buttonWrapper: {
+    width: "40%",
   },
 });
