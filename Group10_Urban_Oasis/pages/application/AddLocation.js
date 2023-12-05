@@ -2,7 +2,7 @@ import { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Alert } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
-import { AuthenticationInputField } from "../../components/AuthenticationInputField";
+import { CustomInputField } from "../../components/CustomInputField";
 import { LocationContext } from "../../location/locationContext";
 import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
@@ -93,7 +93,7 @@ export const AddLocation = ({ navigation }) => {
             </Text>
           </View>
           <View style={styles.inputSection}>
-            <AuthenticationInputField
+            <CustomInputField
               hiddenInput={false}
               placeholder={"Location name"}
               input={locationName}
@@ -102,7 +102,7 @@ export const AddLocation = ({ navigation }) => {
                 <Ionicons name="md-location-sharp" size={20} color="#9e9e9e" />
               }
             />
-            <AuthenticationInputField
+            <CustomInputField
               hiddenInput={false}
               placeholder={"Description"}
               input={description}
