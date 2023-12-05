@@ -1,6 +1,6 @@
 import { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { CustomInputField } from "../../components/CustomInputField";
 import { LocationContext } from "../../location/locationContext";
@@ -16,6 +16,7 @@ export const AddLocation = ({ navigation }) => {
 
   const {
     setDefaultLocations,
+    draggableMarkerCoord,
     draggableMarkerCoordCurrent,
     setDraggableMarkerCoordCurrent,
     currentPosition,
@@ -37,6 +38,13 @@ export const AddLocation = ({ navigation }) => {
       },
     ]);
 
+  const handleGreenMarkerReset = () => {
+    //reset draggable marker to its starting point (current position of the user if data available)
+    setDraggableMarkerCoordCurrent(
+      currentPosition ? currentPosition : draggableMarkerCoord
+    );
+  };
+
   const addLocation = () => {
     let trimmedLocationName = locationName.trim(); //cleans the input up
     let trimmedDescription = description.trim(); //cleans the input up
@@ -44,6 +52,7 @@ export const AddLocation = ({ navigation }) => {
     let longitude = draggableMarkerCoordCurrent.longitude;
 
     if (trimmedLocationName.length !== 0) {
+      //appends new location object to the defautLocations array
       setDefaultLocations(
         (prevLocations) => [
           ...prevLocations,
@@ -65,8 +74,7 @@ export const AddLocation = ({ navigation }) => {
     } else {
       Alert.alert("To add a new location, you need to provide its name");
     }
-    //reset draggable marker to its starting point (current position of the user) after clicking "Add location"
-    setDraggableMarkerCoordCurrent(currentPosition);
+    handleGreenMarkerReset();
   };
 
   return (
@@ -76,6 +84,10 @@ export const AddLocation = ({ navigation }) => {
         <Map screenType={"AddLocation"} />
       </View>
       <View style={styles.contentContainer}>
+        <Pressable onPress={handleGreenMarkerReset} style={styles.resetButton}>
+          <Ionicons name="refresh-circle" size={20} color="#3E9C27" />
+          <Text style={styles.resetButtonText}>Reset position</Text>
+        </Pressable>
         <View style={styles.mainContent}>
           <View style={styles.textSection}>
             <Text
@@ -88,9 +100,8 @@ export const AddLocation = ({ navigation }) => {
               Add current location to community
             </Text>
             <Text style={[typography.paragraph, typography.lightGrayText]}>
-              The green marker shows where you are right now. You
-              can add this location, or you can drag the marker
-              to a new spot.
+              The green marker shows where you are right now. You can add this
+              location, or drag the marker to a new spot.
             </Text>
           </View>
           <View style={styles.inputSection}>
@@ -171,7 +182,7 @@ const styles = StyleSheet.create({
   },
 
   mainContent: {
-    gap: 24,
+    gap: 16,
   },
 
   textSection: {
@@ -185,5 +196,19 @@ const styles = StyleSheet.create({
 
   buttonWrapper: {
     width: "100%",
+  },
+
+  resetButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    position: "absolute",
+    top: 4,
+    right: 0,
+  },
+
+  resetButtonText: {
+    fontWeight: "600",
+    color: "#3E9C27",
   },
 });

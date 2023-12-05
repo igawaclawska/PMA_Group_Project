@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions, Text, Pressable } from "react-native";
 import { useState, useRef, useContext } from "react";
 import { LocationContext } from "../location/locationContext";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -73,9 +73,11 @@ export const Map = ({ screenType }) => {
       {showDefaultLocations()}
 
       {/* Get current position of user */}
-      <CustomMarker type={"currentPosition"} />
+      {screenType === "Explore" && currentPosition && (
+        <CustomMarker type={"currentPosition"} />
+      )}
 
-      {screenType === "AddLocation" && (
+      {screenType === "AddLocation" && currentPosition && (
         //Dragable marker
         <CustomMarker type={"draggableCurrentPosition"} />
       )}
