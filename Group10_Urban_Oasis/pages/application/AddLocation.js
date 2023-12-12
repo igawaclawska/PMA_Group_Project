@@ -26,6 +26,10 @@ export const AddLocation = ({ navigation }) => {
     navigation.navigate("Explore");
   };
 
+  const clickNavigateToCamera = () => {
+    navigation.navigate("Camera Screen");
+  };
+
   // https://reactnative.dev/docs/alert
   const createLocationAddedAlert = () =>
     Alert.alert(`Location successfully added!`, "", [
@@ -140,6 +144,7 @@ export const AddLocation = ({ navigation }) => {
               </View>
               <View style={styles.uploadButtonWrapper}>
                 <CustomButton
+                  onPress={clickNavigateToCamera}
                   value={"Open camera"}
                   theme={"secondary"}
                   icon={<Ionicons name="camera" size={24} color="black" />}

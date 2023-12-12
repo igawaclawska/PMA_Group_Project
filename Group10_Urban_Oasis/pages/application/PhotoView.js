@@ -1,10 +1,17 @@
 import React from "react";
 import { View, Text } from "react-native";
+import { CustomButton } from "../../components/CustomButton";
+import mainContainerStyle from "../../globalStyles/mainContainer";
 
-export const PhotoView = () => {
+export const PhotoView = ({ navigation }) => {
+  const clickNavigateBack = () => {
+    navigation.goBack();
+  };
+
   return (
-    <View>
+    <View style={mainContainerStyle}>
       <Text>PhotoView Page</Text>
+      <CustomButton onPress={clickNavigateBack} value={"Go back"} />
     </View>
   );
 };
