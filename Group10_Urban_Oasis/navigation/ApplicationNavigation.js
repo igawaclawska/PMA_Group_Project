@@ -4,6 +4,7 @@ import { Explore } from "../pages/application/Explore";
 import { AddLocation } from "../pages/application/AddLocation";
 import { RecentlyVisited } from "../pages/application/RecentlyVisited";
 import { UserAccount } from "../pages/application/UserAccount";
+import { AddLocationNavigation } from "./AddLocationNavigation"; 
 
 //This file is responsible for the bottom navigation settings (visible for authenticated users)
 
@@ -41,7 +42,8 @@ export const ApplicationNavigation = () => {
     <Tab.Navigator screenOptions={createScreenOptions}>
       <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Recent Visit" component={RecentlyVisited} />
-      <Tab.Screen name="Add Location" component={AddLocation} />
+      {/* Tab screen "Add Location" contains nested navigation */}
+      <Tab.Screen name="Add Location" component={AddLocationNavigation} /> 
       <Tab.Screen name="My Account" component={UserAccount} />
     </Tab.Navigator>
   );
