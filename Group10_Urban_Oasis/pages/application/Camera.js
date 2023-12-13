@@ -1,9 +1,20 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, StyleSheet } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
+import { useContext, useState } from "react";
+import { useIsFocused } from "@react-navigation/native";
+import { Platform } from "react-native";
+import { CameraContext } from "../../camera/cameraContext";
+import { Camera } from "expo-camera";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 
-export const Camera = ({ navigation }) => {
+export const CameraView = ({ navigation }) => {
+  const isAndroid = Platform.OS === "android";
+  const isFocused = useIsFocused();
+
+  const { type, uri, setCamera, toggleCamera, snapAndSave } =
+    useContext(CameraContext);
+
   const clickNavigateToPhoto = () => {
     navigation.navigate("Photo View");
   };
@@ -12,10 +23,42 @@ export const Camera = ({ navigation }) => {
   };
 
   return (
-    <View style={mainContainerStyle}>
-      <Text>Camera</Text>
-      <CustomButton onPress={clickNavigateToPhoto} value={"Go to photo"} />
-      <CustomButton onPress={clickNavigateBack} value={"Back"} />
-    </View>
+    <>
+      {isFocused && (
+        <Camera
+          style={mainContainerStyle}
+          ref={(ref) => setCamera(ref)}
+          type={type}
+          useCamera2Api={isAndroid}
+          ratio="1:2"
+        />
+      )}
+      <View style={styles.buttonWrapper}>
+        <View style={styles.singleButtonWrapper}>
+          <CustomButton onPress={clickNavigateBack} value={"Back"} />
+        </View>
+        <View style={styles.singleButtonWrapper}>
+          <CustomButton onPress={toggleCamera} value={"Toggle Camera"} />
+        </View>
+      </View>
+    </>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    paddingTop: 46,
+    alignItems: "center",
+    justifyContent: "center",
+    flex: 1,
+  },
+
+  singleButtonWrapper: {
+    flex: 1,
+  },
+
+  buttonWrapper: {
+    width: "100%",
+    flexDirection: "row",
+  },
+});

@@ -8,7 +8,7 @@ export const CameraContext = createContext();
 export const CameraContextProvider = ({ children }) => {
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState(null);
-  const [type, setType] = useState(CameraType.front);
+  const [type, setType] = useState(CameraType.back);
   const [uri, setUri] = useState(null);
 
   useEffect(() => {
@@ -19,9 +19,7 @@ export const CameraContextProvider = ({ children }) => {
   }, []);
 
   const toggleCamera = () => {
-    const newType =
-      type === CameraType.back ? CameraType.front : CameraType.back;
-    setType(newType);
+    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
   };
 
   const snapAndSave = async () => {
