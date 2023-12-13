@@ -1,19 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  Alert,
-  Pressable,
-} from "react-native";
+import { StyleSheet, Text, View, Image, Alert, Pressable } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import Buttons from "../../components/TakeMeThereButton";
 import { useRoute } from "@react-navigation/native";
 
-function ViewLocation({ title, description, close }) {
-
+function ViewLocation() {
   // this is used to get the data from the CustomMarker component in Map.js
   const route = useRoute();
   const { location } = route.params;
