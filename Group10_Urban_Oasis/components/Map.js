@@ -19,14 +19,16 @@ export const Map = ({ screenType }) => {
   const [count, setCount] = useState(0);
   const mapRef = useRef();
   const [destinationCoords, setDestinationCoords] = useState(null);
-  const [routeCoordinates, setRouteCoordinates] = useState([]);
   const [directions, setDirections] = useState(null);
 
   const handleTakeMeThere = async () => {
     setDestinationCoords({
-      latitude: 55.72179184033459,
-      longitude: 12.379072260726619,
+      latitude: 55.60866491013769,
+      longitude: 12.5911277895021,
     });
+
+    console.log("Current Position:", currentPosition);
+    console.log("Destination Coordinates:", destinationCoords);
 
     if (currentPosition && destinationCoords) {
       try {
@@ -40,9 +42,9 @@ export const Map = ({ screenType }) => {
 
         if (data.status === "OK" && data.routes.length > 0) {
           const route = data.routes[0];
-          const coordinates = polyline.decode(route.overview_polyline.points);
-          setRouteCoordinates(coordinates);
-          setDirections(route); // Save the entire route information
+          const overviewPolyline = route.overview_polyline.points;
+
+          setDirections(overviewPolyline);
         } else {
           console.error("Error fetching directions:", data.status);
         }
@@ -120,14 +122,16 @@ export const Map = ({ screenType }) => {
       {/* map overlay, anything could be displayed here */}
       {/* <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text> */}
       {/* Draw Route (Polyline) */}
-      {routeCoordinates.length > 0 && (
+      {directions && (
         <Polyline
-          coordinates={routeCoordinates}
+          coordinates={polyline.decode(directions).map((point) => ({
+            latitude: point[0],
+            longitude: point[1],
+          }))}
           strokeWidth={4}
           strokeColor="#4285F4"
         />
       )}
-
       {/* Take Me There Button */}
       <Pressable
         title="ddd"
