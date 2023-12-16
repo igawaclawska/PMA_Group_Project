@@ -6,6 +6,8 @@ import { CustomMarker } from "./CustomMarker";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import mapTheme from "../globalStyles/mapTheme"; //import map style vector
+import { Polyline } from "react-native-maps";
+import polyline from "@mapbox/polyline";
 
 // detect screen width
 // source: https://reactnative.dev/docs/dimensions
@@ -16,6 +18,39 @@ export const Map = ({ screenType }) => {
 
   const [count, setCount] = useState(0);
   const mapRef = useRef();
+  const [destinationCoords, setDestinationCoords] = useState(null);
+  const [routeCoordinates, setRouteCoordinates] = useState([]);
+  const [directions, setDirections] = useState(null);
+
+  const handleTakeMeThere = async () => {
+    setDestinationCoords({
+      latitude: 55.72179184033459,
+      longitude: 12.379072260726619,
+    });
+
+    if (currentPosition && destinationCoords) {
+      try {
+        const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY";
+        const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
+        const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
+        const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.status === "OK" && data.routes.length > 0) {
+          const route = data.routes[0];
+          const coordinates = polyline.decode(route.overview_polyline.points);
+          setRouteCoordinates(coordinates);
+          setDirections(route); // Save the entire route information
+        } else {
+          console.error("Error fetching directions:", data.status);
+        }
+      } catch (error) {
+        console.error("Error fetching directions:", error);
+      }
+    }
+  };
 
   const showDefaultLocations = () => {
     return defaultLocations.map((item, index) => {
@@ -84,6 +119,23 @@ export const Map = ({ screenType }) => {
 
       {/* map overlay, anything could be displayed here */}
       {/* <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text> */}
+      {/* Draw Route (Polyline) */}
+      {routeCoordinates.length > 0 && (
+        <Polyline
+          coordinates={routeCoordinates}
+          strokeWidth={4}
+          strokeColor="#4285F4"
+        />
+      )}
+
+      {/* Take Me There Button */}
+      <Pressable
+        title="ddd"
+        onPress={handleTakeMeThere}
+        style={styles.takeMeThereButton}
+      >
+        <Text style={{ color: "#fff" }}>Take Me There</Text>
+      </Pressable>
     </MapView>
   );
 };
@@ -106,4 +158,14 @@ const styles = StyleSheet.create({
   //     width: "50%",
   //     textAlign: "center",
   //   },
+
+  takeMeThereButton: {
+    position: "absolute",
+    bottom: 16,
+    color: "#fff",
+    left: windowWidth / 2 - 50, // Adjust based on your design
+    backgroundColor: "#4285F4",
+    padding: 10,
+    borderRadius: 5,
+  },
 });
