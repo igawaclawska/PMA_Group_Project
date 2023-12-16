@@ -99,10 +99,10 @@ export const Map = ({ screenType }) => {
       style={styles.map}
       // onRegionChange={onRegionChange}
       initialRegion={{
-        latitude: 55.71679184033459,
-        latitudeDelta: 0.8060190506549958,
-        longitude: 12.374072260726619,
-        longitudeDelta: 0.884737209682612,
+        latitude: currentPosition.latitude,
+        latitudeDelta: 0.3,
+        longitude: currentPosition.longitude,
+        longitudeDelta: 0.38,
       }}
       customMapStyle={mapTheme}
     >
@@ -120,7 +120,9 @@ export const Map = ({ screenType }) => {
       )}
 
       {/* map overlay, anything could be displayed here */}
+
       {/* <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text> */}
+
       {/* Draw Route (Polyline) */}
       {directions && (
         <Polyline
@@ -128,8 +130,8 @@ export const Map = ({ screenType }) => {
             latitude: point[0],
             longitude: point[1],
           }))}
-          strokeWidth={4}
-          strokeColor="#4285F4"
+          strokeWidth={5}
+          strokeColor="#b33b72"
         />
       )}
       {/* Take Me There Button */}
@@ -138,7 +140,7 @@ export const Map = ({ screenType }) => {
         onPress={handleTakeMeThere}
         style={styles.takeMeThereButton}
       >
-        <Text style={{ color: "#fff" }}>Take Me There</Text>
+        <Text style={{ color: "white" }}>Take Me There</Text>
       </Pressable>
     </MapView>
   );
