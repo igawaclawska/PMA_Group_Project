@@ -16,26 +16,35 @@ export const LocationContextProvider = ({ children }) => {
 
   useEffect(() => {
     // Request permission to access the device's location
-    (async () => {
+    const requestLocationPermission = async () => {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.error("Permission to access location was denied");
         return;
       }
+    };
 
-      // Get the current position
-      let location = await Location.getCurrentPositionAsync({});
-      setCurrentPosition({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
+    // Function to update the current position
+    const updateCurrentPosition = async () => {
+      try {
+        let location = await Location.getCurrentPositionAsync({});
+        setCurrentPosition({
+          latitude: location.coords.latitude,
+          longitude: location.coords.longitude,
+        });
+      } catch (error) {
+        console.error("Error updating current position:", error);
+      }
+    };
 
-      //Get current position for the draggable marker as it starting pont
-      setDraggableMarkerCoordCurrent({
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-      });
-    })();
+    // Initial request for location permission
+    requestLocationPermission();
+
+    // Update the current position every 5 seconds (adjust the interval as needed)
+    const locationUpdateInterval = setInterval(updateCurrentPosition, 5000);
+
+    // Clean up the interval when the component is unmounted
+    return () => clearInterval(locationUpdateInterval);
   }, []); // Run this effect only once when the component mounts
 
   useEffect(() => {

@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Text, Pressable } from "react-native";
+import { StyleSheet, Dimensions, Text, Pressable, View } from "react-native";
 import { useState, useRef, useContext } from "react";
 import { LocationContext } from "../location/locationContext";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -73,10 +73,10 @@ export const Map = ({ screenType }) => {
     });
   };
 
-  // const onRegionChange = (region) => {
-  // console log region change
-  // console.log(region);
-  // };
+  const onRegionChange = (region) => {
+    //console log region change
+    console.log(region);
+  };
 
   const takeSnapshotAndShare = async () => {
     const snapshot = await mapRef.current.takeSnapshot({
@@ -100,9 +100,9 @@ export const Map = ({ screenType }) => {
       // onRegionChange={onRegionChange}
       initialRegion={{
         latitude: currentPosition.latitude,
-        latitudeDelta: 0.3,
+        latitudeDelta: 0.12,
         longitude: currentPosition.longitude,
-        longitudeDelta: 0.38,
+        longitudeDelta: 0.14,
       }}
       customMapStyle={mapTheme}
     >
@@ -135,13 +135,15 @@ export const Map = ({ screenType }) => {
         />
       )}
       {/* Take Me There Button */}
-      <Pressable
-        title="ddd"
-        onPress={handleTakeMeThere}
-        style={styles.takeMeThereButton}
-      >
-        <Text style={{ color: "white" }}>Take Me There</Text>
-      </Pressable>
+      <View style={styles.container}>
+        <Pressable
+          title="ddd"
+          onPress={handleTakeMeThere}
+          style={styles.takeMeThereButton}
+        >
+          <Text style={styles.buttonText}>Take Me There</Text>
+        </Pressable>
+      </View>
     </MapView>
   );
 };
@@ -165,6 +167,11 @@ const styles = StyleSheet.create({
   //     textAlign: "center",
   //   },
 
+  container: {
+    position: "relative",
+    flex: 1, // Make sure the container takes the full height
+  },
+
   takeMeThereButton: {
     position: "absolute",
     bottom: 16,
@@ -173,5 +180,10 @@ const styles = StyleSheet.create({
     backgroundColor: "#4285F4",
     padding: 10,
     borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
   },
 });
