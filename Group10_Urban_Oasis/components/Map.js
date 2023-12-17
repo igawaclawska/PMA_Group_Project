@@ -20,15 +20,29 @@ export const Map = ({ screenType }) => {
   const mapRef = useRef();
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [directions, setDirections] = useState(null);
+  const [recenlyVisited, setRecentlyVisited] = useState([]);
 
   const handleTakeMeThere = async ({ location }) => {
+    // set currently pressed location
     setDestinationCoords({
       latitude: location.latitude,
       longitude: location.longitude,
     });
 
+    // push pressed items to recenly visisted array
+
+    const visited = {
+      title: "test",
+      description: "...",
+      coordinate: location,
+    };
+
+    recenlyVisited.push(visited);
+
     console.log("Current Position:", currentPosition);
     console.log("Destination Coordinates:", destinationCoords);
+
+    // create directions for currently pressed marker
 
     if (currentPosition && destinationCoords) {
       try {
