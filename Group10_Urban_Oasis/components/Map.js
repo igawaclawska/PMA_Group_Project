@@ -115,9 +115,13 @@ export const Map = ({ screenType }) => {
       onRegionChange={onRegionChange}
       // onRegionChange={onRegionChange}
       initialRegion={{
-        latitude: currentPosition.latitude,
+        latitude: currentPosition
+          ? currentPosition.latitude
+          : 55.60866491013769,
         latitudeDelta: 0.007,
-        longitude: currentPosition.longitude,
+        longitude: currentPosition
+          ? currentPosition.longitude
+          : 12.5911277895021,
         longitudeDelta: 0.006,
       }}
       customMapStyle={mapTheme}
