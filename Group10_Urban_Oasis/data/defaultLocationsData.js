@@ -16,6 +16,14 @@ let defaultLocationsData = [
     },
     description: "Hidden Location #2",
   },
+  {
+    title: "Third",
+    location: {
+      latitude: 55.70783139550687,
+      longitude: 12.483655884861946,
+    },
+    description: "Hidden Location #2",
+  },
 ];
 
 export default defaultLocationsData;

@@ -14,16 +14,39 @@ export const LocationContextProvider = ({ children }) => {
   const [draggableMarkerCoordCurrent, setDraggableMarkerCoordCurrent] =
     useState(null);
 
-  useEffect(() => {
-    // Request permission to access the device's location
-    const requestLocationPermission = async () => {
+  // Function to request location permission and update current position
+  const requestLocationPermissionAndUpdatePosition = async () => {
+    try {
       let { status } = await Location.requestForegroundPermissionsAsync();
       if (status !== "granted") {
         console.error("Permission to access location was denied");
         return;
       }
-    };
 
+      // Get the current position
+      let location = await Location.getCurrentPositionAsync({});
+      setCurrentPosition({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+
+      // Get current position for the draggable marker as its starting point
+      setDraggableMarkerCoordCurrent({
+        latitude: location.coords.latitude,
+        longitude: location.coords.longitude,
+      });
+    } catch (error) {
+      console.error("Error updating current position:", error);
+    }
+  };
+
+  // useEffect to fetch initial location immediately upon app start
+  useEffect(() => {
+    requestLocationPermissionAndUpdatePosition();
+  }, []); // Run this effect only once when the component mounts
+
+  // useEffect to start the interval for updating the current position every 5 seconds
+  useEffect(() => {
     // Function to update the current position
     const updateCurrentPosition = async () => {
       try {
@@ -36,9 +59,6 @@ export const LocationContextProvider = ({ children }) => {
         console.error("Error updating current position:", error);
       }
     };
-
-    // Initial request for location permission
-    requestLocationPermission();
 
     // Update the current position every 5 seconds (adjust the interval as needed)
     const locationUpdateInterval = setInterval(updateCurrentPosition, 5000);
