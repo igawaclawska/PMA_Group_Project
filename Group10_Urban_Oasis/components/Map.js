@@ -21,10 +21,10 @@ export const Map = ({ screenType }) => {
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [directions, setDirections] = useState(null);
 
-  const handleTakeMeThere = async () => {
+  const handleTakeMeThere = async ({ location }) => {
     setDestinationCoords({
-      latitude: 55.60866491013769,
-      longitude: 12.5911277895021,
+      latitude: location.latitude,
+      longitude: location.longitude,
     });
 
     console.log("Current Position:", currentPosition);
@@ -68,6 +68,7 @@ export const Map = ({ screenType }) => {
           coordinate={item.location}
           title={item.title}
           description={item.description}
+          onPress={() => handleTakeMeThere({ location: item.location })}
         />
       );
     });
@@ -97,14 +98,16 @@ export const Map = ({ screenType }) => {
       provider={PROVIDER_GOOGLE}
       ref={mapRef}
       style={styles.map}
+      onRegionChange={onRegionChange}
       // onRegionChange={onRegionChange}
       initialRegion={{
-        latitude: currentPosition.latitude,
-        latitudeDelta: 0.12,
-        longitude: currentPosition.longitude,
-        longitudeDelta: 0.14,
+        latitude: 55.813353748065204,
+        latitudeDelta: 0.007,
+        longitude: 12.34104207156517,
+        longitudeDelta: 0.006,
       }}
       customMapStyle={mapTheme}
+      gestureEnabled={true} // Ensure this property is set to true
     >
       {/* Maps through array DefaultLocations and displays markers*/}
       {showDefaultLocations()}
@@ -135,15 +138,15 @@ export const Map = ({ screenType }) => {
         />
       )}
       {/* Take Me There Button */}
-      <View style={styles.container}>
-        <Pressable
-          title="ddd"
-          onPress={handleTakeMeThere}
-          style={styles.takeMeThereButton}
-        >
-          <Text style={styles.buttonText}>Take Me There</Text>
-        </Pressable>
-      </View>
+      {/* <View style={styles.container}> */}
+      <Pressable
+        title="ddd"
+        onPress={handleTakeMeThere}
+        style={styles.takeMeThereButton}
+      >
+        <Text style={styles.buttonText}>Take Me There</Text>
+      </Pressable>
+      {/* </View> */}
     </MapView>
   );
 };

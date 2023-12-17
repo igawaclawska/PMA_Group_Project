@@ -3,6 +3,7 @@ import { useContext } from "react";
 import { LocationContext } from "../location/locationContext";
 import { Callout, Marker } from "react-native-maps";
 import { Alert, Text, Image, StyleSheet, View } from "react-native";
+import { handleTakeMeThere } from "./Map";
 
 export const CustomMarker = ({
   type,
@@ -97,6 +98,9 @@ export const CustomMarker = ({
               )}
 
               <Text style={styles.calloutClickToAction}>Open location</Text>
+              <Text onPress={onPress} style={styles.calloutClickToAction}>
+                Take me there
+              </Text>
             </View>
           </Callout>
         </Marker>
