@@ -7,6 +7,7 @@ import { Platform } from "react-native";
 import { CameraContext } from "../../camera/cameraContext";
 import { Camera } from "expo-camera";
 import mainContainerStyle from "../../globalStyles/mainContainer";
+import { CustomRoundButton } from "../../components/CustomRoundButton";
 
 export const CameraView = ({ navigation }) => {
   const isAndroid = Platform.OS === "android";
@@ -26,21 +27,25 @@ export const CameraView = ({ navigation }) => {
     <>
       {isFocused && (
         <Camera
-          style={mainContainerStyle}
+          style={[mainContainerStyle, styles.container]}
           ref={(ref) => setCamera(ref)}
           type={type}
           useCamera2Api={isAndroid}
           ratio="1:2"
-        />
+        >
+          <View style={styles.buttonWrapper}>
+            <View style={styles.singleButtonWrapper}>
+              <CustomButton onPress={clickNavigateBack} value={"Back"} />
+            </View>
+            {/* <View style={styles.singleButtonWrapper}>
+              <CustomButton onPress={toggleCamera} value={"Toggle Camera"} />
+            </View> */}
+            <View style={styles.singleButtonWrapper}>
+            <CustomRoundButton />
+            </View>
+          </View>
+        </Camera>
       )}
-      <View style={styles.buttonWrapper}>
-        <View style={styles.singleButtonWrapper}>
-          <CustomButton onPress={clickNavigateBack} value={"Back"} />
-        </View>
-        <View style={styles.singleButtonWrapper}>
-          <CustomButton onPress={toggleCamera} value={"Toggle Camera"} />
-        </View>
-      </View>
     </>
   );
 };
@@ -48,8 +53,9 @@ export const CameraView = ({ navigation }) => {
 const styles = StyleSheet.create({
   container: {
     paddingTop: 46,
+    paddingBottom: 24,
     alignItems: "center",
-    justifyContent: "center",
+    justifyContent: "flex-end",
     flex: 1,
   },
 
