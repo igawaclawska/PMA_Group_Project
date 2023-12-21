@@ -1,6 +1,5 @@
 import React from "react";
-import { View, Text, StyleSheet, Pressable } from "react-native";
-import { CustomButton } from "../../components/CustomButton";
+import { View, StyleSheet } from "react-native";
 import { useContext, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { Platform } from "react-native";
@@ -34,27 +33,28 @@ export const CameraView = ({ navigation }) => {
           useCamera2Api={isAndroid}
           ratio="1:2"
         >
-          <View style={styles.singleButtonWrapper}>
-            <CustomButton onPress={clickNavigateBack} value={"Back"} />
+          <View style={styles.backButtonWrapper}>
+            <Ionicons
+              onPress={clickNavigateBack}
+              name="close-circle-outline"
+              size={32}
+              color="white"
+            />
           </View>
           <View style={styles.buttonWrapper}>
-            <Pressable>
-              <Ionicons
-                onPress={toggleCamera}
-                name="sync"
-                size={40}
-                color="white"
-              />
-            </Pressable>
+            <Ionicons
+              onPress={toggleCamera}
+              name="sync"
+              size={40}
+              color="white"
+            />
             <CustomRoundButton />
-            <Pressable>
-              <Ionicons
-                onPress={clickNavigateToPhoto}
-                name="image"
-                size={38}
-                color="white"
-              />
-            </Pressable>
+            <Ionicons
+              onPress={clickNavigateToPhoto}
+              name="image"
+              size={38}
+              color="white"
+            />
           </View>
         </Camera>
       )}
@@ -67,7 +67,7 @@ const styles = StyleSheet.create({
     paddingTop: 46,
     paddingBottom: 24,
     alignItems: "center",
-    justifyContent: "flex-end",
+    justifyContent: "space-between",
     flex: 1,
   },
 
@@ -76,5 +76,10 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-around",
     alignItems: "center",
+    paddingHorizontal: 16,
+  },
+
+  backButtonWrapper: {
+    width: "100%",
   },
 });
