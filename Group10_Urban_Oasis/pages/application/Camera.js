@@ -1,5 +1,5 @@
 import React from "react";
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Alert } from "react-native";
 import { useContext, useState } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { Platform } from "react-native";
@@ -21,6 +21,16 @@ export const CameraView = ({ navigation }) => {
   };
   const clickNavigateBack = () => {
     navigation.goBack();
+  };
+
+  const clickTakeAPhoto = () => {
+    snapAndSave();
+    // temporary solution with the alert
+    Alert.alert(
+      "Photo taken!",
+      "Photo has been taken an saved in your gallery",
+      { cancelable: true }
+    );
   };
 
   return (
@@ -48,7 +58,7 @@ export const CameraView = ({ navigation }) => {
               size={40}
               color="white"
             />
-            <CustomRoundButton />
+            <CustomRoundButton onPress={clickTakeAPhoto} />
             <Ionicons
               onPress={clickNavigateToPhoto}
               name="image"
@@ -69,6 +79,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "space-between",
     flex: 1,
+    zIndex: 1,
   },
 
   buttonWrapper: {
