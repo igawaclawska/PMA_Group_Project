@@ -17,7 +17,8 @@ export const CameraView = ({ navigation }) => {
     useContext(CameraContext);
 
   const clickNavigateToPhoto = () => {
-    navigation.navigate("Photo View");
+    // navigation.navigate("Photo View");
+    Alert.alert("Preview of a saved photo not supported yet")
   };
   const clickNavigateBack = () => {
     navigation.goBack();

@@ -10,7 +10,7 @@ export const PhotoView = ({ navigation }) => {
 
   return (
     <View style={mainContainerStyle}>
-      <Text>PhotoView Page</Text>
+      <Text>Photo Preview Page</Text>
       <CustomButton onPress={clickNavigateBack} value={"Go back"} />
     </View>
   );
