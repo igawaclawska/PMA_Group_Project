@@ -1,12 +1,16 @@
-import { StyleSheet, Pressable, View, Text } from "react-native";
+import { StyleSheet, Pressable, View } from "react-native";
 
 import React from "react";
 
-export const CustomRoundButton = () => {
+export const CustomRoundButton = ({ onPress }) => {
   return (
-    <Pressable style={styles.btnContainer}>
-      <View style={styles.btn}></View>
-    </Pressable>
+    <View onPress={onPress} style={[styles.btnContainer]}>
+      <Pressable
+        style={({ pressed }) =>
+          pressed ? [styles.btn, styles.pressed] : [styles.btn]
+        }
+      ></Pressable>
+    </View>
   );
 };
 
@@ -17,10 +21,14 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "#ffffff", 
+    backgroundColor: "#ffffff",
     borderRadius: 100,
     marginVertical: 4,
     gap: 6,
+  },
+
+  pressed: {
+    backgroundColor: "#d6d6d6",
   },
 
   btnContainer: {
@@ -29,8 +37,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#ffffff",
-    borderWidth: 4,
+    borderWidth: 3,
     borderRadius: 100,
-
-  }
+  },
 });
