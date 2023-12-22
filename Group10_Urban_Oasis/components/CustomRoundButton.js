@@ -4,8 +4,9 @@ import React from "react";
 
 export const CustomRoundButton = ({ onPress }) => {
   return (
-    <View onPress={onPress} style={[styles.btnContainer]}>
+    <View style={[styles.btnContainer]}>
       <Pressable
+        onPress={onPress}
         style={({ pressed }) =>
           pressed ? [styles.btn, styles.pressed] : [styles.btn]
         }
@@ -16,8 +17,8 @@ export const CustomRoundButton = ({ onPress }) => {
 
 const styles = StyleSheet.create({
   btn: {
-    height: 56,
-    width: 56,
+    height: 64,
+    width: 64,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
@@ -37,7 +38,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     borderColor: "#ffffff",
-    borderWidth: 3,
+    borderWidth: 2,
     borderRadius: 100,
   },
 });
