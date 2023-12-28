@@ -32,6 +32,7 @@ export const CameraView = ({ navigation }) => {
       "Photo has been taken an saved in your gallery",
       { cancelable: true }
     );
+    console.log(uri)
   };
 
   return (

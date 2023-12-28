@@ -31,6 +31,7 @@ export const Map = ({ screenType }) => {
           coordinate={item.location}
           title={item.title}
           description={item.description}
+          uri={item.uri}
         />
       );
     });

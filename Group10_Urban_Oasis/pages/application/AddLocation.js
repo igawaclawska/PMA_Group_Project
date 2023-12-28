@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { CustomInputField } from "../../components/CustomInputField";
 import { LocationContext } from "../../location/locationContext";
+import { CameraContext } from "../../camera/cameraContext";
 import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationItem } from "../../data/LocationItem"; //Location class used to create location objects
@@ -21,6 +22,8 @@ export const AddLocation = ({ navigation }) => {
     setDraggableMarkerCoordCurrent,
     currentPosition,
   } = useContext(LocationContext);
+
+  const { uri } = useContext(CameraContext);
 
   const handleNavigateToExplore = () => {
     navigation.navigate("Explore");
@@ -66,12 +69,14 @@ export const AddLocation = ({ navigation }) => {
             trimmedLocationName,
             trimmedDescription,
             latitude,
-            longitude
+            longitude,
+            uri,
           ),
         ],
         //clear input fields after adding a new location
         setLocationName(""),
         setDescription(""),
+        console.log(uri),
 
         createLocationAddedAlert()
       );
