@@ -1,7 +1,7 @@
 import React, { createContext, useEffect, useState } from "react";
 import { CameraType } from "expo-camera";
 
-import { hasCameraPermission, snapAndSavePhoto } from "./cameraServices.js"
+import { hasCameraPermission, snapAndSavePhoto } from "./cameraServices.js";
 
 export const CameraContext = createContext();
 
@@ -19,7 +19,9 @@ export const CameraContextProvider = ({ children }) => {
   }, []);
 
   const toggleCamera = () => {
-    setType(current => (current === CameraType.back ? CameraType.front : CameraType.back));
+    setType((current) =>
+      current === CameraType.back ? CameraType.front : CameraType.back
+    );
   };
 
   const snapAndSave = async () => {
@@ -31,7 +33,7 @@ export const CameraContextProvider = ({ children }) => {
 
   return (
     <CameraContext.Provider
-      value={{ type, uri, setCamera, toggleCamera, snapAndSave }}
+      value={{ type, uri, setUri, setCamera, toggleCamera, snapAndSave }}
     >
       {children}
     </CameraContext.Provider>
