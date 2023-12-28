@@ -1,6 +1,6 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
+import { StyleSheet, Text, View, Alert, Pressable, Image } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { CustomInputField } from "../../components/CustomInputField";
 import { LocationContext } from "../../location/locationContext";
@@ -23,7 +23,7 @@ export const AddLocation = ({ navigation }) => {
     currentPosition,
   } = useContext(LocationContext);
 
-  const { uri } = useContext(CameraContext);
+  const { uri, setUri } = useContext(CameraContext);
 
   const handleNavigateToExplore = () => {
     navigation.navigate("Explore");
@@ -70,7 +70,7 @@ export const AddLocation = ({ navigation }) => {
             trimmedDescription,
             latitude,
             longitude,
-            uri,
+            uri
           ),
         ],
         //clear input fields after adding a new location
@@ -82,8 +82,10 @@ export const AddLocation = ({ navigation }) => {
       );
     } else {
       Alert.alert("To add a new location, you need to provide its name");
+      console.log(uri);
     }
     handleGreenMarkerReset();
+    setUri(null);
   };
 
   return (
@@ -137,20 +139,14 @@ export const AddLocation = ({ navigation }) => {
                 />
               }
             />
+            {uri && (
+              <Image style={styles.imageSection} source={{ uri: uri, isStatic: true }}/>
+            )}
             <View style={styles.uploadButtonsSection}>
               <View style={styles.uploadButtonWrapper}>
                 <CustomButton
-                  value={"Upload image"}
-                  theme={"secondary"}
-                  icon={
-                    <Ionicons name="ios-cloud-upload" size={24} color="black" />
-                  }
-                />
-              </View>
-              <View style={styles.uploadButtonWrapper}>
-                <CustomButton
                   onPress={clickNavigateToCamera}
-                  value={"Open camera"}
+                  value={uri ? "Take another picture":"Take a picture"}
                   theme={"secondary"}
                   icon={<Ionicons name="camera" size={24} color="black" />}
                 />
@@ -202,6 +198,12 @@ const styles = StyleSheet.create({
 
   inputSection: {
     width: "100%",
+  },
+
+  imageSection: {
+    height: 60,
+    width: 60,
+    borderRadius: 8,
   },
 
   buttonWrapper: {

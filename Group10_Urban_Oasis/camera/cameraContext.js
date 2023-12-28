@@ -31,7 +31,7 @@ export const CameraContextProvider = ({ children }) => {
 
   return (
     <CameraContext.Provider
-      value={{ type, uri, setCamera, toggleCamera, snapAndSave }}
+      value={{ type, uri, setUri, setCamera, toggleCamera, snapAndSave }}
     >
       {children}
     </CameraContext.Provider>

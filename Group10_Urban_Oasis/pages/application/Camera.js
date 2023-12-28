@@ -18,7 +18,7 @@ export const CameraView = ({ navigation }) => {
 
   const clickNavigateToPhoto = () => {
     // navigation.navigate("Photo View");
-    Alert.alert("Preview of a saved photo not supported yet")
+    Alert.alert("Preview of a saved photo not supported yet");
   };
   const clickNavigateBack = () => {
     navigation.goBack();
@@ -28,11 +28,25 @@ export const CameraView = ({ navigation }) => {
     snapAndSave();
     // temporary solution with the alert
     Alert.alert(
-      "Photo taken!",
+      "Photo added",
       "Photo has been taken an saved in your gallery",
-      { cancelable: true }
+      [
+        {
+          text: "Continue adding new location",
+          onPress: () => {
+            clickNavigateBack(), console.log("Continue Pressed");
+          },
+        },
+        {
+          text: "Change photo",
+          onPress: () => {
+            console.log("OK Pressed");
+          },
+        },
+      ]
     );
-    console.log(uri)
+
+    console.log(uri);
   };
 
   return (
