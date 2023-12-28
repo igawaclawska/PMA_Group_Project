@@ -1,6 +1,6 @@
 import React from "react";
 import { View, StyleSheet, Alert } from "react-native";
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useIsFocused } from "@react-navigation/native";
 import { Platform } from "react-native";
 import { CameraContext } from "../../camera/cameraContext";
@@ -13,39 +13,16 @@ export const CameraView = ({ navigation }) => {
   const isAndroid = Platform.OS === "android";
   const isFocused = useIsFocused();
 
-  const { type, uri, setCamera, toggleCamera, snapAndSave } =
+  const { type, uri, setUri, setCamera, toggleCamera, snapAndSave } =
     useContext(CameraContext);
-
-  const clickNavigateToPhoto = () => {
-    // navigation.navigate("Photo View");
-    Alert.alert("Preview of a saved photo not supported yet");
-  };
+    
   const clickNavigateBack = () => {
     navigation.goBack();
   };
 
-  const clickTakeAPhoto = () => {
-    snapAndSave();
-    // temporary solution with the alert
-    Alert.alert(
-      "Photo added",
-      "Photo has been taken an saved in your gallery",
-      [
-        {
-          text: "Continue adding new location",
-          onPress: () => {
-            clickNavigateBack(), console.log("Continue Pressed");
-          },
-        },
-        {
-          text: "Change photo",
-          onPress: () => {
-            console.log("OK Pressed");
-          },
-        },
-      ]
-    );
-
+  const clickTakeAPhoto = async () => {
+    await snapAndSave();
+    clickNavigateBack();
     console.log(uri);
   };
 
@@ -59,26 +36,18 @@ export const CameraView = ({ navigation }) => {
           useCamera2Api={isAndroid}
           ratio="1:2"
         >
-          <View style={styles.backButtonWrapper}>
+          <View style={styles.buttonWrapper}>
             <Ionicons
               onPress={clickNavigateBack}
               name="close-circle-outline"
-              size={32}
-              color="white"
-            />
-          </View>
-          <View style={styles.buttonWrapper}>
-            <Ionicons
-              onPress={toggleCamera}
-              name="sync"
               size={40}
               color="white"
             />
             <CustomRoundButton onPress={clickTakeAPhoto} />
             <Ionicons
-              onPress={clickNavigateToPhoto}
-              name="image"
-              size={38}
+              onPress={toggleCamera}
+              name="sync"
+              size={40}
               color="white"
             />
           </View>
@@ -93,9 +62,8 @@ const styles = StyleSheet.create({
     paddingTop: 46,
     paddingBottom: 24,
     alignItems: "center",
-    justifyContent: "space-between",
+    justifyContent: "flex-end",
     flex: 1,
-    zIndex: 1,
   },
 
   buttonWrapper: {
@@ -104,9 +72,5 @@ const styles = StyleSheet.create({
     justifyContent: "space-around",
     alignItems: "center",
     paddingHorizontal: 16,
-  },
-
-  backButtonWrapper: {
-    width: "100%",
   },
 });

@@ -7,6 +7,6 @@ export class LocationItem {
       longitude,
     };
     this.description = description;
-    this.uri = uri
+    this.uri = uri;
   }
 }

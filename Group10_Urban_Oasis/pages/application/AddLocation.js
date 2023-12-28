@@ -1,4 +1,4 @@
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Alert, Pressable, Image } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
@@ -78,14 +78,14 @@ export const AddLocation = ({ navigation }) => {
         setDescription(""),
         console.log(uri),
 
-        createLocationAddedAlert()
+        createLocationAddedAlert(),
+        setUri(null)
       );
+      handleGreenMarkerReset();
     } else {
       Alert.alert("To add a new location, you need to provide its name");
       console.log(uri);
     }
-    handleGreenMarkerReset();
-    setUri(null);
   };
 
   return (
@@ -140,13 +140,16 @@ export const AddLocation = ({ navigation }) => {
               }
             />
             {uri && (
-              <Image style={styles.imageSection} source={{ uri: uri, isStatic: true }}/>
+              <Image
+                style={styles.imageSection}
+                source={{ uri: uri, isStatic: true }}
+              />
             )}
             <View style={styles.uploadButtonsSection}>
               <View style={styles.uploadButtonWrapper}>
                 <CustomButton
                   onPress={clickNavigateToCamera}
-                  value={uri ? "Take another picture":"Take a picture"}
+                  value={uri ? "Update picture" : "Take a picture"}
                   theme={"secondary"}
                   icon={<Ionicons name="camera" size={24} color="black" />}
                 />
