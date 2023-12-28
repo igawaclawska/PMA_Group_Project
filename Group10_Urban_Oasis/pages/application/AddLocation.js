@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Alert, Pressable, Image } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
@@ -52,35 +53,48 @@ export const AddLocation = ({ navigation }) => {
     );
   };
 
-  const addLocation = () => {
+  const addLocation = async () => {
     let trimmedLocationName = locationName.trim(); //cleans the input up
     let trimmedDescription = description.trim(); //cleans the input up
     let latitude = draggableMarkerCoordCurrent.latitude;
     let longitude = draggableMarkerCoordCurrent.longitude;
 
     if (trimmedLocationName.length !== 0) {
+
+      let newLocation = new LocationItem(
+        trimmedLocationName,
+        trimmedDescription,
+        latitude,
+        longitude,
+        uri
+      );
+
       //appends new location object to the defautLocations array
       setDefaultLocations(
         (prevLocations) => [
           ...prevLocations,
+          newLocation,
+        ]
+      );
 
-          //create new Location object
-          new LocationItem(
-            trimmedLocationName,
-            trimmedDescription,
-            latitude,
-            longitude,
-            uri
-          ),
-        ],
-        //clear input fields after adding a new location
-        setLocationName(""),
+      try {
+        await AsyncStorage.setItem("Location1", JSON.stringify(newLocation));
+      } catch (error) {
+        // Error saving data
+      }
+
+      try {
+        let item1 = await AsyncStorage.getItem("Location1");
+        console.log(item1);
+      } catch (error) {
+        console.log(error);
+      }
+
+      setLocationName(""),
         setDescription(""),
         console.log(uri),
-
         createLocationAddedAlert(),
-        setUri(null)
-      );
+        setUri(null);
       handleGreenMarkerReset();
     } else {
       Alert.alert("To add a new location, you need to provide its name");
