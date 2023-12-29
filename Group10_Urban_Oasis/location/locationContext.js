@@ -41,27 +41,34 @@ export const LocationContextProvider = ({ children }) => {
 
   //fetch data from async storage
   useEffect(() => {
-    loadInitialData(); //runs only if async storage is empty, adds initial json data to async storage
-    fetchDataFromAsyncStorage(); //fetches permanent data from async storage
-  }, []);
+    fetchDataFromAsyncStorage();
+    console.log(`default locations: ${defaultLocations}`);
+  }, [defaultLocations.length]);
 
   const fetchDataFromAsyncStorage = async () => {
     try {
       const data = await AsyncStorage.getItem("ALL_LOCATIONS");
       if (data !== null) {
         setDefaultLocations(JSON.parse(data));
+      } else {
+        return loadInitialData();
       }
     } catch (error) {
       console.log(error);
     }
   };
 
+  //add json data to Async Storage if no data available
   const loadInitialData = async () => {
-    if (defaultLocations.length === 0) {
+    try {
       await AsyncStorage.setItem(
         "ALL_LOCATIONS",
         JSON.stringify(defaultLocationsDataJson)
       );
+      const initialData = await AsyncStorage.getItem("ALL_LOCATIONS");
+      setDefaultLocations(JSON.parse(initialData));
+    } catch (error) {
+      console.log(error);
     }
   };
 

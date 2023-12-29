@@ -17,6 +17,7 @@ export const AddLocation = ({ navigation }) => {
   const [description, setDescription] = useState("");
 
   const {
+    defaultLocations,
     setDefaultLocations,
     draggableMarkerCoord,
     draggableMarkerCoordCurrent,
@@ -60,7 +61,6 @@ export const AddLocation = ({ navigation }) => {
     let longitude = draggableMarkerCoordCurrent.longitude;
 
     if (trimmedLocationName.length !== 0) {
-
       let newLocation = new LocationItem(
         trimmedLocationName,
         trimmedDescription,
@@ -70,36 +70,30 @@ export const AddLocation = ({ navigation }) => {
       );
 
       //appends new location object to the defautLocations array
-      setDefaultLocations(
-        (prevLocations) => [
-          ...prevLocations,
-          newLocation,
-        ]
-      );
+      const updatedLocations = [...defaultLocations, newLocation];
+
+      setDefaultLocations(updatedLocations);
 
       try {
-        await AsyncStorage.setItem("Location1", JSON.stringify(newLocation));
-      } catch (error) {
-        // Error saving data
-      }
-
-      try {
-        let item1 = await AsyncStorage.getItem("Location1");
-        console.log(item1);
+        await AsyncStorage.setItem(
+          "ALL_LOCATIONS",
+          JSON.stringify(updatedLocations)
+        );
+        console.log("New location added to Async storage");
       } catch (error) {
         console.log(error);
       }
-
-      setLocationName(""),
-        setDescription(""),
-        console.log(uri),
-        createLocationAddedAlert(),
-        setUri(null);
-      handleGreenMarkerReset();
+      setLocationName(""), setDescription(""), setUri(null);
+      createLocationAddedAlert(), handleGreenMarkerReset();
     } else {
       Alert.alert("To add a new location, you need to provide its name");
-      console.log(uri);
     }
+  };
+
+  //test function
+  const clearAsyncStorage = async () => {
+    await AsyncStorage.removeItem("ALL_LOCATIONS");
+    setDefaultLocations([]);
   };
 
   return (
@@ -172,6 +166,8 @@ export const AddLocation = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonWrapper}>
+          {/* Test button for clearing Async storage location data */}
+          {/* <CustomButton onPress={clearAsyncStorage} value={"Clear"} /> */}
           <CustomButton onPress={addLocation} value={"Add location"} />
         </View>
       </View>

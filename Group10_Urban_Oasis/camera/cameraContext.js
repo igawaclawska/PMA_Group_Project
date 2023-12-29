@@ -9,7 +9,7 @@ export const CameraContextProvider = ({ children }) => {
   const [hasPermission, setHasPermission] = useState(false);
   const [camera, setCamera] = useState(null);
   const [type, setType] = useState(CameraType.back);
-  const [uri, setUri] = useState(null);
+  const [uri, setUri] = useState(null); //uri of all images taken and saved to gallery
 
   useEffect(() => {
     (async () => {
