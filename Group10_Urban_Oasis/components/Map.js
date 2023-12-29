@@ -18,7 +18,7 @@ export const Map = ({ screenType }) => {
   const mapRef = useRef();
 
   const showDefaultLocations = () => {
-    return defaultLocations.map((item, index) => {
+    return defaultLocations?.map((item, index) => {
       return (
         <CustomMarker
           key={index}
