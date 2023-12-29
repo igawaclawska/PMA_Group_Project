@@ -1,7 +1,16 @@
 import { useState, useContext } from "react";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Alert, Pressable, Image } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Pressable,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { CustomInputField } from "../../components/CustomInputField";
 import { LocationContext } from "../../location/locationContext";
@@ -91,8 +100,8 @@ export const AddLocation = ({ navigation }) => {
   };
 
   const clearImage = () => {
-    setUri(null)
-  }
+    setUri(null);
+  };
 
   //test function
   const clearAsyncStorage = async () => {
@@ -101,7 +110,10 @@ export const AddLocation = ({ navigation }) => {
   };
 
   return (
-    <View style={[mainContainerStyle, styles.container]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={[mainContainerStyle, styles.container]}
+    >
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
         <Map screenType={"AddLocation"} />
@@ -153,7 +165,13 @@ export const AddLocation = ({ navigation }) => {
             />
             {uri && (
               <View>
-                  <Ionicons style={styles.deleteImage} name="md-close-circle-sharp" size={28} color="white" onPress={clearImage} />
+                <Ionicons
+                  style={styles.deleteImage}
+                  name="md-close-circle-sharp"
+                  size={28}
+                  color="white"
+                  onPress={clearImage}
+                />
                 <Image
                   style={styles.imageSection}
                   source={{ uri: uri, isStatic: true }}
@@ -178,7 +196,7 @@ export const AddLocation = ({ navigation }) => {
           <CustomButton onPress={addLocation} value={"Add location"} />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -234,9 +252,8 @@ const styles = StyleSheet.create({
     marginLeft: 40,
     marginTop: -6,
     shadowColor: "#000",
-    shadowOffset: {width: 2, height: 2},
+    shadowOffset: { width: 2, height: 2 },
     shadowOpacity: 0.25,
-
   },
 
   buttonWrapper: {
