@@ -1,4 +1,5 @@
 import { useState, useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Alert, Pressable, Image } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
@@ -16,6 +17,7 @@ export const AddLocation = ({ navigation }) => {
   const [description, setDescription] = useState("");
 
   const {
+    defaultLocations,
     setDefaultLocations,
     draggableMarkerCoord,
     draggableMarkerCoordCurrent,
@@ -52,40 +54,50 @@ export const AddLocation = ({ navigation }) => {
     );
   };
 
-  const addLocation = () => {
+  const addLocation = async () => {
     let trimmedLocationName = locationName.trim(); //cleans the input up
     let trimmedDescription = description.trim(); //cleans the input up
     let latitude = draggableMarkerCoordCurrent.latitude;
     let longitude = draggableMarkerCoordCurrent.longitude;
 
     if (trimmedLocationName.length !== 0) {
-      //appends new location object to the defautLocations array
-      setDefaultLocations(
-        (prevLocations) => [
-          ...prevLocations,
-
-          //create new Location object
-          new LocationItem(
-            trimmedLocationName,
-            trimmedDescription,
-            latitude,
-            longitude,
-            uri
-          ),
-        ],
-        //clear input fields after adding a new location
-        setLocationName(""),
-        setDescription(""),
-        console.log(uri),
-
-        createLocationAddedAlert(),
-        setUri(null)
+      let newLocation = new LocationItem(
+        trimmedLocationName,
+        trimmedDescription,
+        latitude,
+        longitude,
+        uri
       );
-      handleGreenMarkerReset();
+
+      //appends new location object to the defautLocations array
+      const updatedLocations = [...defaultLocations, newLocation];
+
+      setDefaultLocations(updatedLocations);
+
+      try {
+        await AsyncStorage.setItem(
+          "ALL_LOCATIONS",
+          JSON.stringify(updatedLocations)
+        );
+        console.log("New location added to Async storage");
+      } catch (error) {
+        console.log(error);
+      }
+      setLocationName(""), setDescription(""), setUri(null);
+      createLocationAddedAlert(), handleGreenMarkerReset();
     } else {
       Alert.alert("To add a new location, you need to provide its name");
-      console.log(uri);
     }
+  };
+
+  const clearImage = () => {
+    setUri(null)
+  }
+
+  //test function
+  const clearAsyncStorage = async () => {
+    await AsyncStorage.removeItem("ALL_LOCATIONS");
+    setDefaultLocations([]);
   };
 
   return (
@@ -140,10 +152,13 @@ export const AddLocation = ({ navigation }) => {
               }
             />
             {uri && (
-              <Image
-                style={styles.imageSection}
-                source={{ uri: uri, isStatic: true }}
-              />
+              <View>
+                  <Ionicons style={styles.deleteImage} name="md-close-circle-sharp" size={28} color="white" onPress={clearImage} />
+                <Image
+                  style={styles.imageSection}
+                  source={{ uri: uri, isStatic: true }}
+                />
+              </View>
             )}
             <View style={styles.uploadButtonsSection}>
               <View style={styles.uploadButtonWrapper}>
@@ -158,6 +173,8 @@ export const AddLocation = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonWrapper}>
+          {/* Test button for clearing Async storage location data */}
+          {/* <CustomButton onPress={clearAsyncStorage} value={"Clear"} /> */}
           <CustomButton onPress={addLocation} value={"Add location"} />
         </View>
       </View>
@@ -207,6 +224,19 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 8,
+    position: "relative",
+    zIndex: 0,
+  },
+
+  deleteImage: {
+    position: "absolute",
+    zIndex: 1,
+    marginLeft: 40,
+    marginTop: -6,
+    shadowColor: "#000",
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.25,
+
   },
 
   buttonWrapper: {

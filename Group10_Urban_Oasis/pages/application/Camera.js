@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { View, StyleSheet, Alert } from "react-native";
 import { useContext } from "react";
 import { useIsFocused } from "@react-navigation/native";
@@ -13,17 +13,40 @@ export const CameraView = ({ navigation }) => {
   const isAndroid = Platform.OS === "android";
   const isFocused = useIsFocused();
 
-  const { type, uri, setUri, setCamera, toggleCamera, snapAndSave } =
+  const { type, uri, setCamera, toggleCamera, snapAndSave } =
     useContext(CameraContext);
-    
+
+  const showAlert = () =>
+    Alert.alert(
+      "Photo taken",
+      "Photo has been taken and saved to your gallery",
+      [
+        {
+          text: "Use this photo",
+          onPress: () => {
+            clickNavigateBack(), console.log("Use this photo Pressed");;
+          },
+        },
+        {
+          text: "Take another photo",
+          onPress: () => console.log("Take another photo Pressed"),
+        },
+      ]
+    );
+
   const clickNavigateBack = () => {
     navigation.goBack();
   };
 
   const clickTakeAPhoto = async () => {
-    await snapAndSave();
-    clickNavigateBack();
-    console.log(uri);
+    try {
+      await snapAndSave();
+    } catch (error) {
+      console.log(error);
+    } finally {
+      console.log(uri);
+      showAlert();
+    }
   };
 
   return (
