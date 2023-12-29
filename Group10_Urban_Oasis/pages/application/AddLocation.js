@@ -90,6 +90,10 @@ export const AddLocation = ({ navigation }) => {
     }
   };
 
+  const clearImage = () => {
+    setUri(null)
+  }
+
   //test function
   const clearAsyncStorage = async () => {
     await AsyncStorage.removeItem("ALL_LOCATIONS");
@@ -148,10 +152,13 @@ export const AddLocation = ({ navigation }) => {
               }
             />
             {uri && (
-              <Image
-                style={styles.imageSection}
-                source={{ uri: uri, isStatic: true }}
-              />
+              <View>
+                  <Ionicons style={styles.deleteImage} name="md-close-circle-sharp" size={28} color="white" onPress={clearImage} />
+                <Image
+                  style={styles.imageSection}
+                  source={{ uri: uri, isStatic: true }}
+                />
+              </View>
             )}
             <View style={styles.uploadButtonsSection}>
               <View style={styles.uploadButtonWrapper}>
@@ -217,6 +224,19 @@ const styles = StyleSheet.create({
     height: 60,
     width: 60,
     borderRadius: 8,
+    position: "relative",
+    zIndex: 0,
+  },
+
+  deleteImage: {
+    position: "absolute",
+    zIndex: 1,
+    marginLeft: 40,
+    marginTop: -6,
+    shadowColor: "#000",
+    shadowOffset: {width: 2, height: 2},
+    shadowOpacity: 0.25,
+
   },
 
   buttonWrapper: {
