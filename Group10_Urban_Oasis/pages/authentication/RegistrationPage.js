@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { useState, useContext } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, KeyboardAvoidingView } from "react-native";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { CustomInputField } from "../../components/CustomInputField";
 import { CustomButton } from "../../components/CustomButton";
@@ -16,7 +16,10 @@ export const RegistrationPage = ({ navigation }) => {
   const [passwordRepeated, setPasswordRepeated] = useState("");
 
   return (
-    <View style={mainContainerStyle}>
+    <KeyboardAvoidingView
+      style={mainContainerStyle}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <StatusBar style="auto" />
       <View style={styles.pageContentWrapper}>
         <Text style={[typography.boldFont, typography.h2]}>
@@ -56,7 +59,7 @@ export const RegistrationPage = ({ navigation }) => {
           />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
