@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { StyleSheet, View, TextInput } from "react-native";
 
-export const AuthenticationInputField = ({
+export const CustomInputField = ({
   placeholder,
   hiddenInput,
   input,
@@ -32,6 +32,7 @@ export const AuthenticationInputField = ({
         onChangeText={handleInputAdded}
         onFocus={() => setFocused(true)}
         onBlur={() => setFocused(false)}
+        blurOnSubmit={true}
       ></TextInput>
       {icon && <View>{icon}</View>}
     </View>

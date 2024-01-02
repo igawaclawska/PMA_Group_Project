@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Alert } from "react-native";
-import { AuthenticationInputField } from "../../components/AuthenticationInputField";
+import { CustomInputField } from "../../components/CustomInputField";
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
 import { CustomButton } from "../../components/CustomButton";
@@ -24,13 +24,13 @@ export const LoginPage = ({ navigation }) => {
       <View style={styles.pageContentWrapper}>
         <Text style={[typography.boldFont, typography.h2]}>Log in</Text>
         <View>
-          <AuthenticationInputField
+          <CustomInputField
             hiddenInput={false}
             input={email}
             setInput={setEmail}
             placeholder={"Email"}
           />
-          <AuthenticationInputField
+          <CustomInputField
             hiddenInput={true}
             input={password}
             setInput={setPassword}

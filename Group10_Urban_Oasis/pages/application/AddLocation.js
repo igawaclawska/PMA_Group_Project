@@ -1,24 +1,93 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
-import { AuthenticationInputField } from "../../components/AuthenticationInputField";
-import { LocationImage } from "../../components/LocationImage";
+import { CustomInputField } from "../../components/CustomInputField";
+import { LocationContext } from "../../location/locationContext";
+import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
+import { LocationItem } from "../../data/LocationItem"; //Location class used to create location objects
 import mainContainerStyle from "../../globalStyles/mainContainer";
 import typography from "../../globalStyles/typography";
 
-export const AddLocation = () => {
+export const AddLocation = ({ navigation }) => {
   const [locationName, setLocationName] = useState("");
   const [description, setDescription] = useState("");
+
+  const {
+    setDefaultLocations,
+    draggableMarkerCoord,
+    draggableMarkerCoordCurrent,
+    setDraggableMarkerCoordCurrent,
+    currentPosition,
+  } = useContext(LocationContext);
+
+  const handleNavigateToExplore = () => {
+    navigation.navigate("Explore");
+  };
+
+  // https://reactnative.dev/docs/alert
+  const createLocationAddedAlert = () =>
+    Alert.alert(`Location successfully added!`, "", [
+      {
+        text: "Go to Explore",
+        onPress: () => {
+          handleNavigateToExplore(), console.log("Go to Explore Pressed");
+        },
+        style: "cancel",
+      },
+    ]);
+
+  const handleGreenMarkerReset = () => {
+    //reset draggable marker to its starting point (current position of the user if data available)
+    setDraggableMarkerCoordCurrent(
+      currentPosition ? currentPosition : draggableMarkerCoord
+    );
+  };
+
+  const addLocation = () => {
+    let trimmedLocationName = locationName.trim(); //cleans the input up
+    let trimmedDescription = description.trim(); //cleans the input up
+    let latitude = draggableMarkerCoordCurrent.latitude;
+    let longitude = draggableMarkerCoordCurrent.longitude;
+
+    if (trimmedLocationName.length !== 0) {
+      //appends new location object to the defautLocations array
+      setDefaultLocations(
+        (prevLocations) => [
+          ...prevLocations,
+
+          //create new Location object
+          new LocationItem(
+            trimmedLocationName,
+            trimmedDescription,
+            latitude,
+            longitude
+          ),
+        ],
+        //clear input fields after adding a new location
+        setLocationName(""),
+        setDescription(""),
+
+        createLocationAddedAlert()
+      );
+    } else {
+      Alert.alert("To add a new location, you need to provide its name");
+    }
+    handleGreenMarkerReset();
+  };
 
   return (
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
-        <LocationImage path={require("../../assets/images/location.png")} />
+        <Map screenType={"AddLocation"} />
       </View>
       <View style={styles.contentContainer}>
+        <Pressable onPress={handleGreenMarkerReset} style={styles.resetButton}>
+          <Ionicons name="refresh-circle" size={20} color="#3E9C27" />
+          <Text style={styles.resetButtonText}>Reset position</Text>
+        </Pressable>
         <View style={styles.mainContent}>
           <View style={styles.textSection}>
             <Text
@@ -31,12 +100,12 @@ export const AddLocation = () => {
               Add current location to community
             </Text>
             <Text style={[typography.paragraph, typography.lightGrayText]}>
-              Lorem ipsum dolor sit amet, adipiscing elit, sed eiusmod tempor
-              incididunt.
+              The green marker shows where you are right now. You can add this
+              location, or drag the marker to a new spot.
             </Text>
           </View>
           <View style={styles.inputSection}>
-            <AuthenticationInputField
+            <CustomInputField
               hiddenInput={false}
               placeholder={"Location name"}
               input={locationName}
@@ -45,7 +114,7 @@ export const AddLocation = () => {
                 <Ionicons name="md-location-sharp" size={20} color="#9e9e9e" />
               }
             />
-            <AuthenticationInputField
+            <CustomInputField
               hiddenInput={false}
               placeholder={"Description"}
               input={description}
@@ -80,7 +149,7 @@ export const AddLocation = () => {
           </View>
         </View>
         <View style={styles.buttonWrapper}>
-          <CustomButton value={"Add location"} />
+          <CustomButton onPress={addLocation} value={"Add location"} />
         </View>
       </View>
     </View>
@@ -93,7 +162,7 @@ const styles = StyleSheet.create({
   },
 
   imageWrapper: {
-    flex: 1,
+    flex: 3,
   },
 
   uploadButtonsSection: {
@@ -106,14 +175,14 @@ const styles = StyleSheet.create({
   },
 
   contentContainer: {
-    flex: 3,
+    flex: 7,
     width: "100%",
     paddingVertical: 32,
     justifyContent: "space-between",
   },
 
   mainContent: {
-    gap: 24,
+    gap: 16,
   },
 
   textSection: {
@@ -127,5 +196,19 @@ const styles = StyleSheet.create({
 
   buttonWrapper: {
     width: "100%",
+  },
+
+  resetButton: {
+    flexDirection: "row",
+    alignItems: "center",
+    gap: 2,
+    position: "absolute",
+    top: 4,
+    right: 0,
+  },
+
+  resetButtonText: {
+    fontWeight: "600",
+    color: "#3E9C27",
   },
 });

@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-const Location = ({ title, img, description }) => (
+const LocationContainer = ({ title, img, description }) => (
   <View style={styles.card}>
     <View style={styles.cardContent}>
       <View style={styles.imageContainer}>
@@ -102,4 +102,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Location;
+export default LocationContainer;

@@ -1,6 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { Map } from "../pages/application/Map";
+import { Explore } from "../pages/application/Explore";
 import { AddLocation } from "../pages/application/AddLocation";
 import { RecentlyVisited } from "../pages/application/RecentlyVisited";
 import { UserAccount } from "../pages/application/UserAccount";
@@ -39,7 +39,7 @@ const createScreenOptions = ({ route }) => {
 export const ApplicationNavigation = () => {
   return (
     <Tab.Navigator screenOptions={createScreenOptions}>
-      <Tab.Screen name="Explore" component={Map} />
+      <Tab.Screen name="Explore" component={Explore} />
       <Tab.Screen name="Recent Visit" component={RecentlyVisited} />
       <Tab.Screen name="Add Location" component={AddLocation} />
       <Tab.Screen name="My Account" component={UserAccount} />
