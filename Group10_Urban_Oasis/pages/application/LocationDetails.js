@@ -121,7 +121,7 @@ function ViewLocation({ navigation }) {
             title={"Take me there"}
             onPress={() => {
               handleTakeMeThere({ location: location.location });
-              navigation.navigate("ExploreScreen");
+              clickNavigateBack();
             }}
           ></Buttons>
         </View>

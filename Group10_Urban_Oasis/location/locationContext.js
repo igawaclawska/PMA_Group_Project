@@ -71,7 +71,7 @@ export const LocationContextProvider = ({ children }) => {
     return () => clearInterval(locationUpdateInterval);
   }, []); // Run this effect only once when the component mounts
 
-  //fetch all locations data from async storage
+  //fetch default locations data from async storage
   useEffect(() => {
     fetchDataFromAsyncStorage();
     console.log(`default locations: ${defaultLocations}`);
@@ -90,7 +90,7 @@ export const LocationContextProvider = ({ children }) => {
     }
   };
 
-  //add json data to Async Storage if no data available
+  //add json data to Async Storage if no default locations data available
   const loadInitialData = async () => {
     try {
       await AsyncStorage.setItem(
