@@ -1,12 +1,68 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
+import { LocationContext } from "../../location/locationContext";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Alert, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
-import { AntDesign } from "@expo/vector-icons";
 import Buttons from "../../components/TakeMeThereButton";
 import { useRoute } from "@react-navigation/native";
 
 function ViewLocation({ navigation }) {
+  const {
+    currentPosition,
+    destinationCoords,
+    setDestinationCoords,
+    directions,
+    setDirections,
+    recenlyVisited,
+    setRecentlyVisited,
+  } = useContext(LocationContext);
+
+  const handleTakeMeThere = async ({ location }) => {
+    // set currently pressed location
+    setDestinationCoords({
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
+
+    // push pressed items to recenly visisted array
+
+    const visited = {
+      title: "test",
+      description: "...",
+      coordinate: location,
+    };
+
+    recenlyVisited.push(visited);
+
+    console.log("Current Position:", currentPosition);
+    console.log("Destination Coordinates:", destinationCoords);
+
+    // create directions for currently pressed marker
+
+    if (currentPosition && destinationCoords) {
+      try {
+        const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY";
+        const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
+        const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
+        const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.status === "OK" && data.routes.length > 0) {
+          const route = data.routes[0];
+          const overviewPolyline = route.overview_polyline.points;
+
+          setDirections(overviewPolyline);
+        } else {
+          console.error("Error fetching directions:", data.status);
+        }
+      } catch (error) {
+        console.error("Error fetching directions:", error);
+      }
+    }
+  };
+
   const clickNavigateBack = () => {
     navigation.goBack();
   };
@@ -63,7 +119,10 @@ function ViewLocation({ navigation }) {
         <View style={styles.buttonContainer}>
           <Buttons
             title={"Take me there"}
-            onPress={() => Alert.alert("works!")}
+            onPress={() => {
+              handleTakeMeThere({ location: location.location });
+              clickNavigateBack();
+            }}
           ></Buttons>
         </View>
       </View>
