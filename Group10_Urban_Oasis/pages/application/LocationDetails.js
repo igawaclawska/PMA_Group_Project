@@ -24,7 +24,7 @@ function ViewLocation({ navigation }) {
       longitude: location.longitude,
     });
 
-    // push pressed items to recenly visisted array
+    // push pressed items to recently visited array
 
     const visited = {
       title: "test",
@@ -32,36 +32,50 @@ function ViewLocation({ navigation }) {
       coordinate: location,
     };
 
-    recenlyVisited.push(visited);
+    const updatedRecentlyVisited = [...recenlyVisited, visited];
+    setRecentlyVisited(updatedRecentlyVisited);
 
     console.log("Current Position:", currentPosition);
     console.log("Destination Coordinates:", destinationCoords);
-
-    // create directions for currently pressed marker
-
-    if (currentPosition && destinationCoords) {
-      try {
-        const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY";
-        const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
-        const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
-        const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
-
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.status === "OK" && data.routes.length > 0) {
-          const route = data.routes[0];
-          const overviewPolyline = route.overview_polyline.points;
-
-          setDirections(overviewPolyline);
-        } else {
-          console.error("Error fetching directions:", data.status);
-        }
-      } catch (error) {
-        console.error("Error fetching directions:", error);
-      }
-    }
   };
+
+  useEffect(() => {
+    // Check if destinationCoords is updated
+    if (destinationCoords) {
+      // Execute logic related to destinationCoords update
+      console.log("Destination Coordinates Updated:", destinationCoords);
+
+      // Call any additional functions or trigger navigation here
+      // For example, you can fetch directions or trigger navigation
+      // Note: The following logic is just an example, modify it based on your requirements
+      const fetchData = async () => {
+        if (currentPosition && destinationCoords) {
+          try {
+            const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY"; // Replace with your Google Maps API key
+            const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
+            const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
+            const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
+
+            const response = await fetch(apiUrl);
+            const data = await response.json();
+
+            if (data.status === "OK" && data.routes.length > 0) {
+              const route = data.routes[0];
+              const overviewPolyline = route.overview_polyline.points;
+
+              setDirections(overviewPolyline);
+            } else {
+              console.error("Error fetching directions:", data.status);
+            }
+          } catch (error) {
+            console.error("Error fetching directions:", error);
+          }
+        }
+      };
+
+      fetchData();
+    }
+  }, [destinationCoords, currentPosition, setDirections, navigation]);
 
   const clickNavigateBack = () => {
     navigation.goBack();
@@ -72,7 +86,6 @@ function ViewLocation({ navigation }) {
   const { location } = route.params;
 
   const [imageURL, setImageURL] = useState(null);
-
   const [favorite, setFavorite] = useState(false);
 
   useEffect(() => {
@@ -90,7 +103,6 @@ function ViewLocation({ navigation }) {
       <View style={styles.container}>
         <View style={styles.imgContainer}>
           <Image
-            //use uri from the location object (if exists) or use hardcoded
             source={location.uri ? { uri: location.uri } : { uri: imageURL }}
             style={styles.image}
           />
@@ -112,7 +124,6 @@ function ViewLocation({ navigation }) {
           </Pressable>
           <View style={styles.detailsTitleContainer}>
             <Text style={styles.detailsTitle}>{location.title}</Text>
-            {/*<AntDesign name="staro" size={24} color="black" />*/}
           </View>
           <Text style={styles.detailsDescription}>{location.description}</Text>
         </View>
@@ -121,9 +132,13 @@ function ViewLocation({ navigation }) {
             title={"Take me there"}
             onPress={() => {
               handleTakeMeThere({ location: location.location });
-              clickNavigateBack();
+
+              //set timeout allowing directions to be updated
+              // before navigating back to map...
+
+              setTimeout(() => navigation.goBack(), 200);
             }}
-          ></Buttons>
+          />
         </View>
       </View>
     </View>
@@ -144,12 +159,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
-
   closeIcon: {
     alignSelf: "flex-start",
     marginBottom: 8,
   },
-
   imgContainer: {
     flex: 1.5,
     justifyContent: "flex-start",
@@ -173,17 +186,6 @@ const styles = StyleSheet.create({
     width: 55,
     height: 55,
   },
-  /*titleContainer: {
-    width: "100%",
-    height: 150,
-    paddingTop: 20,
-    justifyContent: "center",
-    alignItems: "center",
-  },
-  title: {
-    fontSize: 34,
-    fontWeight: "bold",
-  },*/
   detailsContainer: {
     flex: 2,
     paddingHorizontal: 20,
