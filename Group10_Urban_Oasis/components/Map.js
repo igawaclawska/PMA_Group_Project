@@ -1,4 +1,4 @@
-import { StyleSheet, Dimensions, Text, Pressable } from "react-native";
+import { StyleSheet, Dimensions, Text, Pressable, View } from "react-native";
 import { useState, useRef, useContext } from "react";
 import { LocationContext } from "../location/locationContext";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -6,6 +6,8 @@ import { CustomMarker } from "./CustomMarker";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import mapTheme from "../globalStyles/mapTheme"; //import map style vector
+import { Polyline } from "react-native-maps";
+import polyline from "@mapbox/polyline";
 
 // detect screen width
 // source: https://reactnative.dev/docs/dimensions
@@ -17,8 +19,58 @@ export const Map = ({ navigation, screenType }) => {
   const [count, setCount] = useState(0);
 
   const mapRef = useRef();
+  const [destinationCoords, setDestinationCoords] = useState(null);
+  const [directions, setDirections] = useState(null);
+  const [recenlyVisited, setRecentlyVisited] = useState([]);
+
+  const handleTakeMeThere = async ({ location }) => {
+    // set currently pressed location
+    setDestinationCoords({
+      latitude: location.latitude,
+      longitude: location.longitude,
+    });
+
+    // push pressed items to recenly visisted array
+
+    const visited = {
+      title: "test",
+      description: "...",
+      coordinate: location,
+    };
+
+    recenlyVisited.push(visited);
+
+    console.log("Current Position:", currentPosition);
+    console.log("Destination Coordinates:", destinationCoords);
+
+    // create directions for currently pressed marker
+
+    if (currentPosition && destinationCoords) {
+      try {
+        const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY";
+        const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
+        const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
+        const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
+
+        const response = await fetch(apiUrl);
+        const data = await response.json();
+
+        if (data.status === "OK" && data.routes.length > 0) {
+          const route = data.routes[0];
+          const overviewPolyline = route.overview_polyline.points;
+
+          setDirections(overviewPolyline);
+        } else {
+          console.error("Error fetching directions:", data.status);
+        }
+      } catch (error) {
+        console.error("Error fetching directions:", error);
+      }
+    }
+  };
 
   const showDefaultLocations = () => {
+    
     if (defaultLocations !== null) {
       //prevent errors if defautLocations array is empty
       return defaultLocations?.map((item, index) => {
@@ -38,16 +90,17 @@ export const Map = ({ navigation, screenType }) => {
             onPress={() => {
               navigation.navigate("LocationDetails", { location: item });
             }}
+             // onPress={() => handleTakeMeThere({ location: item.location })}
           />
         );
       });
     }
   };
 
-  // const onRegionChange = (region) => {
-  // console log region change
-  // console.log(region);
-  // };
+  const onRegionChange = (region) => {
+    //console log region change
+    console.log(region);
+  };
 
   const takeSnapshotAndShare = async () => {
     const snapshot = await mapRef.current.takeSnapshot({
@@ -68,14 +121,20 @@ export const Map = ({ navigation, screenType }) => {
       provider={PROVIDER_GOOGLE}
       ref={mapRef}
       style={styles.map}
+      onRegionChange={onRegionChange}
       // onRegionChange={onRegionChange}
       initialRegion={{
-        latitude: 55.71679184033459,
-        latitudeDelta: 0.8060190506549958,
-        longitude: 12.374072260726619,
-        longitudeDelta: 0.884737209682612,
+        latitude: currentPosition
+          ? currentPosition.latitude
+          : 55.60866491013769,
+        latitudeDelta: 0.007,
+        longitude: currentPosition
+          ? currentPosition.longitude
+          : 12.5911277895021,
+        longitudeDelta: 0.006,
       }}
       customMapStyle={mapTheme}
+      gestureEnabled={true} // Ensure this property is set to true
     >
       {/* Maps through array DefaultLocations and displays markers*/}
       {showDefaultLocations()}
@@ -91,7 +150,30 @@ export const Map = ({ navigation, screenType }) => {
       )}
 
       {/* map overlay, anything could be displayed here */}
+
       {/* <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text> */}
+
+      {/* Draw Route (Polyline) */}
+      {directions && (
+        <Polyline
+          coordinates={polyline.decode(directions).map((point) => ({
+            latitude: point[0],
+            longitude: point[1],
+          }))}
+          strokeWidth={5}
+          strokeColor="#b33b72"
+        />
+      )}
+      {/* Take Me There Button */}
+      {/* <View style={styles.container}> */}
+      <Pressable
+        title="ddd"
+        onPress={handleTakeMeThere}
+        style={styles.takeMeThereButton}
+      >
+        <Text style={styles.buttonText}>Take Me There</Text>
+      </Pressable>
+      {/* </View> */}
     </MapView>
   );
 };
@@ -114,4 +196,24 @@ const styles = StyleSheet.create({
   //     width: "50%",
   //     textAlign: "center",
   //   },
+
+  container: {
+    position: "relative",
+    flex: 1, // Make sure the container takes the full height
+  },
+
+  takeMeThereButton: {
+    position: "absolute",
+    bottom: 16,
+    color: "#fff",
+    left: windowWidth / 2 - 50, // Adjust based on your design
+    backgroundColor: "#4285F4",
+    padding: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    fontWeight: "bold",
+  },
 });
