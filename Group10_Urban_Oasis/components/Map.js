@@ -6,6 +6,8 @@ import { CustomMarker } from "./CustomMarker";
 import * as FileSystem from "expo-file-system";
 import { shareAsync } from "expo-sharing";
 import mapTheme from "../globalStyles/mapTheme"; //import map style vector
+import LocationDetails from "../pages/application/LocationDetails";
+import { useNavigation } from "@react-navigation/native";
 
 // detect screen width
 // source: https://reactnative.dev/docs/dimensions
@@ -15,9 +17,21 @@ export const Map = ({ screenType }) => {
   const { defaultLocations, currentPosition } = useContext(LocationContext);
 
   const [count, setCount] = useState(0);
+
   const mapRef = useRef();
 
+  const navigation = useNavigation();
+
+  const openLocationDetails = (item) => {
+    navigation.navigate("LocationDetails", { location: item });
+    console.log("LocationDetails content in map.js:", {
+      title: item.title,
+      description: item.description,
+    });
+  };
+
   const showDefaultLocations = () => {
+
     if (defaultLocations !== null) {
       //prevent errors if defautLocations array is empty
       return defaultLocations?.map((item, index) => {
