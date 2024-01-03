@@ -3,12 +3,12 @@ import { StyleSheet, View } from "react-native";
 import { Map } from "../../components/Map";
 import mainContainerStyle from "../../globalStyles/mainContainer";
 
-export const Explore = () => {
+export const Explore = ({ navigation }) => {
   return (
     <View style={[mainContainerStyle, styles.container]}>
       <StatusBar style="auto" />
       <View>
-        <Map screenType={"Explore"} />
+        <Map navigation={navigation} screenType={"Explore"} />
       </View>
     </View>
   );
