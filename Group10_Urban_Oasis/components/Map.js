@@ -18,22 +18,26 @@ export const Map = ({ screenType }) => {
   const mapRef = useRef();
 
   const showDefaultLocations = () => {
-    return defaultLocations.map((item, index) => {
-      return (
-        <CustomMarker
-          key={index}
-          //Callout support only on the "Explore" screen
-          type={
-            screenType === "Explore"
-              ? "addedLocationWithCallout"
-              : "addedLocation"
-          }
-          coordinate={item.location}
-          title={item.title}
-          description={item.description}
-        />
-      );
-    });
+    if (defaultLocations !== null) {
+      //prevent errors if defautLocations array is empty
+      return defaultLocations?.map((item, index) => {
+        return (
+          <CustomMarker
+            key={index}
+            //Callout support only on the "Explore" screen
+            type={
+              screenType === "Explore"
+                ? "addedLocationWithCallout"
+                : "addedLocation"
+            }
+            coordinate={item.location}
+            title={item.title}
+            description={item.description}
+            uri={item.uri}
+          />
+        );
+      });
+    }
   };
 
   // const onRegionChange = (region) => {

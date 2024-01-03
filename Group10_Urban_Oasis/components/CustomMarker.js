@@ -10,6 +10,7 @@ export const CustomMarker = ({
   title,
   description,
   onPress,
+  uri,
 }) => {
   const {
     draggableMarkerCoord,
@@ -89,7 +90,11 @@ export const CustomMarker = ({
             <View style={styles.calloutContentWrapper}>
               <Image
                 style={styles.calloutImage}
-                source={require("../assets/images/image-3.jpg")}
+                source={
+                  uri
+                    ? { uri: uri, isStatic: true }
+                    : require("../assets/images/image-1.jpg")
+                }
               ></Image>
               <Text style={styles.calloutTitle}>{title}</Text>
               {description && (

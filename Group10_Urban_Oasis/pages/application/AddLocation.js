@@ -1,9 +1,20 @@
 import { useState, useContext } from "react";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Alert, Pressable } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  Pressable,
+  Image,
+  KeyboardAvoidingView,
+  Platform,
+} from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { CustomInputField } from "../../components/CustomInputField";
 import { LocationContext } from "../../location/locationContext";
+import { CameraContext } from "../../camera/cameraContext";
 import { Map } from "../../components/Map";
 import { Ionicons } from "@expo/vector-icons";
 import { LocationItem } from "../../data/LocationItem"; //Location class used to create location objects
@@ -15,6 +26,7 @@ export const AddLocation = ({ navigation }) => {
   const [description, setDescription] = useState("");
 
   const {
+    defaultLocations,
     setDefaultLocations,
     draggableMarkerCoord,
     draggableMarkerCoordCurrent,
@@ -22,8 +34,14 @@ export const AddLocation = ({ navigation }) => {
     currentPosition,
   } = useContext(LocationContext);
 
+  const { uri, setUri } = useContext(CameraContext);
+
   const handleNavigateToExplore = () => {
     navigation.navigate("Explore");
+  };
+
+  const clickNavigateToCamera = () => {
+    navigation.navigate("Camera Screen");
   };
 
   // https://reactnative.dev/docs/alert
@@ -45,40 +63,57 @@ export const AddLocation = ({ navigation }) => {
     );
   };
 
-  const addLocation = () => {
+  const addLocation = async () => {
     let trimmedLocationName = locationName.trim(); //cleans the input up
     let trimmedDescription = description.trim(); //cleans the input up
     let latitude = draggableMarkerCoordCurrent.latitude;
     let longitude = draggableMarkerCoordCurrent.longitude;
 
     if (trimmedLocationName.length !== 0) {
-      //appends new location object to the defautLocations array
-      setDefaultLocations(
-        (prevLocations) => [
-          ...prevLocations,
-
-          //create new Location object
-          new LocationItem(
-            trimmedLocationName,
-            trimmedDescription,
-            latitude,
-            longitude
-          ),
-        ],
-        //clear input fields after adding a new location
-        setLocationName(""),
-        setDescription(""),
-
-        createLocationAddedAlert()
+      let newLocation = new LocationItem(
+        trimmedLocationName,
+        trimmedDescription,
+        latitude,
+        longitude,
+        uri
       );
+
+      //appends new location object to the defautLocations array
+      const updatedLocations = [...defaultLocations, newLocation];
+
+      setDefaultLocations(updatedLocations);
+
+      try {
+        await AsyncStorage.setItem(
+          "ALL_LOCATIONS",
+          JSON.stringify(updatedLocations)
+        );
+        console.log("New location added to Async storage");
+      } catch (error) {
+        console.log(error);
+      }
+      setLocationName(""), setDescription(""), setUri(null);
+      createLocationAddedAlert(), handleGreenMarkerReset();
     } else {
       Alert.alert("To add a new location, you need to provide its name");
     }
-    handleGreenMarkerReset();
+  };
+
+  const clearImage = () => {
+    setUri(null);
+  };
+
+  //test function
+  const clearAsyncStorage = async () => {
+    await AsyncStorage.removeItem("ALL_LOCATIONS");
+    setDefaultLocations([]);
   };
 
   return (
-    <View style={[mainContainerStyle, styles.container]}>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={[mainContainerStyle, styles.container]}
+    >
       <StatusBar style="auto" />
       <View style={styles.imageWrapper}>
         <Map screenType={"AddLocation"} />
@@ -128,19 +163,26 @@ export const AddLocation = ({ navigation }) => {
                 />
               }
             />
+            {uri && (
+              <View>
+                <Ionicons
+                  style={styles.deleteImage}
+                  name="md-close-circle-sharp"
+                  size={28}
+                  color="white"
+                  onPress={clearImage}
+                />
+                <Image
+                  style={styles.imageSection}
+                  source={{ uri: uri, isStatic: true }}
+                />
+              </View>
+            )}
             <View style={styles.uploadButtonsSection}>
               <View style={styles.uploadButtonWrapper}>
                 <CustomButton
-                  value={"Upload image"}
-                  theme={"secondary"}
-                  icon={
-                    <Ionicons name="ios-cloud-upload" size={24} color="black" />
-                  }
-                />
-              </View>
-              <View style={styles.uploadButtonWrapper}>
-                <CustomButton
-                  value={"Open camera"}
+                  onPress={clickNavigateToCamera}
+                  value={uri ? "Update picture" : "Take a picture"}
                   theme={"secondary"}
                   icon={<Ionicons name="camera" size={24} color="black" />}
                 />
@@ -149,10 +191,12 @@ export const AddLocation = ({ navigation }) => {
           </View>
         </View>
         <View style={styles.buttonWrapper}>
+          {/* Test button for clearing Async storage location data */}
+          {/* <CustomButton onPress={clearAsyncStorage} value={"Clear"} /> */}
           <CustomButton onPress={addLocation} value={"Add location"} />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
@@ -192,6 +236,24 @@ const styles = StyleSheet.create({
 
   inputSection: {
     width: "100%",
+  },
+
+  imageSection: {
+    height: 60,
+    width: 60,
+    borderRadius: 8,
+    position: "relative",
+    zIndex: 0,
+  },
+
+  deleteImage: {
+    position: "absolute",
+    zIndex: 1,
+    marginLeft: 40,
+    marginTop: -6,
+    shadowColor: "#000",
+    shadowOffset: { width: 2, height: 2 },
+    shadowOpacity: 0.25,
   },
 
   buttonWrapper: {
