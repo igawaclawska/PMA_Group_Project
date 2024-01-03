@@ -1,11 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { StatusBar } from "expo-status-bar";
 import { StyleSheet, Text, View, Image, Alert, Pressable } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import Buttons from "../../components/TakeMeThereButton";
 import { useRoute } from "@react-navigation/native";
 
-function ViewLocation() {
+function ViewLocation({ navigation }) {
+  const clickNavigateBack = () => {
+    navigation.goBack();
+  };
+
   // this is used to get the data from the CustomMarker component in Map.js
   const route = useRoute();
   const { location } = route.params;
@@ -28,7 +33,11 @@ function ViewLocation() {
     <View style={styles.outerContainer}>
       <View style={styles.container}>
         <View style={styles.imgContainer}>
-          <Image source={{ uri: imageURL }} style={styles.image} />
+          <Image
+            //use uri from the location object (if exists) or use hardcoded
+            source={location.uri ? { uri: location.uri } : { uri: imageURL }}
+            style={styles.image}
+          />
           <Pressable onPress={changeFavorite} style={styles.favContainer}>
             <Image
               source={
@@ -40,7 +49,11 @@ function ViewLocation() {
             />
           </Pressable>
         </View>
+
         <View style={styles.detailsContainer}>
+          <Pressable style={styles.closeIcon} onPress={clickNavigateBack}>
+            <Ionicons name="arrow-back" size={24} color="black" />
+          </Pressable>
           <View style={styles.detailsTitleContainer}>
             <Text style={styles.detailsTitle}>{location.title}</Text>
             {/*<AntDesign name="staro" size={24} color="black" />*/}
@@ -72,6 +85,12 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
   },
+
+  closeIcon: {
+    alignSelf: "flex-start",
+    marginBottom: 8,
+  },
+
   imgContainer: {
     flex: 1.5,
     justifyContent: "flex-start",
@@ -109,7 +128,7 @@ const styles = StyleSheet.create({
   detailsContainer: {
     flex: 2,
     paddingHorizontal: 20,
-    paddingVertical: 25,
+    paddingVertical: 20,
   },
   detailsTitleContainer: {
     flexDirection: "row",

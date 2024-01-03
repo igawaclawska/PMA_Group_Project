@@ -1,29 +1,27 @@
-import React from "react";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
-import { ApplicationNavigation } from "./ApplicationNavigation";
 import LocationDetails from "../pages/application/LocationDetails";
+import { Explore } from "../pages/application/Explore";
 
 const Stack = createNativeStackNavigator();
 
-const createScreenOptionsForApp = () => {
+const createScreenOptions = () => {
   return {
     headerShown: false,
   };
 };
 
-// creating a nested navigation with the first "App" as the whole app navigation
-export const LocationDetailNav = () => {
+export const ExploreNavigation = () => {
   return (
     <Stack.Navigator>
       <Stack.Screen
-        name="App"
-        component={ApplicationNavigation}
-        options={createScreenOptionsForApp}
+        name="ExploreScreen"
+        options={createScreenOptions}
+        component={Explore}
       />
       <Stack.Screen
         name="LocationDetails"
+        options={createScreenOptions}
         component={LocationDetails}
-        options={createScreenOptionsForApp}
       />
     </Stack.Navigator>
   );
