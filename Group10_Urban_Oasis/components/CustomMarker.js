@@ -11,6 +11,7 @@ export const CustomMarker = ({
   title,
   description,
   onPress,
+  uri,
 }) => {
   const {
     draggableMarkerCoord,
@@ -90,7 +91,14 @@ export const CustomMarker = ({
             <View style={styles.calloutContentWrapper}>
               <Image
                 style={styles.calloutImage}
-                source={require("../assets/images/image-3.jpg")}
+                source={
+                  //use uri from the location object or hardcoded
+                  uri
+                    ? { uri: uri, isStatic: true }
+                    : {
+                        uri: "https://images.nationalgeographic.org/image/upload/t_edhub_resource_key_image_large/v1652303287/EducationHub/photos/earth-day.jpg",
+                      }
+                }
               ></Image>
               <Text style={styles.calloutTitle}>{title}</Text>
               {description && (

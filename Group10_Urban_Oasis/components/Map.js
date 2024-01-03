@@ -13,10 +13,11 @@ import polyline from "@mapbox/polyline";
 // source: https://reactnative.dev/docs/dimensions
 const windowWidth = Dimensions.get("window").width;
 
-export const Map = ({ screenType }) => {
+export const Map = ({ navigation, screenType }) => {
   const { defaultLocations, currentPosition } = useContext(LocationContext);
 
   const [count, setCount] = useState(0);
+
   const mapRef = useRef();
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [directions, setDirections] = useState(null);
@@ -69,23 +70,31 @@ export const Map = ({ screenType }) => {
   };
 
   const showDefaultLocations = () => {
-    return defaultLocations.map((item, index) => {
-      return (
-        <CustomMarker
-          key={index}
-          //Callout support only on the "Explore" screen
-          type={
-            screenType === "Explore"
-              ? "addedLocationWithCallout"
-              : "addedLocation"
-          }
-          coordinate={item.location}
-          title={item.title}
-          description={item.description}
-          onPress={() => handleTakeMeThere({ location: item.location })}
-        />
-      );
-    });
+    
+    if (defaultLocations !== null) {
+      //prevent errors if defautLocations array is empty
+      return defaultLocations?.map((item, index) => {
+        return (
+          <CustomMarker
+            key={index}
+            //Callout support only on the "Explore" screen
+            type={
+              screenType === "Explore"
+                ? "addedLocationWithCallout"
+                : "addedLocation"
+            }
+            coordinate={item.location}
+            title={item.title}
+            description={item.description}
+            uri={item.uri}
+            onPress={() => {
+              navigation.navigate("LocationDetails", { location: item });
+            }}
+             // onPress={() => handleTakeMeThere({ location: item.location })}
+          />
+        );
+      });
+    }
   };
 
   const onRegionChange = (region) => {
