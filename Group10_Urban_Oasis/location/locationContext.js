@@ -7,6 +7,9 @@ export const LocationContext = createContext();
 
 export const LocationContextProvider = ({ children }) => {
   const [defaultLocations, setDefaultLocations] = useState([]);
+  const [destinationCoords, setDestinationCoords] = useState(null);
+  const [directions, setDirections] = useState(null);
+  const [recenlyVisited, setRecentlyVisited] = useState([]);
   const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({
     latitude: 55.60866491013769,
     longitude: 12.34104207156517,
@@ -68,7 +71,7 @@ export const LocationContextProvider = ({ children }) => {
     return () => clearInterval(locationUpdateInterval);
   }, []); // Run this effect only once when the component mounts
 
-  //fetch data from async storage
+  //fetch all locations data from async storage
   useEffect(() => {
     fetchDataFromAsyncStorage();
     console.log(`default locations: ${defaultLocations}`);
@@ -106,6 +109,12 @@ export const LocationContextProvider = ({ children }) => {
       value={{
         defaultLocations,
         setDefaultLocations,
+        destinationCoords,
+        setDestinationCoords,
+        directions,
+        setDirections,
+        recenlyVisited,
+        setRecentlyVisited,
         draggableMarkerCoord,
         setDraggableMarkerCoord,
         draggableMarkerCoordCurrent,

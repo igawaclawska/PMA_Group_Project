@@ -1,5 +1,5 @@
 import { StyleSheet, Dimensions, Text, Pressable, View } from "react-native";
-import { useState, useRef, useContext } from "react";
+import { useState, useRef, useContext, useEffect } from "react";
 import { LocationContext } from "../location/locationContext";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
 import { CustomMarker } from "./CustomMarker";
@@ -14,63 +14,22 @@ import polyline from "@mapbox/polyline";
 const windowWidth = Dimensions.get("window").width;
 
 export const Map = ({ navigation, screenType }) => {
-  const { defaultLocations, currentPosition } = useContext(LocationContext);
+  const {
+    defaultLocations,
+    currentPosition,
+    destinationCoords,
+    setDestinationCoords,
+    directions,
+    setDirections,
+    recenlyVisited,
+    setRecentlyVisited,
+  } = useContext(LocationContext);
 
   const [count, setCount] = useState(0);
 
   const mapRef = useRef();
-  const [destinationCoords, setDestinationCoords] = useState(null);
-  const [directions, setDirections] = useState(null);
-  const [recenlyVisited, setRecentlyVisited] = useState([]);
-
-  const handleTakeMeThere = async ({ location }) => {
-    // set currently pressed location
-    setDestinationCoords({
-      latitude: location.latitude,
-      longitude: location.longitude,
-    });
-
-    // push pressed items to recenly visisted array
-
-    const visited = {
-      title: "test",
-      description: "...",
-      coordinate: location,
-    };
-
-    recenlyVisited.push(visited);
-
-    console.log("Current Position:", currentPosition);
-    console.log("Destination Coordinates:", destinationCoords);
-
-    // create directions for currently pressed marker
-
-    if (currentPosition && destinationCoords) {
-      try {
-        const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY";
-        const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
-        const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
-        const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
-
-        const response = await fetch(apiUrl);
-        const data = await response.json();
-
-        if (data.status === "OK" && data.routes.length > 0) {
-          const route = data.routes[0];
-          const overviewPolyline = route.overview_polyline.points;
-
-          setDirections(overviewPolyline);
-        } else {
-          console.error("Error fetching directions:", data.status);
-        }
-      } catch (error) {
-        console.error("Error fetching directions:", error);
-      }
-    }
-  };
 
   const showDefaultLocations = () => {
-    
     if (defaultLocations !== null) {
       //prevent errors if defautLocations array is empty
       return defaultLocations?.map((item, index) => {
@@ -88,9 +47,10 @@ export const Map = ({ navigation, screenType }) => {
             description={item.description}
             uri={item.uri}
             onPress={() => {
-              navigation.navigate("LocationDetails", { location: item });
+              navigation.navigate("LocationDetails", {
+                location: item,
+              });
             }}
-             // onPress={() => handleTakeMeThere({ location: item.location })}
           />
         );
       });
@@ -166,13 +126,13 @@ export const Map = ({ navigation, screenType }) => {
       )}
       {/* Take Me There Button */}
       {/* <View style={styles.container}> */}
-      <Pressable
+      {/* <Pressable
         title="ddd"
         onPress={handleTakeMeThere}
         style={styles.takeMeThereButton}
       >
         <Text style={styles.buttonText}>Take Me There</Text>
-      </Pressable>
+      </Pressable> */}
       {/* </View> */}
     </MapView>
   );

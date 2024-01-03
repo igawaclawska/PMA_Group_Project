@@ -104,11 +104,7 @@ export const CustomMarker = ({
               {description && (
                 <Text style={styles.calloutDescription}>{description}</Text>
               )}
-
               <Text style={styles.calloutClickToAction}>Open location</Text>
-              <Text onPress={onPress} style={styles.calloutClickToAction}>
-                Take me there
-              </Text>
             </View>
           </Callout>
         </Marker>
