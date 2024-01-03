@@ -3,7 +3,6 @@ import { useContext } from "react";
 import { LocationContext } from "../location/locationContext";
 import { Callout, Marker } from "react-native-maps";
 import { Alert, Text, Image, StyleSheet, View } from "react-native";
-import { handleTakeMeThere } from "./Map";
 
 export const CustomMarker = ({
   type,
