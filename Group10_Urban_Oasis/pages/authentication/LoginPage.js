@@ -1,5 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View, Alert } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  Alert,
+  KeyboardAvoidingView,
+} from "react-native";
 import { CustomInputField } from "../../components/CustomInputField";
 import { useState, useContext } from "react";
 import { AuthenticationContext } from "../../authentication/AuthenticationContext";
@@ -19,7 +25,10 @@ export const LoginPage = ({ navigation }) => {
   };
 
   return (
-    <View style={mainContainerStyle}>
+    <KeyboardAvoidingView
+      style={mainContainerStyle}
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+    >
       <StatusBar style="auto" />
       <View style={styles.pageContentWrapper}>
         <Text style={[typography.boldFont, typography.h2]}>Log in</Text>
@@ -52,7 +61,7 @@ export const LoginPage = ({ navigation }) => {
           />
         </View>
       </View>
-    </View>
+    </KeyboardAvoidingView>
   );
 };
 
