@@ -83,7 +83,7 @@ export const Map = ({ navigation, screenType }) => {
 
   const handleZoom = () => {
     // Adjust the zoom level based on the count
-    const zoomLevel = 4 * count * 0.004; // You can adjust the factor as needed
+    const zoomLevel = 6 * count * 0.004;
     console.log(zoomLevel);
 
     setRegion((prevRegion) => ({
@@ -114,7 +114,7 @@ export const Map = ({ navigation, screenType }) => {
           provider={PROVIDER_GOOGLE}
           ref={mapRef}
           style={styles.map}
-          // onMarkerDrag={onRegionChange}
+          onRegionChangeComplete={onRegionChange}
           // onLongPress={handleRecenter}
           initialRegion={{
             latitude: currentPosition
