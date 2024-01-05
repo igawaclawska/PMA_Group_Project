@@ -88,30 +88,24 @@ export const Map = ({ navigation, screenType }) => {
 
     if (count === 0) {
       zoomLevel = 0.003;
-    }
-    if (count === 1) {
+    } else if (count === 1) {
       zoomLevel = 0.012;
-    }
-
-    if (count === 2) {
+    } else if (count === 2) {
       zoomLevel = 0.044;
-    }
-
-    if (count === 3) {
+    } else if (count === 3) {
       zoomLevel = 0.088;
-    }
-    if (count === 4) {
+    } else if (count === 4) {
       zoomLevel = 1.0;
     }
+
     console.log(count);
     console.log(zoomLevel);
-    setTimeout(() => {
-      setRegion((prevRegion) => ({
-        ...prevRegion,
-        latitudeDelta: zoomLevel,
-        longitudeDelta: zoomLevel,
-      }));
-    }, 120);
+
+    setRegion((prevRegion) => ({
+      ...prevRegion,
+      latitudeDelta: zoomLevel,
+      longitudeDelta: zoomLevel,
+    }));
   };
 
   const takeSnapshotAndShare = async () => {
@@ -199,7 +193,9 @@ export const Map = ({ navigation, screenType }) => {
             title="zoomOut"
             onPress={() => {
               setCount(Math.min(4, count + 1));
-              handleZoom();
+              setTimeout(() => {
+                handleZoom();
+              }, 50);
             }}
             style={styles.zoomOut}
             disabled={count === 5 ? true : false}
@@ -210,7 +206,9 @@ export const Map = ({ navigation, screenType }) => {
             title="zoomIn"
             onPress={() => {
               setCount(Math.max(0, count - 1));
-              handleZoom();
+              setTimeout(() => {
+                handleZoom();
+              }, 50);
             }}
             disabled={count === -1 ? true : false}
             style={styles.zoomIn}
