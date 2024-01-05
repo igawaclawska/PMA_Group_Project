@@ -83,14 +83,35 @@ export const Map = ({ navigation, screenType }) => {
 
   const handleZoom = () => {
     // Adjust the zoom level based on the count
-    const zoomLevel = 6 * count * 0.004;
-    console.log(zoomLevel);
 
-    setRegion((prevRegion) => ({
-      ...prevRegion,
-      latitudeDelta: zoomLevel,
-      longitudeDelta: zoomLevel,
-    }));
+    let zoomLevel = 0.004;
+
+    if (count === 0) {
+      zoomLevel = 0.003;
+    }
+    if (count === 1) {
+      zoomLevel = 0.012;
+    }
+
+    if (count === 2) {
+      zoomLevel = 0.044;
+    }
+
+    if (count === 3) {
+      zoomLevel = 0.088;
+    }
+    if (count === 4) {
+      zoomLevel = 1.0;
+    }
+    console.log(count);
+    console.log(zoomLevel);
+    setTimeout(() => {
+      setRegion((prevRegion) => ({
+        ...prevRegion,
+        latitudeDelta: zoomLevel,
+        longitudeDelta: zoomLevel,
+      }));
+    }, 120);
   };
 
   const takeSnapshotAndShare = async () => {
@@ -114,7 +135,7 @@ export const Map = ({ navigation, screenType }) => {
           provider={PROVIDER_GOOGLE}
           ref={mapRef}
           style={styles.map}
-          onRegionChangeComplete={onRegionChange}
+          //onRegionChangeComplete={onRegionChange}
           // onLongPress={handleRecenter}
           initialRegion={{
             latitude: currentPosition
@@ -124,7 +145,7 @@ export const Map = ({ navigation, screenType }) => {
             longitude: currentPosition
               ? currentPosition.longitude
               : 12.5911277895021,
-            longitudeDelta: 0.002,
+            longitudeDelta: 0.003,
           }}
           region={region}
           customMapStyle={mapTheme}
@@ -165,19 +186,23 @@ export const Map = ({ navigation, screenType }) => {
         <View style={styles.container}>
           <Pressable
             title="recenter"
-            onPress={handleRecenter}
+            onPress={() => {
+              handleRecenter();
+              setCount(0);
+            }}
             style={styles.recenter}
           >
-            <Ionicons name="refresh-circle-outline" size={23} color="#fff" />
+            <Ionicons name="navigate-circle-outline" size={23} color="#fff" />
           </Pressable>
 
           <TouchableOpacity
             title="zoomOut"
             onPress={() => {
-              setCount(count + 1);
+              setCount(Math.min(4, count + 1));
               handleZoom();
             }}
             style={styles.zoomOut}
+            disabled={count === 5 ? true : false}
           >
             <Ionicons name="remove-circle-outline" size={23} color="#fff" />
           </TouchableOpacity>
@@ -187,6 +212,7 @@ export const Map = ({ navigation, screenType }) => {
               setCount(Math.max(0, count - 1));
               handleZoom();
             }}
+            disabled={count === -1 ? true : false}
             style={styles.zoomIn}
           >
             <Ionicons name="add-circle-outline" size={23} color="#fff" />
@@ -204,18 +230,6 @@ const styles = StyleSheet.create({
     zIndex: 4,
   },
 
-  //   mapOverlay: {
-  //     position: "absolute",
-  //     bottom: 50,
-  //     backgroundColor: "#eee",
-  //     borderWidth: 0.4,
-  //     borderRadius: 5,
-  //     padding: 16,
-  //     left: "25%",
-  //     width: "50%",
-  //     textAlign: "center",
-  //   },
-
   container: {
     position: "relative",
     flex: 1, // Make sure the container takes the full height
@@ -226,9 +240,10 @@ const styles = StyleSheet.create({
     bottom: 16,
     left: 10,
     alignSelf: "left", // Center the button horizontally
-    backgroundColor: "#4285F4",
+    backgroundColor: "#000",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
+    opacity: 0.7,
   },
 
   zoomIn: {
@@ -237,8 +252,9 @@ const styles = StyleSheet.create({
     right: 70,
     alignSelf: "right", // Center the button horizontally
     backgroundColor: "#4285F4",
+    opacity: 0.7,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   zoomOut: {
     position: "absolute",
@@ -246,6 +262,7 @@ const styles = StyleSheet.create({
     right: 20,
     alignSelf: "right", // Center the button horizontally
     backgroundColor: "#4285F4",
+    opacity: 0.7,
     padding: 10,
     borderRadius: 5,
   },
