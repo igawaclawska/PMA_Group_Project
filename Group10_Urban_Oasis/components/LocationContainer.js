@@ -15,6 +15,7 @@ import { Ionicons } from "@expo/vector-icons";
 const LocationContainer = ({
   id,
   title,
+  visitLocation,
   img,
   description,
   visited,
@@ -43,10 +44,7 @@ const LocationContainer = ({
           <Text style={styles.description}>{description}</Text>
         </View>
         <View style={styles.buttonContainer}>
-          <TouchableOpacity
-            style={styles.button}
-            onPress={() => Alert.alert("hi")}
-          >
+          <TouchableOpacity style={styles.button} onPress={visitLocation}>
             <Text style={styles.btnText}>View location</Text>
             <Ionicons name="navigate-circle-outline" size={22} color="white" />
           </TouchableOpacity>

@@ -2,6 +2,7 @@ import { StatusBar } from "expo-status-bar";
 import { useState, useContext } from "react";
 import { FlatList, StyleSheet, Text, View, SafeAreaView } from "react-native";
 import { LocationContext } from "../../location/locationContext";
+import { useNavigation } from "@react-navigation/native";
 
 import LocationContainer from "../../components/LocationContainer";
 
@@ -15,6 +16,7 @@ export const RecentlyVisited = () => {
         "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.",
     },
   ]);
+  const navigation = useNavigation();
 
   const {
     currentPosition,
@@ -39,9 +41,10 @@ export const RecentlyVisited = () => {
         }
       });
 
-    const handleDelete = (id) => {
+    const handleDelete = (uid) => {
+      console.log(uid);
       const updatedVisted = recenlyVisited.filter(
-        (location) => location.id !== id
+        (location) => location.uid !== uid
       );
       setRecentlyVisited(updatedVisted);
     };
@@ -52,12 +55,18 @@ export const RecentlyVisited = () => {
       <View style={styles.item} key={index}>
         <LocationContainer
           id={location.id}
+          uid={location.uid}
           title={location.title}
           img={location.image}
           description={location.description}
           visited={location.date}
+          visitLocation={() => {
+            navigation.navigate("LocationDetails", {
+              location: location,
+            });
+          }}
           style={styles.locationCard}
-          onPress={() => handleDelete(location.id)}
+          onPress={() => handleDelete(location.uid)}
         />
       </View>
     ));

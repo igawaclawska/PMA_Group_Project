@@ -5,6 +5,7 @@ import { StyleSheet, Text, View, Image, Alert, Pressable } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 import Buttons from "../../components/TakeMeThereButton";
 import { useRoute } from "@react-navigation/native";
+import { v4 as uuidv4 } from "uuid";
 
 function ViewLocation({ navigation }) {
   const {
@@ -23,6 +24,7 @@ function ViewLocation({ navigation }) {
     description,
     image,
     id,
+    uid,
   }) => {
     console.log(recenlyVisited);
     console.log(image);
@@ -39,12 +41,15 @@ function ViewLocation({ navigation }) {
     let visitTime = new Date().toLocaleTimeString().slice(0, -3);
     const visited = {
       id: id,
+      uid: uid,
       title: title,
       description: description,
       image: image,
       coordinate: location,
       date: visitDate + " " + visitTime,
     };
+
+    // Generate a unique ID
 
     const updatedRecentlyVisited = [...recenlyVisited, visited];
     setRecentlyVisited(updatedRecentlyVisited);
@@ -147,6 +152,7 @@ function ViewLocation({ navigation }) {
             onPress={() => {
               handleTakeMeThere({
                 id: location.id,
+                uid: uuidv4(),
                 title: location.title,
                 description: location.description,
                 location: location.location,
