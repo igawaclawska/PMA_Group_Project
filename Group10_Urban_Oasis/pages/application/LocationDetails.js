@@ -30,7 +30,7 @@ function ViewLocation({ navigation }) {
 
     // push pressed items to recently visited array
     let visitDate = new Date().toLocaleDateString();
-    let visitTime = new Date().toLocaleTimeString();
+    let visitTime = new Date().toLocaleTimeString().slice(0, -3);
     const visited = {
       title: title,
       description: description,
