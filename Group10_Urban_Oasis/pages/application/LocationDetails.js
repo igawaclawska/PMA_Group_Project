@@ -17,19 +17,25 @@ function ViewLocation({ navigation }) {
     setRecentlyVisited,
   } = useContext(LocationContext);
 
-  const handleTakeMeThere = async ({ location }) => {
+  const handleTakeMeThere = async ({ location, title, description, image }) => {
+    console.log(recenlyVisited);
+    console.log(image);
+
     // set currently pressed location
+
     setDestinationCoords({
       latitude: location.latitude,
       longitude: location.longitude,
     });
 
     // push pressed items to recently visited array
-
+    let visitDate = new Date().toDateString();
     const visited = {
-      title: "test",
-      description: "...",
+      title: title,
+      description: description,
+      image: image,
       coordinate: location,
+      date: visitDate,
     };
 
     const updatedRecentlyVisited = [...recenlyVisited, visited];
@@ -131,7 +137,12 @@ function ViewLocation({ navigation }) {
           <Buttons
             title={"Take me there"}
             onPress={() => {
-              handleTakeMeThere({ location: location.location });
+              handleTakeMeThere({
+                location: location.location,
+                title: location.title,
+                description: location.description,
+                image: location.uri ? location.uri : imageURL,
+              });
 
               //set timeout allowing directions to be updated
               // before navigating back to map...

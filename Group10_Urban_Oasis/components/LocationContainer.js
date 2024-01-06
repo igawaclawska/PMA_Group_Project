@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
 
-const LocationContainer = ({ title, img, description }) => (
+const LocationContainer = ({ title, img, description, visited }) => (
   <View style={styles.card}>
     <View style={styles.cardContent}>
       <View style={styles.imageContainer}>

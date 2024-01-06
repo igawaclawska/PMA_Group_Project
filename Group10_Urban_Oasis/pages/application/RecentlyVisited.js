@@ -1,12 +1,7 @@
 import { StatusBar } from "expo-status-bar";
-import { useState } from "react";
-import {
-  FlatList,
-  StyleSheet,
-  Text,
-  View,
-  SafeAreaView,
-} from "react-native";
+import { useState, useContext } from "react";
+import { FlatList, StyleSheet, Text, View, SafeAreaView } from "react-native";
+import { LocationContext } from "../../location/locationContext";
 
 import LocationContainer from "../../components/LocationContainer";
 
@@ -21,17 +16,31 @@ export const RecentlyVisited = () => {
     },
   ]);
 
-  const renderLocation = ({ item }) => (
-    <View style={styles.item}>
-      <LocationContainer
-        title={item.title}
-        img={item.img}
-        description={item.description}
-        style={styles.locationCard}
-      />
-    </View>
-  );
+  const {
+    currentPosition,
+    destinationCoords,
+    setDestinationCoords,
+    directions,
+    setDirections,
+    recenlyVisited,
+    setRecentlyVisited,
+  } = useContext(LocationContext);
 
+  const renderLocation = () =>
+    recenlyVisited
+      .slice()
+      .reverse()
+      .map((location, index) => (
+        <View style={styles.item} key={index}>
+          <LocationContainer
+            title={location.title}
+            img={location.image}
+            description={location.description}
+            visited={location.date}
+            style={styles.locationCard}
+          />
+        </View>
+      ));
   const addNewLocation = () => {
     const newLocation = {
       id: String(locationData.length + 1),
@@ -66,7 +75,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: "#fff",
-    alignItems: "center",
+    alignItems: "left",
     justifyContent: "center",
   },
   header: {
