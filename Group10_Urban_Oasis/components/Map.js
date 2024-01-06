@@ -1,4 +1,11 @@
-import { StyleSheet, Dimensions, Text, Pressable, View } from "react-native";
+import {
+  StyleSheet,
+  Dimensions,
+  Text,
+  Pressable,
+  View,
+  TouchableOpacity,
+} from "react-native";
 import { useState, useRef, useContext, useEffect } from "react";
 import { LocationContext } from "../location/locationContext";
 import MapView, { PROVIDER_GOOGLE } from "react-native-maps";
@@ -8,6 +15,7 @@ import { shareAsync } from "expo-sharing";
 import mapTheme from "../globalStyles/mapTheme"; //import map style vector
 import { Polyline } from "react-native-maps";
 import polyline from "@mapbox/polyline";
+import { Ionicons } from "@expo/vector-icons";
 
 // detect screen width
 // source: https://reactnative.dev/docs/dimensions
@@ -23,6 +31,8 @@ export const Map = ({ navigation, screenType }) => {
     setDirections,
     recenlyVisited,
     setRecentlyVisited,
+    region,
+    setRegion,
   } = useContext(LocationContext);
 
   const [count, setCount] = useState(0);
@@ -57,9 +67,49 @@ export const Map = ({ navigation, screenType }) => {
     }
   };
 
-  const onRegionChange = (region) => {
-    //console log region change
-    console.log(region);
+  const onRegionChange = (newRegion) => {
+    // Update the state with the new region
+    setRegion(newRegion);
+  };
+
+  const handleRecenter = () => {
+    setRegion({
+      latitude: currentPosition ? currentPosition.latitude : 55.60866491013769,
+      latitudeDelta: 0.004,
+      longitude: currentPosition ? currentPosition.longitude : 12.5911277895021,
+      longitudeDelta: 0.003,
+    });
+  };
+
+  const handleZoom = (increment) => {
+    let zoomLevel = 0.004;
+
+    const newCount = increment ? count + 1 : count - 1;
+
+    // zoom levels goes from 0-4
+    const clampedCount = Math.min(4, Math.max(0, newCount));
+    setCount(clampedCount);
+
+    if (clampedCount === 0) {
+      zoomLevel = 0.003;
+    } else if (clampedCount === 1) {
+      zoomLevel = 0.012;
+    } else if (clampedCount === 2) {
+      zoomLevel = 0.044;
+    } else if (clampedCount === 3) {
+      zoomLevel = 0.088;
+    } else if (clampedCount === 4) {
+      zoomLevel = 1.0;
+    }
+
+    console.log(clampedCount);
+    console.log(zoomLevel);
+
+    setRegion((prevRegion) => ({
+      ...prevRegion,
+      latitudeDelta: zoomLevel,
+      longitudeDelta: zoomLevel,
+    }));
   };
 
   const takeSnapshotAndShare = async () => {
@@ -77,64 +127,95 @@ export const Map = ({ navigation, screenType }) => {
   };
 
   return (
-    <MapView
-      provider={PROVIDER_GOOGLE}
-      ref={mapRef}
-      style={styles.map}
-      onRegionChange={onRegionChange}
-      // onRegionChange={onRegionChange}
-      initialRegion={{
-        latitude: currentPosition
-          ? currentPosition.latitude
-          : 55.60866491013769,
-        latitudeDelta: 0.007,
-        longitude: currentPosition
-          ? currentPosition.longitude
-          : 12.5911277895021,
-        longitudeDelta: 0.006,
-      }}
-      customMapStyle={mapTheme}
-      gestureEnabled={true} // Ensure this property is set to true
-    >
-      {/* Maps through array DefaultLocations and displays markers*/}
-      {showDefaultLocations()}
+    <>
+      <View>
+        <MapView
+          provider={PROVIDER_GOOGLE}
+          ref={mapRef}
+          style={styles.map}
+          //onRegionChangeComplete={onRegionChange}
+          // onLongPress={handleRecenter}
+          initialRegion={{
+            latitude: currentPosition
+              ? currentPosition.latitude
+              : 55.60866491013769,
+            latitudeDelta: 0.004,
+            longitude: currentPosition
+              ? currentPosition.longitude
+              : 12.5911277895021,
+            longitudeDelta: 0.003,
+          }}
+          region={region}
+          customMapStyle={mapTheme}
+          gestureEnabled={true} // Ensure this property is set to true
+        >
+          {/* Maps through array DefaultLocations and displays markers*/}
+          {showDefaultLocations()}
 
-      {/* Get current position of user */}
-      {screenType === "Explore" && currentPosition && (
-        <CustomMarker type={"currentPosition"} />
+          {/* Get current position of user */}
+          {screenType === "Explore" && currentPosition && (
+            <CustomMarker type={"currentPosition"} />
+          )}
+
+          {screenType === "AddLocation" && currentPosition && (
+            //Dragable marker
+            <CustomMarker type={"draggableCurrentPosition"} />
+          )}
+
+          {/* map overlay, anything could be displayed here */}
+
+          {/* <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text> */}
+
+          {/* Draw Route (Polyline) */}
+          {screenType === "Explore" && directions && (
+            <Polyline
+              coordinates={polyline.decode(directions).map((point) => ({
+                latitude: point[0],
+                longitude: point[1],
+              }))}
+              strokeWidth={5}
+              strokeColor="#b33b72"
+            />
+          )}
+        </MapView>
+      </View>
+      {/* control buttons */}
+      {screenType === "Explore" && (
+        <View style={styles.container}>
+          <Pressable
+            title="recenter"
+            onPress={() => {
+              handleRecenter();
+              setCount(0);
+            }}
+            style={styles.recenter}
+          >
+            <Ionicons name="navigate-circle-outline" size={23} color="#fff" />
+          </Pressable>
+
+          <TouchableOpacity
+            title="zoomOut"
+            onPress={() => {
+              handleZoom(true);
+            }}
+            style={styles.zoomOut}
+            disabled={count === 4 ? true : false}
+          >
+            <Ionicons name="remove-circle-outline" size={23} color="#fff" />
+          </TouchableOpacity>
+          <TouchableOpacity
+            title="zoomIn"
+            onPress={() => {
+              handleZoom(false);
+            }}
+            disabled={count === 0 ? true : false}
+            style={styles.zoomIn}
+          >
+            <Ionicons name="add-circle-outline" size={23} color="#fff" />
+          </TouchableOpacity>
+        </View>
       )}
-
-      {screenType === "AddLocation" && currentPosition && (
-        //Dragable marker
-        <CustomMarker type={"draggableCurrentPosition"} />
-      )}
-
-      {/* map overlay, anything could be displayed here */}
-
-      {/* <Text style={styles.mapOverlay}>{draggableMarkerCoord.latitude}</Text> */}
-
-      {/* Draw Route (Polyline) */}
-      {directions && (
-        <Polyline
-          coordinates={polyline.decode(directions).map((point) => ({
-            latitude: point[0],
-            longitude: point[1],
-          }))}
-          strokeWidth={5}
-          strokeColor="#b33b72"
-        />
-      )}
-      {/* Take Me There Button */}
-      {/* <View style={styles.container}> */}
-      {/* <Pressable
-        title="ddd"
-        onPress={handleTakeMeThere}
-        style={styles.takeMeThereButton}
-      >
-        <Text style={styles.buttonText}>Take Me There</Text>
-      </Pressable> */}
-      {/* </View> */}
-    </MapView>
+    </>
   );
 };
 
@@ -142,36 +223,48 @@ const styles = StyleSheet.create({
   map: {
     width: windowWidth,
     height: "100%",
-    zIndex: 1,
+    zIndex: 4,
   },
-
-  //   mapOverlay: {
-  //     position: "absolute",
-  //     bottom: 50,
-  //     backgroundColor: "#eee",
-  //     borderWidth: 0.4,
-  //     borderRadius: 5,
-  //     padding: 16,
-  //     left: "25%",
-  //     width: "50%",
-  //     textAlign: "center",
-  //   },
 
   container: {
     position: "relative",
     flex: 1, // Make sure the container takes the full height
   },
 
-  takeMeThereButton: {
+  recenter: {
     position: "absolute",
     bottom: 16,
-    color: "#fff",
-    left: windowWidth / 2 - 50, // Adjust based on your design
-    backgroundColor: "#4285F4",
+    left: 10,
+    alignSelf: "left", // Center the button horizontally
+    backgroundColor: "#000",
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
+    opacity: 0.7,
+  },
+
+  zoomIn: {
+    position: "absolute",
+    bottom: 16,
+    right: 70,
+    alignSelf: "right", // Center the button horizontally
+    backgroundColor: "#4285F4",
+    opacity: 0.7,
+    padding: 10,
+    borderRadius: 10,
+  },
+  zoomOut: {
+    position: "absolute",
+    bottom: 16,
+    right: 20,
+    alignSelf: "right", // Center the button horizontally
+    backgroundColor: "#4285F4",
+    opacity: 0.7,
+    padding: 10,
+    borderRadius: 10,
   },
   buttonText: {
+    position: "relative",
+    bottom: 17,
     color: "#fff",
     fontSize: 16,
     fontWeight: "bold",

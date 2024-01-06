@@ -17,6 +17,7 @@ export const LocationContextProvider = ({ children }) => {
   const [currentPosition, setCurrentPosition] = useState(null);
   const [draggableMarkerCoordCurrent, setDraggableMarkerCoordCurrent] =
     useState(null);
+  const [region, setRegion] = useState({});
 
   // Function to request location permission and update current position
   const requestLocationPermissionAndUpdatePosition = async () => {
@@ -121,6 +122,8 @@ export const LocationContextProvider = ({ children }) => {
         setDraggableMarkerCoordCurrent,
         currentPosition,
         setCurrentPosition,
+        region,
+        setRegion,
       }}
     >
       {children}
