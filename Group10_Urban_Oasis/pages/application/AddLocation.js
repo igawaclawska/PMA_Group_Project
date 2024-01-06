@@ -10,6 +10,7 @@ import {
   Image,
   KeyboardAvoidingView,
   Platform,
+  ScrollView,
 } from "react-native";
 import { CustomButton } from "../../components/CustomButton";
 import { CustomInputField } from "../../components/CustomInputField";
@@ -123,78 +124,84 @@ export const AddLocation = ({ navigation }) => {
           <Ionicons name="refresh-circle" size={20} color="#3E9C27" />
           <Text style={styles.resetButtonText}>Reset position</Text>
         </Pressable>
-        <View style={styles.mainContent}>
-          <View style={styles.textSection}>
-            <Text
-              style={[
-                typography.h2,
-                typography.boldFont,
-                typography.darkGrayText,
-              ]}
-            >
-              Add current location to community
-            </Text>
-            <Text style={[typography.paragraph, typography.lightGrayText]}>
-              The green marker shows where you are right now. You can add this
-              location, or drag the marker to a new spot.
-            </Text>
-          </View>
-          <View style={styles.inputSection}>
-            <CustomInputField
-              hiddenInput={false}
-              placeholder={"Location name"}
-              input={locationName}
-              setInput={setLocationName}
-              icon={
-                <Ionicons name="md-location-sharp" size={20} color="#9e9e9e" />
-              }
-            />
-            <CustomInputField
-              hiddenInput={false}
-              placeholder={"Description"}
-              input={description}
-              setInput={setDescription}
-              isMultiline={true}
-              icon={
-                <Ionicons
-                  name="chatbubble-ellipses-sharp"
-                  size={20}
-                  color="#9e9e9e"
-                />
-              }
-            />
-            {uri && (
-              <View>
-                <Ionicons
-                  style={styles.deleteImage}
-                  name="md-close-circle-sharp"
-                  size={28}
-                  color="white"
-                  onPress={clearImage}
-                />
-                <Image
-                  style={styles.imageSection}
-                  source={{ uri: uri, isStatic: true }}
-                />
-              </View>
-            )}
-            <View style={styles.uploadButtonsSection}>
-              <View style={styles.uploadButtonWrapper}>
-                <CustomButton
-                  onPress={clickNavigateToCamera}
-                  value={uri ? "Update picture" : "Take a picture"}
-                  theme={"secondary"}
-                  icon={<Ionicons name="camera" size={24} color="black" />}
-                />
+        <ScrollView>
+          <View style={styles.mainContent}>
+            <View style={styles.textSection}>
+              <Text
+                style={[
+                  typography.h2,
+                  typography.boldFont,
+                  typography.darkGrayText,
+                ]}
+              >
+                Add current location to community
+              </Text>
+              <Text style={[typography.paragraph, typography.lightGrayText]}>
+                The green marker shows where you are right now. You can add this
+                location, or drag the marker to a new spot.
+              </Text>
+            </View>
+            <View style={styles.inputSection}>
+              <CustomInputField
+                hiddenInput={false}
+                placeholder={"Location name"}
+                input={locationName}
+                setInput={setLocationName}
+                icon={
+                  <Ionicons
+                    name="md-location-sharp"
+                    size={20}
+                    color="#9e9e9e"
+                  />
+                }
+              />
+              <CustomInputField
+                hiddenInput={false}
+                placeholder={"Description"}
+                input={description}
+                setInput={setDescription}
+                isMultiline={true}
+                icon={
+                  <Ionicons
+                    name="chatbubble-ellipses-sharp"
+                    size={20}
+                    color="#9e9e9e"
+                  />
+                }
+              />
+              {uri && (
+                <View>
+                  <Ionicons
+                    style={styles.deleteImage}
+                    name="md-close-circle-sharp"
+                    size={28}
+                    color="white"
+                    onPress={clearImage}
+                  />
+                  <Image
+                    style={styles.imageSection}
+                    source={{ uri: uri, isStatic: true }}
+                  />
+                </View>
+              )}
+              <View style={styles.uploadButtonsSection}>
+                <View style={styles.uploadButtonWrapper}>
+                  <CustomButton
+                    onPress={clickNavigateToCamera}
+                    value={uri ? "Update picture" : "Take a picture"}
+                    theme={"secondary"}
+                    icon={<Ionicons name="camera" size={24} color="black" />}
+                  />
+                </View>
               </View>
             </View>
           </View>
-        </View>
-        <View style={styles.buttonWrapper}>
-          {/* Test button for clearing Async storage location data */}
-          {/* <CustomButton onPress={clearAsyncStorage} value={"Clear"} /> */}
-          <CustomButton onPress={addLocation} value={"Add location"} />
-        </View>
+          <View style={styles.buttonWrapper}>
+            {/* Test button for clearing Async storage location data */}
+            {/* <CustomButton onPress={clearAsyncStorage} value={"Clear"} /> */}
+            <CustomButton onPress={addLocation} value={"Add location"} />
+          </View>
+        </ScrollView>
       </View>
     </KeyboardAvoidingView>
   );
