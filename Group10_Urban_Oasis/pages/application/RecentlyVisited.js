@@ -81,7 +81,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     fontWeight: "bold",
-    paddingVertical: 40,
+    paddingVertical: 30,
+    marginLeft: 20,
   },
   listContainer: {
     width: "100%",
