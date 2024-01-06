@@ -26,21 +26,34 @@ export const RecentlyVisited = () => {
     setRecentlyVisited,
   } = useContext(LocationContext);
 
-  const renderLocation = () =>
+  const renderLocation = () => {
+    const uniqueVisited = new Map();
+
     recenlyVisited
       .slice()
       .reverse()
-      .map((location, index) => (
-        <View style={styles.item} key={index}>
-          <LocationContainer
-            title={location.title}
-            img={location.image}
-            description={location.description}
-            visited={location.date}
-            style={styles.locationCard}
-          />
-        </View>
-      ));
+      .forEach((location, index) => {
+        const key = `${location.title}}`;
+        if (!uniqueVisited.has(key)) {
+          uniqueVisited.set(key, location);
+        }
+      });
+
+    const uniqueVisitedArray = Array.from(uniqueVisited.values());
+
+    return uniqueVisitedArray.map((location, index) => (
+      <View style={styles.item} key={index}>
+        <LocationContainer
+          title={location.title}
+          img={location.image}
+          description={location.description}
+          visited={location.date}
+          style={styles.locationCard}
+        />
+      </View>
+    ));
+  };
+
   const addNewLocation = () => {
     const newLocation = {
       id: String(locationData.length + 1),
