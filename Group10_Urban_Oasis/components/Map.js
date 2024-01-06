@@ -198,7 +198,7 @@ export const Map = ({ navigation, screenType }) => {
             onPress={() => {
               handleZoom(true);
             }}
-            style={styles.zoomOut}
+            style={[styles.zoomOut, { opacity: count === 4 ? 0.3 : 0.8 }]}
             disabled={count === 4 ? true : false}
           >
             <Ionicons name="remove-circle-outline" size={23} color="#fff" />
@@ -209,7 +209,7 @@ export const Map = ({ navigation, screenType }) => {
               handleZoom(false);
             }}
             disabled={count === 0 ? true : false}
-            style={styles.zoomIn}
+            style={[styles.zoomIn, { opacity: count === 0 ? 0.3 : 0.8 }]}
           >
             <Ionicons name="add-circle-outline" size={23} color="#fff" />
           </TouchableOpacity>
