@@ -29,13 +29,14 @@ function ViewLocation({ navigation }) {
     });
 
     // push pressed items to recently visited array
-    let visitDate = new Date().toDateString();
+    let visitDate = new Date().toLocaleDateString();
+    let visitTime = new Date().toLocaleTimeString();
     const visited = {
       title: title,
       description: description,
       image: image,
       coordinate: location,
-      date: visitDate,
+      date: visitDate + " " + visitTime,
     };
 
     const updatedRecentlyVisited = [...recenlyVisited, visited];

@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
 } from "react-native";
 import { Entypo } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 
 const LocationContainer = ({ title, img, description, visited }) => (
   <View style={styles.card}>
@@ -20,6 +21,18 @@ const LocationContainer = ({ title, img, description, visited }) => (
       <View style={styles.rightContainer}>
         <View style={styles.textContainer}>
           <Text style={styles.title}>{title}</Text>
+
+          <Text
+            style={{
+              fontSize: 12,
+              marginTop: 2,
+              marginBottom: 10,
+              fontWeight: "300",
+            }}
+          >
+            <Ionicons name="time" size={14} color="#000" />
+            {" " + visited}
+          </Text>
           <Text style={styles.description}>{description}</Text>
         </View>
         <View style={styles.buttonContainer}>
