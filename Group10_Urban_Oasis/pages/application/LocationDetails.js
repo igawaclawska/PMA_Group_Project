@@ -17,7 +17,13 @@ function ViewLocation({ navigation }) {
     setRecentlyVisited,
   } = useContext(LocationContext);
 
-  const handleTakeMeThere = async ({ location, title, description, image }) => {
+  const handleTakeMeThere = async ({
+    location,
+    title,
+    description,
+    image,
+    id,
+  }) => {
     console.log(recenlyVisited);
     console.log(image);
 
@@ -32,6 +38,7 @@ function ViewLocation({ navigation }) {
     let visitDate = new Date().toLocaleDateString();
     let visitTime = new Date().toLocaleTimeString().slice(0, -3);
     const visited = {
+      id: id,
       title: title,
       description: description,
       image: image,
@@ -139,9 +146,10 @@ function ViewLocation({ navigation }) {
             title={"Take me there"}
             onPress={() => {
               handleTakeMeThere({
-                location: location.location,
+                id: location.id,
                 title: location.title,
                 description: location.description,
+                location: location.location,
                 image: location.uri ? location.uri : imageURL,
               });
 

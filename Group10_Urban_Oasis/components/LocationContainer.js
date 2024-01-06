@@ -12,7 +12,14 @@ import {
 import { Entypo } from "@expo/vector-icons";
 import { Ionicons } from "@expo/vector-icons";
 
-const LocationContainer = ({ title, img, description, visited }) => (
+const LocationContainer = ({
+  id,
+  title,
+  img,
+  description,
+  visited,
+  onPress,
+}) => (
   <View style={styles.card}>
     <View style={styles.cardContent}>
       <View style={styles.imageContainer}>
@@ -40,12 +47,19 @@ const LocationContainer = ({ title, img, description, visited }) => (
             style={styles.button}
             onPress={() => Alert.alert("hi")}
           >
-            <Text style={styles.btnText}>Take me there!</Text>
-            <Entypo name="location-pin" size={16} color="white" />
+            <Text style={styles.btnText}>View location</Text>
+            <Ionicons name="navigate-circle-outline" size={22} color="white" />
           </TouchableOpacity>
         </View>
       </View>
     </View>
+
+    <Ionicons
+      style={styles.delete}
+      onPress={onPress}
+      name="trash-outline"
+      color="red"
+    />
   </View>
 );
 
@@ -67,7 +81,7 @@ const styles = StyleSheet.create({
   cardContent: {
     flexDirection: "row",
     alignItems: "flex-start",
-    height: 180,
+    height: 150,
   },
   imageContainer: {
     marginRight: 10,
@@ -100,18 +114,26 @@ const styles = StyleSheet.create({
   buttonContainer: {},
   button: {
     backgroundColor: "#3E9C27",
-    width: 150,
-    height: 28,
+    width: 140,
+    height: 40,
     flexDirection: "row",
     justifyContent: "center",
     alignItems: "center",
-    borderRadius: 14,
+    borderRadius: 20,
   },
   btnText: {
     color: "white",
     paddingRight: 3,
     fontWeight: "500",
     fontSize: 14,
+  },
+  delete: {
+    position: "absolute",
+    top: 15,
+    right: 5,
+    paddingRight: 3,
+    fontWeight: "500",
+    fontSize: 22,
   },
 });
 

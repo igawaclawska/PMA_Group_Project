@@ -39,16 +39,25 @@ export const RecentlyVisited = () => {
         }
       });
 
+    const handleDelete = (id) => {
+      const updatedVisted = recenlyVisited.filter(
+        (location) => location.id !== id
+      );
+      setRecentlyVisited(updatedVisted);
+    };
+
     const uniqueVisitedArray = Array.from(uniqueVisited.values());
 
     return uniqueVisitedArray.map((location, index) => (
       <View style={styles.item} key={index}>
         <LocationContainer
+          id={location.id}
           title={location.title}
           img={location.image}
           description={location.description}
           visited={location.date}
           style={styles.locationCard}
+          onPress={() => handleDelete(location.id)}
         />
       </View>
     ));
