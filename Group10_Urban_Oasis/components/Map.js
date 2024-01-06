@@ -81,24 +81,28 @@ export const Map = ({ navigation, screenType }) => {
     });
   };
 
-  const handleZoom = () => {
-    // Adjust the zoom level based on the count
-
+  const handleZoom = (increment) => {
     let zoomLevel = 0.004;
 
-    if (count === 0) {
+    const newCount = increment ? count + 1 : count - 1;
+
+    // zoom levels goes from 0-4
+    const clampedCount = Math.min(4, Math.max(0, newCount));
+    setCount(clampedCount);
+
+    if (clampedCount === 0) {
       zoomLevel = 0.003;
-    } else if (count === 1) {
+    } else if (clampedCount === 1) {
       zoomLevel = 0.012;
-    } else if (count === 2) {
+    } else if (clampedCount === 2) {
       zoomLevel = 0.044;
-    } else if (count === 3) {
+    } else if (clampedCount === 3) {
       zoomLevel = 0.088;
-    } else if (count === 4) {
+    } else if (clampedCount === 4) {
       zoomLevel = 1.0;
     }
 
-    console.log(count);
+    console.log(clampedCount);
     console.log(zoomLevel);
 
     setRegion((prevRegion) => ({
@@ -192,25 +196,19 @@ export const Map = ({ navigation, screenType }) => {
           <TouchableOpacity
             title="zoomOut"
             onPress={() => {
-              setCount(Math.min(4, count + 1));
-              setTimeout(() => {
-                handleZoom();
-              }, 50);
+              handleZoom(true);
             }}
             style={styles.zoomOut}
-            disabled={count === 5 ? true : false}
+            disabled={count === 4 ? true : false}
           >
             <Ionicons name="remove-circle-outline" size={23} color="#fff" />
           </TouchableOpacity>
           <TouchableOpacity
             title="zoomIn"
             onPress={() => {
-              setCount(Math.max(0, count - 1));
-              setTimeout(() => {
-                handleZoom();
-              }, 50);
+              handleZoom(false);
             }}
-            disabled={count === -1 ? true : false}
+            disabled={count === 0 ? true : false}
             style={styles.zoomIn}
           >
             <Ionicons name="add-circle-outline" size={23} color="#fff" />
@@ -262,7 +260,7 @@ const styles = StyleSheet.create({
     backgroundColor: "#4285F4",
     opacity: 0.7,
     padding: 10,
-    borderRadius: 5,
+    borderRadius: 10,
   },
   buttonText: {
     position: "relative",
