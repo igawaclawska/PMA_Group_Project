@@ -45,7 +45,7 @@ function ViewLocation({ navigation }) {
       title: title,
       description: description,
       image: image,
-      coordinate: location,
+      location: location,
       date: visitDate + " " + visitTime,
     };
 
