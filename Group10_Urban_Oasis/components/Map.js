@@ -226,9 +226,9 @@ export const Map = ({ navigation, screenType }) => {
             title="clearRoute"
             onPress={() => {
               setPrevDirections(directions);
-              setDirections(prevDirections === null ? null : prevDirections);
+              setDirections(null);
+              setDirections(directions === null ? prevDirections : null);
             }}
-            disabled={count === 0 ? true : false}
             style={[
               styles.clearRoute,
               { opacity: directions === null ? 0.3 : 0.9 },
