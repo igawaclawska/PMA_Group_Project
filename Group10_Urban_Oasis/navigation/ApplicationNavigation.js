@@ -1,8 +1,6 @@
 import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import { Ionicons } from "@expo/vector-icons";
-import { Explore } from "../pages/application/Explore";
 import { ExploreNavigation } from "./ExploreNavigation";
-import { AddLocation } from "../pages/application/AddLocation";
 import { RecentlyVisited } from "../pages/application/RecentlyVisited";
 import { UserAccount } from "../pages/application/UserAccount";
 import { AddLocationNavigation } from "./AddLocationNavigation"; 
