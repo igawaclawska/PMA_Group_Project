@@ -9,7 +9,7 @@ export const LocationContextProvider = ({ children }) => {
   const [defaultLocations, setDefaultLocations] = useState([]);
   const [destinationCoords, setDestinationCoords] = useState(null);
   const [directions, setDirections] = useState(null);
-  const [recenlyVisited, setRecentlyVisited] = useState([]);
+  const [recentlyVisited, setRecentlyVisited] = useState([]);
   const [draggableMarkerCoord, setDraggableMarkerCoord] = useState({
     latitude: 55.60866491013769,
     longitude: 12.34104207156517,
@@ -114,7 +114,7 @@ export const LocationContextProvider = ({ children }) => {
         setDestinationCoords,
         directions,
         setDirections,
-        recenlyVisited,
+        recentlyVisited,
         setRecentlyVisited,
         draggableMarkerCoord,
         setDraggableMarkerCoord,

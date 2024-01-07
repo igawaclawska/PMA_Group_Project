@@ -75,6 +75,7 @@ export const CustomMarker = ({
       return (
         // Marker to display added locations (supports callout)
         <Marker
+          //pinColor="#D4AFEA"
           pinColor={pinColor}
           coordinate={coordinate}
           title={title}

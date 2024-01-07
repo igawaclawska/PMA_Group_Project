@@ -24,14 +24,14 @@ export const RecentlyVisited = () => {
     setDestinationCoords,
     directions,
     setDirections,
-    recenlyVisited,
+    recentlyVisited,
     setRecentlyVisited,
   } = useContext(LocationContext);
 
   const renderLocation = () => {
     const uniqueVisited = new Map();
 
-    recenlyVisited
+    recentlyVisited
       .slice()
       .reverse()
       .forEach((location, index) => {
@@ -43,7 +43,7 @@ export const RecentlyVisited = () => {
 
     const handleDelete = (uid) => {
       console.log(uid);
-      const updatedVisted = recenlyVisited.filter(
+      const updatedVisted = recentlyVisited.filter(
         (location) => location.uid !== uid
       );
       setRecentlyVisited(updatedVisted);

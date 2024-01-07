@@ -14,7 +14,7 @@ function ViewLocation({ navigation }) {
     setDestinationCoords,
     directions,
     setDirections,
-    recenlyVisited,
+    recentlyVisited,
     setRecentlyVisited,
   } = useContext(LocationContext);
 
@@ -26,7 +26,7 @@ function ViewLocation({ navigation }) {
     id,
     uid,
   }) => {
-    console.log(recenlyVisited);
+    console.log(recentlyVisited);
     console.log(image);
 
     // set currently pressed location
@@ -51,7 +51,7 @@ function ViewLocation({ navigation }) {
 
     // Generate a unique ID
 
-    const updatedRecentlyVisited = [...recenlyVisited, visited];
+    const updatedRecentlyVisited = [...recentlyVisited, visited];
     setRecentlyVisited(updatedRecentlyVisited);
 
     console.log("Current Position:", currentPosition);

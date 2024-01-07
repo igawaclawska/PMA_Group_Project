@@ -30,7 +30,7 @@ export const Map = ({ navigation, screenType }) => {
     setDestinationCoords,
     directions,
     setDirections,
-    recenlyVisited,
+    recentlyVisited,
     setRecentlyVisited,
     region,
     setRegion,
@@ -58,6 +58,7 @@ export const Map = ({ navigation, screenType }) => {
             title={item.title}
             description={item.description}
             uri={item.uri}
+            pinColor={recentlyVisited.includes(item.title) ? "#000" : "#0ff"}
             onPress={() => {
               navigation.navigate("LocationDetails", {
                 location: item,
@@ -69,6 +70,10 @@ export const Map = ({ navigation, screenType }) => {
     }
   };
 
+  useEffect(() => {
+    setRecentlyVisited(recentlyVisited);
+  }, [recentlyVisited]);
+
   const onRegionChange = (newRegion) => {
     // Update the state with the new region
     if (!directions) setRegion(newRegion);
@@ -76,9 +81,9 @@ export const Map = ({ navigation, screenType }) => {
 
   const handleRecenter = () => {
     setRegion({
-      latitude: currentPosition ? currentPosition.latitude : 55.60866491013769,
+      latitude: currentPosition ? currentPosition.latitude : 55.67594,
       latitudeDelta: 0.004,
-      longitude: currentPosition ? currentPosition.longitude : 12.5911277895021,
+      longitude: currentPosition ? currentPosition.longitude : 12.56553,
       longitudeDelta: 0.003,
     });
   };
@@ -135,16 +140,13 @@ export const Map = ({ navigation, screenType }) => {
           provider={PROVIDER_GOOGLE}
           ref={mapRef}
           style={styles.map}
-          //onRegionChangeComplete={onRegionChange}
+          // onRegionChangeComplete={region}
           onLongPress={handleRecenter}
+          onMapReady={handleRecenter}
           initialRegion={{
-            latitude: currentPosition
-              ? currentPosition.latitude
-              : 55.60866491013769,
+            latitude: currentPosition ? currentPosition.latitude : 55.67594,
             latitudeDelta: 0.004,
-            longitude: currentPosition
-              ? currentPosition.longitude
-              : 12.5911277895021,
+            longitude: currentPosition ? currentPosition.longitude : 12.56553,
             longitudeDelta: 0.003,
           }}
           region={region}
