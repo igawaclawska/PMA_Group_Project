@@ -225,10 +225,10 @@ export const Map = ({ navigation, screenType }) => {
             disabled={count === 0 ? true : false}
             style={[
               styles.clearRoute,
-              { opacity: directions === null ? 0.3 : 0.8 },
+              { opacity: directions === null ? 0.3 : 0.9 },
             ]}
           >
-            <Ionicons name="compass" size={23} color="#fff" />
+            <Ionicons name="compass" size={30} color="#fff" />
           </TouchableOpacity>
         </View>
       )}
@@ -282,7 +282,7 @@ const styles = StyleSheet.create({
 
   clearRoute: {
     position: "absolute",
-    bottom: windHeight - 130,
+    bottom: windHeight - 140,
     left: 10,
     alignSelf: "right",
     backgroundColor: "#3FC76D",
