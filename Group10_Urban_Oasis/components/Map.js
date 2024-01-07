@@ -20,6 +20,7 @@ import { Ionicons } from "@expo/vector-icons";
 // detect screen width
 // source: https://reactnative.dev/docs/dimensions
 const windowWidth = Dimensions.get("window").width;
+const windHeight = Dimensions.get("window").height;
 
 export const Map = ({ navigation, screenType }) => {
   const {
@@ -36,6 +37,7 @@ export const Map = ({ navigation, screenType }) => {
   } = useContext(LocationContext);
 
   const [count, setCount] = useState(0);
+  const [prevDirections, setPrevDirections] = useState(null);
 
   const mapRef = useRef();
 
@@ -69,7 +71,7 @@ export const Map = ({ navigation, screenType }) => {
 
   const onRegionChange = (newRegion) => {
     // Update the state with the new region
-    setRegion(newRegion);
+    if (!directions) setRegion(newRegion);
   };
 
   const handleRecenter = () => {
@@ -134,7 +136,7 @@ export const Map = ({ navigation, screenType }) => {
           ref={mapRef}
           style={styles.map}
           //onRegionChangeComplete={onRegionChange}
-          // onLongPress={handleRecenter}
+          onLongPress={handleRecenter}
           initialRegion={{
             latitude: currentPosition
               ? currentPosition.latitude
@@ -190,7 +192,7 @@ export const Map = ({ navigation, screenType }) => {
             }}
             style={styles.recenter}
           >
-            <Ionicons name="navigate-circle-outline" size={23} color="#fff" />
+            <Ionicons name="locate" size={23} color="#fff" />
           </Pressable>
 
           <TouchableOpacity
@@ -212,6 +214,21 @@ export const Map = ({ navigation, screenType }) => {
             style={[styles.zoomIn, { opacity: count === 0 ? 0.3 : 0.8 }]}
           >
             <Ionicons name="add-circle-outline" size={23} color="#fff" />
+          </TouchableOpacity>
+
+          <TouchableOpacity
+            title="clearRoute"
+            onPress={() => {
+              setPrevDirections(directions);
+              setDirections(prevDirections === null ? null : prevDirections);
+            }}
+            disabled={count === 0 ? true : false}
+            style={[
+              styles.clearRoute,
+              { opacity: directions === null ? 0.3 : 0.8 },
+            ]}
+          >
+            <Ionicons name="compass" size={23} color="#fff" />
           </TouchableOpacity>
         </View>
       )}
@@ -260,6 +277,17 @@ const styles = StyleSheet.create({
     backgroundColor: "#4285F4",
     opacity: 0.7,
     padding: 10,
+    borderRadius: 10,
+  },
+
+  clearRoute: {
+    position: "absolute",
+    bottom: windHeight - 130,
+    left: 10,
+    alignSelf: "right",
+    backgroundColor: "#3FC76D",
+    opacity: 0.4,
+    padding: 2,
     borderRadius: 10,
   },
   buttonText: {

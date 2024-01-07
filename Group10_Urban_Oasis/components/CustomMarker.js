@@ -8,6 +8,7 @@ export const CustomMarker = ({
   type,
   coordinate,
   title,
+  pinColor,
   description,
   onPress,
   uri,
@@ -52,7 +53,7 @@ export const CustomMarker = ({
         //Get current position of user
         <Marker
           title="You are here"
-          description="Right here..."
+          description="Move around and your location updates"
           pinColor="#0000FF"
           coordinate={{
             latitude: currentPosition.latitude,
@@ -74,7 +75,7 @@ export const CustomMarker = ({
       return (
         // Marker to display added locations (supports callout)
         <Marker
-          pinColor="#D4AFEA"
+          pinColor={pinColor}
           coordinate={coordinate}
           title={title}
           description={description}
