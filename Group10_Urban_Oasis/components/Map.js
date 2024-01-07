@@ -43,12 +43,13 @@ export const Map = ({ navigation, screenType }) => {
 
   const showDefaultLocations = () => {
     if (defaultLocations !== null) {
-      //prevent errors if defautLocations array is empty
+      // prevent errors if defaultLocations array is empty
       return defaultLocations?.map((item, index) => {
+        const markerKey = `${item.title}-${index}`;
         return (
           <CustomMarker
-            key={index}
-            //Callout support only on the "Explore" screen
+            key={markerKey}
+            // Callout support only on the "Explore" screen
             type={
               screenType === "Explore"
                 ? "addedLocationWithCallout"
@@ -58,7 +59,7 @@ export const Map = ({ navigation, screenType }) => {
             title={item.title}
             description={item.description}
             uri={item.uri}
-            pinColor={recentlyVisited.includes(item.title) ? "#000" : "#0ff"}
+            pinColor={"#D4AFEA"}
             onPress={() => {
               navigation.navigate("LocationDetails", {
                 location: item,
@@ -71,7 +72,10 @@ export const Map = ({ navigation, screenType }) => {
   };
 
   useEffect(() => {
-    setRecentlyVisited(recentlyVisited);
+    // This effect will run whenever recentlyVisited changes
+    showDefaultLocations();
+    console.log(recentlyVisited);
+    console.log("Map component re-rendered due to recentlyVisited change");
   }, [recentlyVisited]);
 
   const onRegionChange = (newRegion) => {
