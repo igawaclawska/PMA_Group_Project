@@ -1,7 +1,6 @@
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { AddLocation } from "../pages/application/AddLocation";
 import { CameraView } from "../pages/application/Camera";
-import { PhotoView } from "../pages/application/PhotoView";
 
 const Stack = createNativeStackNavigator();
 
@@ -23,11 +22,6 @@ export const AddLocationNavigation = () => {
         name="Camera Screen"
         options={createScreenOptions}
         component={CameraView}
-      />
-      <Stack.Screen
-        name="Photo View"
-        options={createScreenOptions}
-        component={PhotoView}
       />
     </Stack.Navigator>
   );
