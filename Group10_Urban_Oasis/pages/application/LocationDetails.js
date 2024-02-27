@@ -70,7 +70,9 @@ function ViewLocation({ navigation }) {
       const fetchData = async () => {
         if (currentPosition && destinationCoords) {
           try {
-            const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY"; // Replace with your Google Maps API key
+
+            // ATTENTION... GOOGLE API IS REVOKED DUE TO SAFETY - GENERATE A NEW ONE FOR THE APP TO WORK!!!
+            const apiKey = "AIzaSyAMZ6HuwBRZ8AIrWYuM8b6itoCpH-4c6WY"; 
             const origin = `${currentPosition.latitude},${currentPosition.longitude}`;
             const destination = `${destinationCoords.latitude},${destinationCoords.longitude}`;
             const apiUrl = `https://maps.googleapis.com/maps/api/directions/json?origin=${origin}&destination=${destination}&key=${apiKey}`;
